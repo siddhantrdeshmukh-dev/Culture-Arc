@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Staffing & Workforce Solutions | CultureArc</title>
+  <meta name="description" content="Deploy pre-vetted IT professionals within 24 hours. CultureArc offers contractual, permanent, and project-based staffing across 75+ technology skill verticals.">
+  <link rel="stylesheet" href="inner-pages.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="top-bar"
+        style="background: var(--color-dark); color: white; padding: 0.5rem 5%; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1001;">
+        <div class="top-bar-left" style="display: flex; gap: 2rem;">
+            <a href="mailto:info@culturearc.com"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-envelope"></i> info@culturearc.com</a>
+            <a href="tel:+91206680456"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-phone"></i> Global Support</a>
+            <span style="color: #6B7280; display: flex; align-items: center; gap: 0.5rem;"><i class="ph ph-map-pin"></i>
+                HQ: Pune, India &bull; USA &bull; UK</span>
+        </div>
+        <div class="top-bar-right" style="display: flex; gap: 1.5rem;">
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'"
+                onmouseout="this.style.color='white'">Investors</a>
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">Newsroom</a>
+            <a href="career.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">Careers</a>
+            <div class="lang-select"
+                style="display:flex; align-items: center; gap: 0.2rem; cursor: pointer; color: var(--color-gold); font-weight: 600;">
+                <i class="ph ph-globe"></i> EN <i class="ph ph-caret-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .mega-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 5%;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mega-links {
+            display: flex;
+            height: 100%;
+            gap: 2.5rem;
+        }
+
+        .mega-item {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .mega-link {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--color-dark);
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .mega-link i {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            transition: transform 0.3s;
+        }
+
+        .mega-item:hover .mega-link {
+            color: var(--color-primary);
+        }
+
+        .mega-item:hover .mega-link i {
+            transform: rotate(180deg);
+            color: var(--color-primary);
+        }
+
+        /* The Dropdown Container */
+        .mega-dropdown {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: white;
+            width: 850px;
+            border-radius: 16px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--color-border);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            display: flex;
+            overflow: hidden;
+            z-index: -1;
+            padding-bottom: 0px;
+            margin-top: -10px;
+        }
+
+        .mega-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+
+        .mega-item:hover .mega-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(10px);
+            pointer-events: auto;
+            z-index: 1000;
+        }
+
+        .mega-drop-left {
+            width: 35%;
+            background: var(--color-surface);
+            padding: 3rem;
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mega-drop-right {
+            width: 65%;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .drop-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            line-height: 1.2;
+        }
+
+        .drop-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .drop-link:hover {
+            background: var(--color-base);
+            transform: translateX(5px);
+        }
+
+        .drop-icon {
+            background: rgba(192, 0, 0, 0.06);
+            color: var(--color-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            border: 1px solid rgba(192, 0, 0, 0.1);
+        }
+
+        .drop-link:hover .drop-icon {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: 0 10px 20px rgba(192, 0, 0, 0.2);
+        }
+
+        .drop-text h4 {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 0.35rem;
+            font-size: 1.05rem;
+            transition: color 0.2s;
+        }
+
+        .drop-link:hover .drop-text h4 {
+            color: var(--color-primary);
+        }
+
+        .drop-text p {
+            font-size: 0.85rem;
+            color: var(--color-gray);
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+
+        /* Responsive hiding for mega nav on strictly small elements */
+        @media (max-width: 1024px) {
+            .mega-links,
+            .top-bar-right,
+            .top-bar-left span {
+                display: none !important;
+            }
+
+            .nav-toggle {
+                display: flex !important;
+                margin-left: auto;
+            }
+        }
+    </style>
+
+    <nav class="mega-nav">
+        <a href="index.html" class="nav-logo" style="text-decoration: none; display: flex; align-items: center;">
+            <img src="culture  arc logo.png" alt="CultureArc Logo" style="height: 44px; width: auto; object-fit: contain;">
+        </a>
+
+        <div class="mega-links">
+            <div class="mega-item">
+                <a href="about.html" class="mega-link" style="gap: 0;">Company</a>
+            </div>
+            <div class="mega-item">
+                <span class="mega-link">Solutions <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown">
+                    <div class="mega-drop-left">
+                        <div>
+                            <h3 class="drop-title" style="color: #C00000;">End-to-End Enterprise Solutions</h3>
+                            <p style="color: #C00000; line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem;">
+                                Discover how CultureArc engineers talent infrastructure to scale global technology
+                                operations securely and efficiently.
+                            </p>
+                        </div>
+                        <a href="services.html" class="btn btn-primary"
+                            style="width: 100%; justify-content: center;">View All Solutions <i
+                                class="ph ph-arrow-right"></i></a>
+                    </div>
+                    <div class="mega-drop-right">
+                        <a href="it-staffing.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-users-three"></i></div>
+                            <div class="drop-text">
+                                <h4>IT Staffing</h4>
+                                <p>Rapid deployment of pre-vetted tech professionals.</p>
+                            </div>
+                        </a>
+                        <a href="global-capability-center.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-buildings"></i></div>
+                            <div class="drop-text">
+                                <h4>Global Tech Center</h4>
+                                <p>Build-Operate-Transfer models for global scale.</p>
+                            </div>
+                        </a>
+                        <a href="executive-search.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-briefcase"></i></div>
+                            <div class="drop-text">
+                                <h4>Executive Search</h4>
+                                <p>Elite leadership and C-suite talent acquisition.</p>
+                            </div>
+                        </a>
+                        <a href="background-verification.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-shield-check"></i></div>
+                            <div class="drop-text">
+                                <h4>Background Verification</h4>
+                                <p>Comprehensive compliance and security checks.</p>
+                            </div>
+                        </a>
+                        <a href="rpo-solutions.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-chart-line-up"></i></div>
+                            <div class="drop-text">
+                                <h4>RPO Solutions</h4>
+                                <p>End-to-end recruitment process outsourcing.</p>
+                            </div>
+                        </a>
+                        <a href="payroll-management.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-files"></i></div>
+                            <div class="drop-text">
+                                <h4>Payroll Management</h4>
+                                <p>Seamless contractor and employee administration.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Industries <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 700px;">
+                    <div class="mega-drop-left" style="width: 40%; background: white;">
+                        <h3 class="drop-title">Industry Verticals</h3>
+                        <p style="color: var(--color-gray); font-size: 0.9rem;">Tailored staffing architectures
+                            specialized for strict sector compliance and high velocity execution.</p>
+                    </div>
+                   <div class="mega-drop-right" style="width: 60%; grid-template-columns: 1fr 1fr; padding: 2rem;">
+                        <a href="bfsi.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-bank"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">BFSI</h4>
+                            </div>
+                        </a>
+                        <a href="healthcare.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-heartbeat"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Healthcare</h4>
+                            </div>
+                        </a>
+                        <a href="ecommerce.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-shopping-cart"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">E-Commerce</h4>
+                            </div>
+                        </a>
+                        <a href="telecom.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-broadcast"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Telecom</h4>
+                            </div>
+                        </a>
+                        <a href="manufacturing.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-factory"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Manufacturing</h4>
+                            </div>
+                        </a>
+                        <a href="technology.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-cpu"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Technology</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Insights <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="portfolio.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-open"></i></div>
+                        <div class="drop-text">
+                            <h4>Case Studies</h4>
+                            <p>Read about our successful commercial transformations.</p>
+                        </div>
+                    </a>
+                    <a href="study.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-newspaper"></i></div>
+                        <div class="drop-text">
+                            <h4>Newsroom</h4>
+                            <p>Latest corporate updates and press releases.</p>
+                        </div>
+                    </a>
+                    <a href="whitepapers.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-file-text"></i></div>
+                        <div class="drop-text">
+                            <h4>Whitepapers & Research</h4>
+                            <p>Deep-dive research into global talent markets.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Resources <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="blog.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-article"></i></div>
+                        <div class="drop-text">
+                            <h4>Blog</h4>
+                            <p>Latest articles, industry trends, and expert opinions.</p>
+                        </div>
+                    </a>
+                    <a href="webinars.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-video-camera"></i></div>
+                        <div class="drop-text">
+                            <h4>Webinars</h4>
+                            <p>Live and on-demand video sessions and masterclasses.</p>
+                        </div>
+                    </a>
+                    <a href="ebooks.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-bookmark"></i></div>
+                        <div class="drop-text">
+                            <h4>E-Books & Guides</h4>
+                            <p>Comprehensive materials to elevate your talent strategy.</p>
+                        </div>
+                    </a>
+                    <a href="help-center.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-question"></i></div>
+                        <div class="drop-text">
+                            <h4>Help Center & FAQ</h4>
+                            <p>Support and answers to your most common questions.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 1.25rem; align-items: center;" class="nav-buttons-right">
+            <a href="jobs.html" class="btn btn-ghost"
+                style="padding: 0.75rem 1.5rem; border-color: var(--color-border); font-weight: 600;">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary"
+                style="padding: 0.75rem 1.5rem; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner
+                With Us</a>
+            <button class="nav-toggle" id="nav-toggle"
+                style="display: none; background: transparent; border: none; font-size: 1.5rem; cursor: pointer;">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="nav-mobile" id="nav-mobile-menu" style="display: none; background: white; padding: 1rem 5% 2rem; position: absolute; top: 90px; left: 0; width: 100%; border-bottom: 1px solid var(--color-border); box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: calc(100vh - 90px); overflow-y: auto; z-index: 999;">
+        
+        <style>
+            .nav-mobile details summary::-webkit-details-marker { display: none; }
+            .nav-mobile details summary { list-style: none; }
+            .nav-mobile a { transition: color 0.2s; }
+            .nav-mobile a:hover { color: var(--color-primary) !important; }
+        </style>
+
+        <a href="index.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Home</a>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Solutions <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="services.html" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">View All Solutions</a>
+                <a href="it-staffing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">IT Staffing</a>
+                <a href="global-capability-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Global Tech Center</a>
+                <a href="executive-search.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Executive Search</a>
+                <a href="background-verification.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Background Verification</a>
+                <a href="rpo-solutions.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">RPO Solutions</a>
+                <a href="payroll-management.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Payroll Management</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Industries <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="bfsi.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">BFSI</a>
+                <a href="healthcare.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Healthcare</a>
+                <a href="ecommerce.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Commerce</a>
+                <a href="telecom.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Telecom</a>
+                <a href="manufacturing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Manufacturing</a>
+                <a href="technology.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Technology</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Insights <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="portfolio.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Case Studies</a>
+                <a href="study.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Newsroom</a>
+                <a href="whitepapers.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Whitepapers & Research</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Resources <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="blog.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Blog</a>
+                <a href="webinars.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Webinars</a>
+                <a href="ebooks.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Books & Guides</a>
+                <a href="help-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Help Center & FAQ</a>
+            </div>
+        </details>
+
+        <a href="about.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Company</a>
+        
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+            <a href="jobs.html" class="btn btn-ghost" style="justify-content: center; border: 1px solid var(--color-border); padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; color: var(--color-dark);">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary" style="justify-content: center; padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner With Us</a>
+        </div>
+    </div>
+
+    <main style="margin-top: 72px;">
+    
+    <!-- HERO -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-content">
+          <div class="page-hero-breadcrumb">
+            <a href="../index.html">Home</a><span class="sep">/</span>
+            <a href="#">Solutions</a><span class="sep">/</span>
+            <span>IT Staffing</span>
+          </div>
+          <div class="pill pill-red" style="margin-bottom:1.5rem;"><span class="pulse-dot"></span>Workforce Engineering</div>
+          <h1>IT Staffing &<br><span style="color:var(--color-gold);">Workforce Solutions</span></h1>
+          <p>Deploy pre-vetted, culturally aligned IT professionals within 0–24 hours. From contractual to permanent placements, we source talent for 75+ specialised skills across PAN India and globally.</p>
+          <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+            <a href="../hire.html" class="btn btn-primary btn-lg">Hire Talent Now <i class="ph ph-arrow-right"></i></a>
+            <a href="#process" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,0.3);color:white;">See Our Process</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="stats-bar">
+      <div class="container">
+        <div class="stats-grid">
+          <div><div class="stat-value">1M+</div><div class="stat-label">Pre-Vetted Profiles</div></div>
+          <div><div class="stat-value">75+</div><div class="stat-label">Skill Verticals</div></div>
+          <div><div class="stat-value">0–24h</div><div class="stat-label">Turnaround Time</div></div>
+          <div><div class="stat-value">100%</div><div class="stat-label">Client Retention</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="section">
+      <div class="container">
+        <div class="two-col">
+          <div class="reveal">
+            <div class="section-header">
+              <span class="eyebrow">What We Do</span>
+              <h2>The Right Talent.<br>Right Now.</h2>
+              <p>CultureArc is a premier IT staffing firm functioning as a consortium of 25+ mid and large-sized IT MNCs. We combine enterprise resources with startup agility to place elite professionals who don't just fill roles — they transform teams.</p>
+            </div>
+            <div class="benefits-list">
+              <div class="benefit-item"><div class="benefit-check"><i class="ph ph-check"></i></div><div><h5>Pre-Vetted Database</h5><p>Access to over 10 Lakh (1 Million+) screened profiles ready for immediate deployment.</p></div></div>
+              <div class="benefit-item"><div class="benefit-check"><i class="ph ph-check"></i></div><div><h5>100,000+ Industry Connects</h5><p>Deep sourcing network spanning Metro, Tier II, and Tier III cities across India.</p></div></div>
+              <div class="benefit-item"><div class="benefit-check"><i class="ph ph-check"></i></div><div><h5>50+ In-House Recruiters</h5><p>Dedicated technical recruiters specialised in identifying the top 5% of industry talent.</p></div></div>
+              <div class="benefit-item"><div class="benefit-check"><i class="ph ph-check"></i></div><div><h5>800+ Global Techies</h5><p>Active talent pool of technology professionals available for immediate project mobilisation.</p></div></div>
+            </div>
+          </div>
+          <div class="reveal delay-2">
+            <div class="two-col-image" style="height:450px;">
+              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" alt="IT Staffing Team" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY OFFERINGS -->
+    <section class="section bg-surface">
+      <div class="container">
+        <div class="section-header center reveal">
+          <span class="eyebrow">Service Portfolio</span>
+          <h2>Staffing Models That Scale</h2>
+          <p>Every engagement model is designed to match your business velocity, budget, and risk appetite.</p>
+        </div>
+        <div class="features-grid">
+          <div class="card card-feature reveal delay-1">
+            <div class="card-icon"><i class="ph ph-arrows-clockwise"></i></div>
+            <div><h4>Contractual Staffing</h4><p>Flexible, scalable solutions with quick deployment from our pre-vetted pool. Ideal for project-critical phases and seasonal scaling without long-term commitments.</p></div>
+          </div>
+          <div class="card card-feature reveal delay-2">
+            <div class="card-icon"><i class="ph ph-user-check"></i></div>
+            <div><h4>Permanent Placement</h4><p>Identifying top talent aligned with your organisational goals through in-depth screening and industry-specific hiring expertise for long-term cultural fit.</p></div>
+          </div>
+          <div class="card card-feature reveal delay-3">
+            <div class="card-icon"><i class="ph ph-briefcase"></i></div>
+            <div><h4>Leadership Hiring</h4><p>Headhunting C-level executives — CEO, CFO, CTO — using a strategic, confidential, and result-oriented advisory approach built for high-stakes decisions.</p></div>
+          </div>
+          <div class="card card-feature reveal delay-1">
+            <div class="card-icon"><i class="ph ph-chart-line-up"></i></div>
+            <div><h4>RPO (Recruitment Process Outsourcing)</h4><p>End-to-end, technology-driven recruitment solutions with scalable and flexible hiring models designed around your talent acquisition roadmap.</p></div>
+          </div>
+          <div class="card card-feature reveal delay-2">
+            <div class="card-icon"><i class="ph ph-lightning"></i></div>
+            <div><h4>Project-Based Staffing</h4><p>On-demand hiring for critical project phases. Specialised IT talent for niche and high-impact projects with rapid deployment to meet tight deadlines.</p></div>
+          </div>
+          <div class="card card-feature reveal delay-3">
+            <div class="card-icon"><i class="ph ph-globe-hemisphere-west"></i></div>
+            <div><h4>Offshore Development Teams</h4><p>Build dedicated development centres through our BOT (Build-Operate-Transfer) model. Test talent offshore before permanent institutional adoption.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section" id="process">
+      <div class="container">
+        <div class="two-col">
+          <div class="reveal">
+            <div class="section-header">
+              <span class="eyebrow">Our Methodology</span>
+              <h2>4-Stage Precision Screening</h2>
+              <p>Every candidate goes through a rigorous, multi-dimensional evaluation designed to validate both technical excellence and cultural alignment before a single profile reaches your desk.</p>
+            </div>
+            <div class="process-steps" style="position:relative;">
+              <div class="process-line"><div class="process-line-fill" style="height:100%;"></div></div>
+              <div class="process-step active">
+                <div class="step-number">01</div>
+                <div class="step-content"><h4>Technical Skills Assessment</h4><p>Role-specific coding challenges, system design reviews, and domain knowledge tests curated by senior engineers.</p></div>
+              </div>
+              <div class="process-step active">
+                <div class="step-number">02</div>
+                <div class="step-content"><h4>Cultural & Behavioural Fit</h4><p>Structured competency interviews and psychometric evaluations to assess leadership, collaboration, and adaptability.</p></div>
+              </div>
+              <div class="process-step active">
+                <div class="step-number">03</div>
+                <div class="step-content"><h4>Background Verification (10 Steps)</h4><p>Comprehensive 10-point checks including employment records, education, criminal history, credit, and drug testing.</p></div>
+              </div>
+              <div class="process-step active">
+                <div class="step-number">04</div>
+                <div class="step-content"><h4>Client Match & Deployment</h4><p>Precise profile-to-role matching followed by onboarding support and 90-day performance tracking.</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="reveal delay-2" style="background:var(--color-dark);border-radius:var(--radius-xl);padding:3rem;color:white;">
+            <h3 style="color:white;margin-bottom:2rem;">Performance Metrics</h3>
+            <div style="display:flex;flex-direction:column;gap:1.75rem;">
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.9rem;"><span style="color:rgba(255,255,255,0.7);">Submission → Screen Select</span><span style="color:var(--color-gold);font-weight:700;">80%</span></div>
+                <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"><div style="width:80%;height:100%;background:linear-gradient(90deg,#C00000,#F7B32D);border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.9rem;"><span style="color:rgba(255,255,255,0.7);">L1 → L2 Qualification</span><span style="color:var(--color-gold);font-weight:700;">68%</span></div>
+                <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"><div style="width:68%;height:100%;background:linear-gradient(90deg,#C00000,#F7B32D);border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.9rem;"><span style="color:rgba(255,255,255,0.7);">L2 → Offer</span><span style="color:var(--color-gold);font-weight:700;">60%</span></div>
+                <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"><div style="width:60%;height:100%;background:linear-gradient(90deg,#C00000,#F7B32D);border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.9rem;"><span style="color:rgba(255,255,255,0.7);">Acceptance → Joining</span><span style="color:var(--color-gold);font-weight:700;">84%</span></div>
+                <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"><div style="width:84%;height:100%;background:linear-gradient(90deg,#C00000,#F7B32D);border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.9rem;"><span style="color:rgba(255,255,255,0.7);">Consultant Renewals</span><span style="color:var(--color-gold);font-weight:700;">95%</span></div>
+                <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"><div style="width:95%;height:100%;background:linear-gradient(90deg,#C00000,#F7B32D);border-radius:3px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.9rem;"><span style="color:rgba(255,255,255,0.7);">Client Satisfaction (out of 5)</span><span style="color:var(--color-gold);font-weight:700;">4.6</span></div>
+                <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;"><div style="width:92%;height:100%;background:linear-gradient(90deg,#C00000,#F7B32D);border-radius:3px;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="section bg-surface">
+      <div class="container">
+        <div class="section-header center reveal">
+          <span class="eyebrow">Technology Expertise</span>
+          <h2>75+ Skill Verticals Covered</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;" class="reveal">
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">☁️</div><h4>Cloud & DevOps</h4><p style="font-size:0.85rem;">AWS, Azure, GCP, Kubernetes, Terraform, SRE</p></div>
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">💻</div><h4>Full Stack Dev</h4><p style="font-size:0.85rem;">.NET, Java, Python, NodeJS, React, Angular</p></div>
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">🤖</div><h4>AI / ML / Data</h4><p style="font-size:0.85rem;">Machine Learning, Data Science, Spark, Hadoop, Power BI</p></div>
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">📱</div><h4>Mobile</h4><p style="font-size:0.85rem;">iOS, Android, React Native, Ionic, Flutter</p></div>
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">🔒</div><h4>QA & Security</h4><p style="font-size:0.85rem;">Manual, Automation, Performance, Penetration Testing</p></div>
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">🏢</div><h4>SAP & ERP</h4><p style="font-size:0.85rem;">SAP ABAP, FICO, SD, MM, S/4HANA</p></div>
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">📊</div><h4>Business Intelligence</h4><p style="font-size:0.85rem;">Tableau, Qlik View, Power BI, SSIS, SSRS</p></div>
+          <div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">🌐</div><h4>IoT & Emerging Tech</h4><p style="font-size:0.85rem;">IoT Device Integration, 5G, Computer Vision, Chatbots</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-band">
+      <div class="container">
+        <div class="cta-band-inner reveal">
+          <h2>Ready to Build Your Dream Team?</h2>
+          <p>Join 100+ organisations who trust CultureArc to deliver elite, culture-matched IT professionals at scale.</p>
+          <div class="btn-group">
+            <a href="../hire.html" class="btn btn-primary btn-lg">Hire Talent <i class="ph ph-arrow-right"></i></a>
+            <a href="../jobs.html" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,0.3);color:white;">Find a Job</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+  <div id="site-footer"></div>
+  <script src="shared.js"></script>
+  <script>
+    // Reveal on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+      const els = document.querySelectorAll('.reveal');
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
+      }, {threshold: 0.12});
+      els.forEach(el => obs.observe(el));
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item');
+          const ans = item.querySelector('.faq-a');
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item.open').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.faq-a').style.maxHeight = '0';
+          });
+          if (!isOpen) {
+            item.classList.add('open');
+            ans.style.maxHeight = ans.scrollHeight + 'px';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

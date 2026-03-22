@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CultureArc | Case Studies & Portfolio</title>
+    <meta name="description"
+        content="Read about CultureArc's successful commercial transformations, IT staffing scale-ups, and technology implementations across global enterprises.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --color-primary: #C00000;
+            --color-gold: #F7B32D;
+            --color-dark: #00224D;
+            --color-gray: #6B7280;
+            --color-base: #F8F9FC;
+            --color-surface: #FFFFFF;
+            --color-border: rgba(0,0,0,0.1);
+            --font-display: 'Bricolage Grotesque', sans-serif;
+            --font-sans: 'Figtree', sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --radius-lg: 12px;
+            --radius-xl: 20px;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* ===== GLOBAL RESETS ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            font-family: var(--font-sans);
+            color: var(--color-dark);
+            background: var(--color-base);
+            line-height: 1.5;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
+        .text-center { text-align: center; }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); line-height: 1.2; }
+        .text-gradient {
+            background: linear-gradient(135deg, #FFC107, #FF8F00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Buttons & Pills */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600;
+            text-decoration: none; cursor: pointer; transition: all 0.3s var(--ease-out);
+            font-family: var(--font-sans); border: 1px solid transparent;
+        }
+        .btn-primary { background: var(--color-primary); color: white; box-shadow: 0 10px 20px rgba(192,0,0,0.2); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(192,0,0,0.3); }
+        .btn-outline { border-color: var(--color-border); background: transparent; color: var(--color-dark); }
+        .btn-outline:hover { background: var(--color-base); border-color: var(--color-primary); color: var(--color-primary); }
+        .btn-ghost { border: 1px solid var(--color-border); background: transparent; color: var(--color-dark); }
+        .btn-ghost:hover { background: rgba(0,0,0,0.02); }
+        
+        .pill {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono);
+        }
+        .pill-red { border: 1px solid rgba(192,0,0,0.3); background: rgba(192,0,0,0.1); color: var(--color-primary); }
+        .pill-gold { border: 1px solid rgba(247,179,45,0.3); background: rgba(247,179,45,0.1); color: var(--color-gold); }
+
+        /* ===== NAVIGATION (Matching About.html) ===== */
+        .top-bar { background: var(--color-dark); color: white; padding: 0.5rem 5%; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1001; }
+        .top-bar a { color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+        .top-bar a:hover { color: white; }
+        .mega-nav { position: sticky; top: 0; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid var(--color-border); padding: 0 5%; height: 90px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06); transition: all 0.4s var(--ease-out); }
+        .mega-links { display: flex; height: 100%; gap: 2.5rem; }
+        .mega-item { height: 100%; display: flex; align-items: center; position: relative; }
+        .mega-link { font-family: var(--font-sans); font-weight: 600; color: var(--color-dark); text-decoration: none; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0 0.5rem; transition: color 0.2s; }
+        .mega-link i { font-size: 0.9rem; color: var(--color-gray); transition: transform 0.3s; }
+        .mega-item:hover .mega-link { color: var(--color-primary); }
+        .mega-item:hover .mega-link i { transform: rotate(180deg); color: var(--color-primary); }
+        
+        .mega-dropdown { position: absolute; top: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: white; width: 850px; border-radius: 16px; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15); border: 1px solid var(--color-border); opacity: 0; visibility: hidden; transition: all 0.3s var(--ease-out); pointer-events: none; display: flex; overflow: hidden; z-index: -1; margin-top: -10px; }
+        .mega-dropdown::before { content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; background: transparent; }
+        .mega-item:hover .mega-dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(10px); pointer-events: auto; z-index: 1000; }
+        
+        .mega-drop-left { width: 35%; background: var(--color-surface); padding: 3rem; border-right: 1px solid var(--color-border); display: flex; flex-direction: column; justify-content: space-between; }
+        .mega-drop-right { width: 65%; padding: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .drop-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-dark); line-height: 1.2; }
+        .drop-link { display: flex; align-items: flex-start; gap: 1.25rem; text-decoration: none; padding: 1rem; border-radius: 12px; transition: all 0.2s; position: relative; }
+        .drop-link:hover { background: var(--color-base); transform: translateX(5px); }
+        .drop-icon { background: rgba(192, 0, 0, 0.06); color: var(--color-primary); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; transition: all 0.3s; border: 1px solid rgba(192, 0, 0, 0.1); }
+        .drop-link:hover .drop-icon { background: var(--color-primary); color: white; box-shadow: 0 10px 20px rgba(192, 0, 0, 0.2); }
+        .drop-text h4 { font-family: var(--font-sans); font-weight: 700; color: var(--color-dark); margin-bottom: 0.35rem; font-size: 1.05rem; transition: color 0.2s; }
+        .drop-link:hover .drop-text h4 { color: var(--color-primary); }
+        .drop-text p { font-size: 0.85rem; color: var(--color-gray); line-height: 1.5; transition: color 0.2s; }
+
+        /* ===== CASE STUDIES SPECIFIC STYLES ===== */
+        .section-lg { padding: 100px 0; }
+        
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+        
+        .case-card {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+            transition: all 0.4s var(--ease-out);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .case-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 60px rgba(0,0,0,0.1);
+            border-color: rgba(192,0,0,0.2);
+        }
+        
+        .case-header {
+            padding: 3rem 3rem 1.5rem;
+            position: relative;
+            background: linear-gradient(180deg, var(--color-base) 0%, white 100%);
+        }
+        
+        .case-icon {
+            width: 60px; height: 60px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin-bottom: 1.5rem;
+        }
+        
+        .icon-red { background: rgba(192,0,0,0.1); color: var(--color-primary); }
+        .icon-gold { background: rgba(247,179,45,0.1); color: var(--color-gold); }
+        .icon-blue { background: rgba(33,150,243,0.1); color: #2196F3; }
+        .icon-green { background: rgba(76,175,80,0.1); color: #4CAF50; }
+        
+        .case-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: var(--color-dark); }
+        .case-card p.desc { color: var(--color-gray); font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        
+        .case-body { padding: 0 3rem 3rem; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .case-results {
+            margin-top: auto;
+            border-top: 1px solid var(--color-border);
+            padding-top: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .result-item h4 { font-family: var(--font-sans); color: var(--color-primary); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem; }
+        .result-item p { font-size: 0.85rem; color: var(--color-gray); line-height: 1.4; font-weight: 500; margin: 0; }
+
+        /* Featured Case Study */
+        .case-featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: var(--color-dark);
+            color: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+        .case-featured .case-header { background: transparent; padding: 4rem; }
+        .case-featured .case-body { padding: 0 4rem 4rem; }
+        .case-featured h3 { color: white; font-size: clamp(2rem, 3vw, 2.5rem); line-height: 1.1; }
+        .case-featured p.desc { color: rgba(255,255,255,0.7); font-size: 1.15rem; }
+        .case-featured .case-results { border-top-color: rgba(255,255,255,0.1); }
+        .case-featured .result-item h4 { color: var(--color-gold); font-size: 2rem; }
+        .case-featured .result-item p { color: rgba(255,255,255,0.6); }
+        
+        .featured-visual {
+            background: linear-gradient(135deg, #0f172a 0%, #000 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .code-block-mockup {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 2.5rem; width: 80%; font-family: var(--font-mono);
+            font-size: 0.9rem; color: #a5b4fc; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px); line-height: 1.6;
+        }
+
+        /* ===== DISTRIBUTION BARS ===== */
+        .dist-bars { display: flex; flex-direction: column; gap: 1.5rem; }
+        .bar-wrap { width: 100%; }
+        .bar-label { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; color: var(--color-dark); }
+        .bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; }
+
+        /* ===== CLIENT MARQUEE ===== */
+        .clients-marquee { width: 100%; overflow: hidden; background: white; padding: 4rem 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; }
+        .marquee-track { display: flex; width: max-content; animation: scrollMarquee 30s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+        .client-logo { height: 48px; width: auto; margin: 0 4rem; filter: grayscale(100%) opacity(0.6); transition: all 0.3s var(--ease-out); object-fit: contain; }
+        .client-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.05); }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .mega-links, .top-bar-right, .top-bar-left span { display: none !important; }
+            .nav-toggle { display: block !important; }
+            .case-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .case-featured { grid-template-columns: 1fr; }
+            .featured-visual { height: 350px; }
+            .dist-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+        }
+        @media (max-width: 768px) {
+            .hero-stats { flex-direction: column; gap: 2rem !important; text-align: center; border-top: none !important; padding-top: 1rem !important; }
+            .hero-stats .divider { display: none; }
+            .case-header { padding: 2rem 2rem 1rem; }
+            .case-body { padding: 0 2rem 2rem; }
+            .case-results { grid-template-columns: 1fr; gap: 1rem; }
+            .case-featured .case-header { padding: 2rem; }
+            .case-featured .case-body { padding: 0 2rem 2rem; }
+            .featured-visual { display: none; }
+        }
+        /* ===== SCROLL REVEAL ANIMATIONS ===== */
+        .gs-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), 
+                        transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: opacity, transform;
+        }
+
+        .gs-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered Delays for elements grouped together */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* Fallback for animations.js if you use .fade-in */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+        .fade-in.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+    <!-- ===== ENTERPRISE HEADERS ===== -->
+    <div class="top-bar"
+        style="background: var(--color-dark); color: white; padding: 0.5rem 5%; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1001;">
+        <div class="top-bar-left" style="display: flex; gap: 2rem;">
+            <a href="mailto:info@culturearc.com"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-envelope"></i> info@culturearc.com</a>
+            <a href="tel:+91206680456"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-phone"></i> Global Support</a>
+            <span style="color: #6B7280; display: flex; align-items: center; gap: 0.5rem;"><i class="ph ph-map-pin"></i>
+                HQ: Pune, India &bull; USA &bull; UK</span>
+        </div>
+        <div class="top-bar-right" style="display: flex; gap: 1.5rem;">
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'"
+                onmouseout="this.style.color='white'">Investors</a>
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">Newsroom</a>
+            <a href="career.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">Careers</a>
+            <div class="lang-select"
+                style="display:flex; align-items: center; gap: 0.2rem; cursor: pointer; color: var(--color-gold); font-weight: 600;">
+                <i class="ph ph-globe"></i> EN <i class="ph ph-caret-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .mega-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 5%;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mega-links {
+            display: flex;
+            height: 100%;
+            gap: 2.5rem;
+        }
+
+        .mega-item {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .mega-link {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--color-dark);
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .mega-link i {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            transition: transform 0.3s;
+        }
+
+        .mega-item:hover .mega-link {
+            color: var(--color-primary);
+        }
+
+        .mega-item:hover .mega-link i {
+            transform: rotate(180deg);
+            color: var(--color-primary);
+        }
+
+        /* The Dropdown Container */
+        .mega-dropdown {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: white;
+            width: 850px;
+            border-radius: 16px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--color-border);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            display: flex;
+            overflow: hidden;
+            z-index: -1;
+            /* Extra invisible hover padding */
+            padding-bottom: 0px;
+            margin-top: -10px;
+            /* Bridge the gap */
+        }
+
+        .mega-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+
+        .mega-item:hover .mega-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(10px);
+            pointer-events: auto;
+            z-index: 1000;
+        }
+
+        .mega-drop-left {
+            width: 35%;
+            background: var(--color-surface);
+            padding: 3rem;
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mega-drop-right {
+            width: 65%;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .drop-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            line-height: 1.2;
+        }
+
+        .drop-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .drop-link:hover {
+            background: var(--color-base);
+            transform: translateX(5px);
+        }
+
+        .drop-icon {
+            background: rgba(192, 0, 0, 0.06);
+            color: var(--color-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            border: 1px solid rgba(192, 0, 0, 0.1);
+        }
+
+        .drop-link:hover .drop-icon {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: 0 10px 20px rgba(192, 0, 0, 0.2);
+        }
+
+        .drop-text h4 {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 0.35rem;
+            font-size: 1.05rem;
+            transition: color 0.2s;
+        }
+
+        .drop-link:hover .drop-text h4 {
+            color: var(--color-primary);
+        }
+
+        .drop-text p {
+            font-size: 0.85rem;
+            color: var(--color-gray);
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+
+        /* Responsive hiding for mega nav on strictly small elements */
+        @media (max-width: 1024px) {
+
+            .mega-links,
+            .top-bar-right,
+            .top-bar-left span {
+                display: none !important;
+            }
+
+            .nav-toggle {
+                display: flex !important;
+                margin-left: auto;
+            }
+        }
+        
+    </style>
+
+    <nav class="mega-nav">
+        <a href="index.html" class="nav-logo" style="flex: 1; text-decoration: none; display: flex; align-items: center;">
+            <img src="culture  arc logo.png" alt="CultureArc Logo" style="height: 65px; width: auto; object-fit: contain;">
+        </a>
+
+        <div class="mega-links">
+            <div class="mega-item">
+                <a href="about.html" class="mega-link" style="gap: 0;">Company</a>
+            </div>
+            <div class="mega-item">
+                <span class="mega-link">Solutions <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown">
+                    <div class="mega-drop-left">
+                        <div>
+                            <h3 class="drop-title" style="color: #C00000;">End-to-End Enterprise Solutions</h3>
+                            <p style="color: #C00000; line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem;">
+                                Discover how CultureArc engineers talent infrastructure to scale global technology
+                                operations securely and efficiently.
+                            </p>
+                        </div>
+                        <a href="services.html" class="btn btn-primary"
+                            style="width: 100%; justify-content: center;">View All Solutions <i
+                                class="ph ph-arrow-right"></i></a>
+                    </div>
+                    <div class="mega-drop-right">
+                        <a href="it-staffing.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-users-three"></i></div>
+                            <div class="drop-text">
+                                <h4>IT Staffing</h4>
+                                <p>Rapid deployment of pre-vetted tech professionals.</p>
+                            </div>
+                        </a>
+                        <a href="global-capability-center.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-buildings"></i></div>
+                            <div class="drop-text">
+                                <h4>Global Tech Center</h4>
+                                <p>Build-Operate-Transfer models for global scale.</p>
+                            </div>
+                        </a>
+                        <a href="executive-search.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-briefcase"></i></div>
+                            <div class="drop-text">
+                                <h4>Executive Search</h4>
+                                <p>Elite leadership and C-suite talent acquisition.</p>
+                            </div>
+                        </a>
+                        <a href="background-verification.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-shield-check"></i></div>
+                            <div class="drop-text">
+                                <h4>Background Verification</h4>
+                                <p>Comprehensive compliance and security checks.</p>
+                            </div>
+                        </a>
+                        <a href="rpo-solutions.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-chart-line-up"></i></div>
+                            <div class="drop-text">
+                                <h4>RPO Solutions</h4>
+                                <p>End-to-end recruitment process outsourcing.</p>
+                            </div>
+                        </a>
+                        <a href="payroll-management.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-files"></i></div>
+                            <div class="drop-text">
+                                <h4>Payroll Management</h4>
+                                <p>Seamless contractor and employee administration.</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Industries <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 700px;">
+                    <div class="mega-drop-left" style="width: 40%; background: white;">
+                        <h3 class="drop-title">Industry Verticals</h3>
+                        <p style="color: var(--color-gray); font-size: 0.9rem;">Tailored staffing architectures
+                            specialized for strict sector compliance and high velocity execution.</p>
+                    </div>
+                   <div class="mega-drop-right" style="width: 60%; grid-template-columns: 1fr 1fr; padding: 2rem;">
+                        <a href="bfsi.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-bank"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">BFSI</h4>
+                            </div>
+                        </a>
+                        <a href="healthcare.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-heartbeat"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Healthcare</h4>
+                            </div>
+                        </a>
+                        <a href="ecommerce.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-shopping-cart"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">E-Commerce</h4>
+                            </div>
+                        </a>
+                        <a href="telecom.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-broadcast"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Telecom</h4>
+                            </div>
+                        </a>
+                        <a href="manufacturing.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-factory"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Manufacturing</h4>
+                            </div>
+                        </a>
+                        <a href="technology.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-cpu"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Technology</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Insights <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="portfolio.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-open"></i></div>
+                        <div class="drop-text">
+                            <h4>Case Studies</h4>
+                            <p>Read about our successful commercial transformations.</p>
+                        </div>
+                    </a>
+                    <a href="study.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-newspaper"></i></div>
+                        <div class="drop-text">
+                            <h4>Newsroom</h4>
+                            <p>Latest corporate updates and press releases.</p>
+                        </div>
+                    </a>
+                    <a href="whitepapers.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-file-text"></i></div>
+                        <div class="drop-text">
+                            <h4>Whitepapers & Research</h4>
+                            <p>Deep-dive research into global talent markets.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Resources <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="blog.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-article"></i></div>
+                        <div class="drop-text">
+                            <h4>Blog</h4>
+                            <p>Latest articles, industry trends, and expert opinions.</p>
+                        </div>
+                    </a>
+                    <a href="webinars.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-video-camera"></i></div>
+                        <div class="drop-text">
+                            <h4>Webinars</h4>
+                            <p>Live and on-demand video sessions and masterclasses.</p>
+                        </div>
+                    </a>
+                    <a href="ebooks.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-bookmark"></i></div>
+                        <div class="drop-text">
+                            <h4>E-Books & Guides</h4>
+                            <p>Comprehensive materials to elevate your talent strategy.</p>
+                        </div>
+                    </a>
+                    <a href="help-center.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-question"></i></div>
+                        <div class="drop-text">
+                            <h4>Help Center & FAQ</h4>
+                            <p>Support and answers to your most common questions.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="flex: 1; display: flex; gap: 1.25rem; justify-content: flex-end; align-items: center;" class="nav-buttons-right">
+            <a href="jobs.html" class="btn btn-ghost"
+                style="padding: 0.75rem 1.5rem; border-color: var(--color-border); font-weight: 600;">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary"
+                style="padding: 0.75rem 1.5rem; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner
+                With Us</a>
+            <button class="nav-toggle" id="nav-toggle"
+                style="display: none; background: transparent; border: none; font-size: 1.5rem; cursor: pointer;">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Enterprise Mobile Navigation (Hidden by default) -->
+    <div class="nav-mobile" id="nav-mobile-menu" style="display: none; background: white; padding: 1rem 5% 2rem; position: absolute; top: 90px; left: 0; width: 100%; border-bottom: 1px solid var(--color-border); box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: calc(100vh - 90px); overflow-y: auto; z-index: 999;">
+        
+        <style>
+            /* Clean up default summary arrows for mobile menu */
+            .nav-mobile details summary::-webkit-details-marker { display: none; }
+            .nav-mobile details summary { list-style: none; }
+            .nav-mobile a { transition: color 0.2s; }
+            .nav-mobile a:hover { color: var(--color-primary) !important; }
+        </style>
+
+        <a href="index.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Home</a>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Solutions <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="services.html" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">View All Solutions</a>
+                <a href="it-staffing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">IT Staffing</a>
+                <a href="global-capability-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Global Tech Center</a>
+                <a href="executive-search.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Executive Search</a>
+                <a href="background-verification.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Background Verification</a>
+                <a href="rpo-solutions.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">RPO Solutions</a>
+                <a href="payroll-management.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Payroll Management</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Industries <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="bfsi.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">BFSI</a>
+                <a href="healthcare.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Healthcare</a>
+                <a href="ecommerce.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Commerce</a>
+                <a href="telecom.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Telecom</a>
+                <a href="manufacturing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Manufacturing</a>
+                <a href="technology.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Technology</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Insights <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="portfolio.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Case Studies</a>
+                <a href="study.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Newsroom</a>
+                <a href="whitepapers.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Whitepapers & Research</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Resources <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="blog.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Blog</a>
+                <a href="webinars.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Webinars</a>
+                <a href="ebooks.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Books & Guides</a>
+                <a href="help-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Help Center & FAQ</a>
+            </div>
+        </details>
+
+        <a href="about.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Company</a>
+        
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+            <a href="jobs.html" class="btn btn-ghost" style="justify-content: center; border: 1px solid var(--color-border); padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; color: var(--color-dark);">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary" style="justify-content: center; padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner With Us</a>
+        </div>
+    </div>
+
+    <main style="margin-top: 72px;">
+
+    <!-- ===== 1. ABOUT-THEMED HERO ===== -->
+    <section style="min-height: 80vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--color-dark);">
+        <!-- Abstract Background Elements -->
+        <div style="position: absolute; top: -20%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(192,0,0,0.15) 0%, transparent 70%); border-radius: 50%; filter: blur(60px); z-index: 0;"></div>
+        <div style="position: absolute; bottom: -20%; right: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(247,179,45,0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(60px); z-index: 0;"></div>
+
+        <div class="container text-center" style="position: relative; z-index: 2; padding: 120px 5% 100px;">
+            <div>
+                <div class="pill pill-gold" style="margin-bottom: 2rem;">
+                    <i class="ph ph-briefcase"></i> Global Portfolio
+                </div>
+            </div>
+
+            <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 800; color: white; line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                Transformational <br>
+                <span class="text-gradient">Commercial Impacts.</span>
+            </h1>
+
+            <p style="font-size: clamp(1.1rem, 2vw, 1.35rem); color: rgba(255,255,255,0.7); max-width: 800px; margin: 0 auto 4rem; line-height: 1.7;">
+                Real-world impact across global enterprises. Discover how CultureArc engineers scalable talent arrays, modernizes legacy infrastructures, and accelerates digital roadmaps.
+            </p>
+
+            <div class="hero-stats" style="display: flex; gap: 3rem; justify-content: center; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem; max-width: 1100px; margin: 0 auto; flex-wrap: wrap;">
+                <div>
+                    <div style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white;">100%</div>
+                    <div style="font-size: 0.85rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">Client Retention</div>
+                </div>
+                <div class="divider" style="width: 1px; height: 50px; background: rgba(255,255,255,0.1);"></div>
+                <div>
+                    <div style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white;">800+</div>
+                    <div style="font-size: 0.85rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">Techies Deployed</div>
+                </div>
+                <div class="divider" style="width: 1px; height: 50px; background: rgba(255,255,255,0.1);"></div>
+                <div>
+                    <div style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white;">0-24h</div>
+                    <div style="font-size: 0.85rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">Fulfillment TAT</div>
+                </div>
+                <div class="divider" style="width: 1px; height: 50px; background: rgba(255,255,255,0.1);"></div>
+                <div>
+                    <div style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white;">75+</div>
+                    <div style="font-size: 0.85rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">Niche Skills Sourced</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Grid Overlay Graphic -->
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 200px; background: linear-gradient(to top, var(--color-base) 0%, transparent 100%); z-index: 1;"></div>
+        <div style="position: absolute; bottom: -50px; left: 0; width: 100%; height: 300px; opacity: 0.1; background-image: linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px); background-size: 40px 40px; transform: perspective(500px) rotateX(60deg); z-index: 0;"></div>
+    </section>
+
+    <!-- ===== CASE STUDIES GRID ===== -->
+    <section class="section-lg" style="background: var(--color-base); position: relative;">
+        <div class="container">
+            
+            <div style="margin-bottom: 4rem; text-align: center;">
+                <div class="pill pill-red" style="margin-bottom: 1.5rem;">Proven Frameworks</div>
+                <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; color: var(--color-dark); line-height: 1.1; margin-bottom: 1.5rem;">
+                    Execution <span style="color: var(--color-primary);">Excellence.</span>
+                </h2>
+                <p style="font-size: 1.1rem; color: var(--color-gray); line-height: 1.7; max-width: 600px; margin: 0 auto;">
+                    From rapid staff augmentation to end-to-end fixed-price product builds, review our commercial success stories.
+                </p>
+            </div>
+
+            <div class="case-grid">
+                
+                <!-- FEATURED CASE STUDY: Telecom Staffing -->
+                <div class="case-card case-featured">
+                    <div style="display: flex; flex-direction: column;">
+                        <div class="case-header">
+                            <div class="pill" style="font-family: var(--font-sans); background: rgba(255,255,255,0.1); color: var(--color-gold); margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.2);">IT Staffing / Telecom</div>
+                            <h3>Rapid Telecom Scaling (Pyramid Model)</h3>
+                            <p class="desc">Addressed a critical engineering talent shortage for a major telecom giant undergoing a massive 5G infrastructure rollout. By utilizing our proprietary "Pyramid" single-sourcing staffing model, we engineered an aggressive delivery pipeline to meet extreme project deadlines without compromising on niche skill requirements.</p>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-results">
+                                <div class="result-item">
+                                    <h4>50+</h4>
+                                    <p>Specialized Telecom Engineers deployed.</p>
+                                </div>
+                                <div class="result-item">
+                                    <h4>4 Weeks</h4>
+                                    <p>Total time-to-fill for the entire engineering pod.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="featured-visual">
+                        <i class="ph ph-broadcast" style="position: absolute; font-size: 30rem; color: rgba(255,255,255,0.03); left: -10%;"></i>
+                        <div class="code-block-mockup">
+                            <span style="color: #4ade80;">// Sourcing Engine Active</span><br>
+                            const requirement = {<br>
+                            &nbsp;&nbsp;sector: "Telecom 5G",<br>
+                            &nbsp;&nbsp;roles: ["Cloud Native", "DevOps", "IoT"],<br>
+                            &nbsp;&nbsp;volume: 50,<br>
+                            &nbsp;&nbsp;timeline: "28_Days"<br>
+                            };<br><br>
+                            <span style="color: #60a5fa;">await</span> CultureArc.DeployPyramidModel(requirement);<br>
+                            <span style="color: #4ade80;">> Status: 100% Fulfilled. SLA Met.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 1: POS -->
+                <div class="case-card">
+                    <div class="case-header">
+                        <div class="case-icon icon-red"><i class="ph ph-storefront"></i></div>
+                        <div class="pill" style="font-family: var(--font-sans); background: #F3F4F6; color: var(--color-gray); margin-bottom: 1rem;">BFSI & Retail</div>
+                        <h3>Next-Gen POS Architecture</h3>
+                        <p class="desc">Built a highly scalable Point-of-Sale application integrating complex payment gateways and synchronized inventory management across a massive retail network of 500+ global stores.</p>
+                    </div>
+                    <div class="case-body">
+                        <div class="case-results">
+                            <div class="result-item">
+                                <h4>45%</h4>
+                                <p>Reduction in transaction latency across all retail terminals.</p>
+                            </div>
+                            <div class="result-item">
+                                <h4>PCI DSS</h4>
+                                <p>Strict adherence and certification achieved for payment safety.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 2: IoT Smart Home -->
+                <div class="case-card">
+                    <div class="case-header">
+                        <div class="case-icon icon-blue"><i class="ph ph-house-line"></i></div>
+                        <div class="pill" style="font-family: var(--font-sans); background: #F3F4F6; color: var(--color-gray); margin-bottom: 1rem;">IoT & Mobility</div>
+                        <h3>Smart Appliance Ecosystem</h3>
+                        <p class="desc">Engineered a unified native iOS/Android mobile solution designed to securely control smart home appliances via a robust, cloud-backed IoT data infrastructure.</p>
+                    </div>
+                    <div class="case-body">
+                        <div class="case-results">
+                            <div class="result-item">
+                                <h4 style="color: #2196F3;">99.9%</h4>
+                                <p>Connection success rate across devices in variable networks.</p>
+                            </div>
+                            <div class="result-item">
+                                <h4 style="color: #2196F3;">10+</h4>
+                                <p>Seamless hardware appliance integrations delivered.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 3: SAP Migration -->
+                <div class="case-card">
+                    <div class="case-header">
+                        <div class="case-icon icon-gold"><i class="ph ph-factory"></i></div>
+                        <div class="pill" style="font-family: var(--font-sans); background: #F3F4F6; color: var(--color-gray); margin-bottom: 1rem;">Manufacturing / Fixed Price</div>
+                        <h3>Enterprise SAP ERP Migration</h3>
+                        <p class="desc">Executed a highly complex, fixed-price SAP data and infrastructure migration for a major manufacturing client, ensuring continuity of the global supply chain during switchover.</p>
+                    </div>
+                    <div class="case-body">
+                        <div class="case-results">
+                            <div class="result-item">
+                                <h4 style="color: var(--color-gold);">Zero</h4>
+                                <p>Downtime experienced during global system deployment.</p>
+                            </div>
+                            <div class="result-item">
+                                <h4 style="color: var(--color-gold);">100%</h4>
+                                <p>Data integrity maintained post-migration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 4: Innovation Lab -->
+                <div class="case-card">
+                    <div class="case-header">
+                        <div class="case-icon icon-green"><i class="ph ph-flask"></i></div>
+                        <div class="pill" style="font-family: var(--font-sans); background: #F3F4F6; color: var(--color-gray); margin-bottom: 1rem;">Product R&D</div>
+                        <h3>Emerging Tech Innovation Labs</h3>
+                        <p class="desc">Established dedicated offshore innovation hubs for a leading tech firm focused on rapid prototyping and MVP development for next-generation AI and Machine Learning models.</p>
+                    </div>
+                    <div class="case-body">
+                        <div class="case-results">
+                            <div class="result-item">
+                                <h4 style="color: #4CAF50;">Accelerated</h4>
+                                <p>Time-to-market for cloud native solutions.</p>
+                            </div>
+                            <div class="result-item">
+                                <h4 style="color: #4CAF50;">B.O.T.</h4>
+                                <p>Successfully transitioned ownership back to the client.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== REVENUE DISTRIBUTION (Styled like "Corporate Ethics" section from About) ===== -->
+    <section class="section-lg" style="background: white; border-top: 1px solid var(--color-border);">
+        <div class="container" style="max-width: 1400px; padding: 0 5%;">
+            <div class="dist-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;">
+                
+                <div>
+                    <div class="pill pill-red" style="margin-bottom: 1rem; align-self: flex-start;"><i class="ph ph-chart-polar"></i> Data & Analytics</div>
+                    <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; color: var(--color-dark); line-height: 1.1; margin-bottom: 1.5rem;">
+                        Global Delivery <br><span style="color: var(--color-primary);">Distribution.</span>
+                    </h2>
+                    <p style="font-size: 1.1rem; color: var(--color-gray); line-height: 1.7; margin-bottom: 2rem;">
+                        A transparent look at CultureArc's operational output and revenue distribution across our core technology sectors and business units. Our diversified portfolio ensures stability and cross-industry expertise.
+                    </p>
+                    <a href="services.html" class="btn btn-outline">Explore Our Tech Stack <i class="ph ph-arrow-right"></i></a>
+                </div>
+                
+                <div class="dist-bars" style="background: var(--color-base); padding: 3rem; border-radius: 24px; border: 1px solid var(--color-border); box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Services & R&D</span> <span>61%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 0%; transition: width 1.5s var(--ease-out); background: var(--color-primary);"></div></div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Product Development</span> <span>14%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 0%; transition: width 1.5s var(--ease-out); background: var(--color-gold);"></div></div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>Mobile Solutions</span> <span>11%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 0%; transition: width 1.5s var(--ease-out); background: #2196F3;"></div></div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>BFSI Sector</span> <span>10%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 0%; transition: width 1.5s var(--ease-out); background: var(--color-dark);"></div></div>
+                    </div>
+                    <div class="bar-wrap">
+                        <div class="bar-label"><span>IoT Solutions</span> <span>4%</span></div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 0%; transition: width 1.5s var(--ease-out); background: #4CAF50;"></div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CLIENT MARQUEE ===== -->
+    <div class="clients-marquee">
+        <div class="marquee-track">
+            <!-- Simulated client logos using text for fallback if images miss -->
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">INTEL</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">IBM</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">VERIZON</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">IHS MARKIT</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">AWS</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">MICROSOFT</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">ORACLE</div>
+            <!-- Duplicate for infinite scroll loop -->
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">INTEL</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">IBM</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">VERIZON</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">IHS MARKIT</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">AWS</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">MICROSOFT</div>
+            <div class="client-logo" style="display:flex; align-items:center; font-weight: 800; font-size:1.5rem; font-family: var(--font-display);">ORACLE</div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER (Consistent with index & about) ===== -->
+    <footer class="footer"
+        style="background: var(--color-dark); padding: 6rem 5% 2rem; position: relative; overflow: hidden; color: white;">
+        <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #C00000, #F7B32D, #C00000);">
+        </div>
+        <i class="ph ph-globe"
+            style="position: absolute; top: -10%; right: -5%; font-size: 50rem; color: rgba(255,255,255,0.02); z-index: 0; pointer-events: none;"></i>
+
+        <div class="container" style="max-width: 1400px; position: relative; z-index: 2;">
+
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4rem; margin-bottom: 4rem; gap: 2rem;">
+                <div style="max-width: 500px;">
+                    <h3
+                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: white;">
+                        Subscribe to <span style="color: var(--color-gold);">ArcInsights</span></h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.6;">Get monthly executive
+                        briefings on global talent trends, remote team compliance updates, and AI in recruitment.</p>
+                </div>
+                <div style="flex-grow: 1; max-width: 500px; display: flex; gap: 1rem;">
+                    <input type="email" placeholder="Enter your work email"
+                        style="width: 100%; padding: 1.25rem 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: white; font-size: 1rem; outline: none; transition: all 0.3s;"
+                        onfocus="this.style.borderColor='var(--color-gold)'; this.style.background='rgba(255,255,255,0.05)';"
+                        onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.03)';">
+                    <button class="btn btn-primary"
+                        style="padding: 0 2.5rem; flex-shrink: 0; border-radius: 8px; font-weight: 700;">Subscribe <i
+                            class="ph ph-paper-plane-tilt"></i></button>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+
+                <div>
+                    <a href="index.html"
+                        style="display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; margin-bottom: 2rem;">
+                        <div
+                            style="background: linear-gradient(135deg, #C00000, #F7B32D); width: 45px; height: 45px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; font-weight: 800; color: white; box-shadow: 0 10px 20px rgba(192,0,0,0.3);">
+                            C
+                        </div>
+                        <div
+                            style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: -0.03em;">
+                            Culture<span style="color: var(--color-gold);">Arc</span>
+                        </div>
+                    </a>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;">
+                        Engineering scalable talent infrastructure for the digital economy. We provide end-to-end IT
+                        staffing, executive search, and enterprise operational transformation across global markets.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#0077b5'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-linkedin-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#1DA1F2'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-twitter-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#E1306C'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-instagram-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#FF0000'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-youtube-logo"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Solutions</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">IT Contract Staffing</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Global Tech Centers</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Executive Search</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">RPO Architecture</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Background Verifications</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Company</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Corporate Overview</a></li>
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Leadership Team</a></li>
+                        <li><a href="portfolio.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Global Operations</a></li>
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">ESG Initiatives</a></li>
+                        <li><a href="hire.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Partner With Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Talent</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="jobs.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Find Jobs</a></li>
+                        <li><a href="jobs.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Submit Resume</a></li>
+                        <li><a href="study.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Career Content</a></li>
+                        <li><a href="#"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Alumni Network</a></li>
+                        <li><a href="#"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Payroll Portal</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Global HQ</h4>
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <i class="ph ph-map-pin"
+                            style="color: var(--color-gold); font-size: 1.25rem; margin-top: 0.2rem;"></i>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                            15A, 4th Floor, City Vista,
+                            Fountain Road, Kharadi<br>Pune, Maharashtra - 411014
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <i class="ph ph-envelope"
+                            style="color: var(--color-gold); font-size: 1.25rem; margin-top: 0.2rem;"></i>
+                        <a href="mailto:info@culturearc.com"
+                            style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                            onmouseover="this.style.color='var(--color-gold)';"
+                            onmouseout="this.style.color='rgba(255,255,255,0.6)';">info@culturearc.com</a>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div
+                            style="font-size: 0.8rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; font-weight: 700;">
+                            Government Registered</div>
+                        <div
+                            style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: white;">
+                            MSME: UDYAM-MH-26-0170565</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div
+                style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
+                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.5);">
+                    &copy; 2026 CultureArc Pvt. Ltd. All Rights Reserved.
+                </div>
+
+                <div style="display: flex; gap: 2rem; align-items: center;">
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Privacy Architecture</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Terms of Engagement</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Cookie Enforcement</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Compliance Center</a>
+                </div>
+            </div>
+
+            <style>
+                @media (max-width: 1024px) {
+                    .footer>.container>div:nth-child(2) {
+                        grid-template-columns: 1fr 1fr;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .footer>.container>div:nth-child(2) {
+                        grid-template-columns: 1fr;
+                        gap: 3rem;
+                    }
+
+                    .footer>.container>div:nth-child(3) {
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                    }
+                }
+            </style>
+        </div>
+    </footer>
+
+    <script src="js/global1.js"></script>
+    <script src="js/animations.js"></script> 
+    <script src="js/hero.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('carousel');
+            const cards = document.querySelectorAll('.story-card');
+            const wrap = document.querySelector('.story-carousel-wrap');
+
+            if (!carousel || !cards.length || !wrap) return;
+
+            let currAngle = 0;
+            let isDragging = false;
+            let startX = 0;
+            let autoRotate = true;
+
+            // 1. Logic to Snap Card to Front on Click
+            cards.forEach((card, i) => {
+                card.addEventListener('click', () => {
+                    const anglePerCard = 360 / cards.length;
+                    currAngle = i * -anglePerCard;
+                    carousel.style.transform = `rotateY(${currAngle}deg)`;
+                });
+            });
+
+            // 2. Manual Drag Interaction
+            wrap.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                autoRotate = false;
+                startX = e.pageX;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.pageX - startX;
+                currAngle += dx * 0.3; // Sensitivity
+                startX = e.pageX;
+                carousel.style.transform = `rotateY(${currAngle}deg)`;
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            wrap.addEventListener('mouseleave', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            // 3. Touch support
+            wrap.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                autoRotate = false;
+                startX = e.touches[0].pageX;
+            }, { passive: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const dx = e.touches[0].pageX - startX;
+                currAngle += dx * 0.4;
+                startX = e.touches[0].pageX;
+                carousel.style.transform = `rotateY(${currAngle}deg)`;
+            }, { passive: true });
+
+            window.addEventListener('touchend', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            // 4. Gentle Auto-Drift
+            function drift() {
+                if (!isDragging && autoRotate) {
+                    currAngle -= 0.08;
+                    carousel.style.transform = `rotateY(${currAngle}deg)`;
+                }
+                requestAnimationFrame(drift);
+            }
+            drift();
+        });
+    </script>
+
+    <script>
+        (function () {
+            const pipeline = document.getElementById('pipeline');
+            const fill = document.getElementById('pipeline-fill');
+            const dots = document.querySelectorAll('.pipeline-dot');
+
+            if (!pipeline || !fill) return;
+
+            function updatePipeline() {
+                const rect = pipeline.getBoundingClientRect();
+                const viewH = window.innerHeight;
+                const progress = Math.max(0, Math.min(1, (viewH - rect.top) / (rect.height + viewH * 0.5)));
+                fill.style.height = (progress * 100) + '%';
+
+                dots.forEach((dot, i) => {
+                    const dotRect = dot.getBoundingClientRect();
+                    if (dotRect.top < viewH * 0.7) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updatePipeline, { passive: true });
+
+            // Industry horizontal scroll drag
+            const track = document.getElementById('industry-scroll');
+            if (track) {
+                let isDown = false, startX, scrollLeft;
+                track.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+                track.addEventListener('mouseleave', () => isDown = false);
+                track.addEventListener('mouseup', () => isDown = false);
+                track.addEventListener('mousemove', e => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - track.offsetLeft;
+                    track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

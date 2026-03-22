@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture Arc - Sales Dashboard</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .kpi-active { border-left: 4px solid #dc2626; background: linear-gradient(to right, #fff5f5, #ffffff); }
+        .kpi-inactive { border-left: 4px solid #cbd5e1; }
+        .chart-container { position: relative; height: 100%; width: 100%; }
+        
+        /* Table Styles */
+        .model-row:nth-child(even) { background-color: #f8fafc; }
+        
+        /* Custom Scrollbar for Slicers */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden text-gray-800 bg-gray-50">
+
+    <!-- Top Header -->
+    <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-sm z-20 shrink-0">
+        <div class="flex items-center gap-6">
+            
+            <!-- LOGO SECTION -->
+            <div class="relative group cursor-pointer" onclick="document.getElementById('logoInput').click()">
+                <div id="logoContainer" class="flex items-center gap-3">
+                    
+                    <!-- ================================================================================== -->
+                    <!-- USER: PASTE YOUR LOGO IMAGE PATH BELOW IN THE src="" ATTRIBUTE TO USE LOCAL FILE -->
+                    <!-- Example: src="C:/Users/Name/Downloads/image_5fc142.png" or src="./logo.png"      -->
+                    <!-- ================================================================================== -->
+                    <img id="userProvidedLogo" src="" class="h-10 w-auto object-contain hidden" alt="Culture Arc Logo" onerror="this.style.display='none'; document.getElementById('defaultSvgLogo').style.display='flex'">
+
+                    <!-- Default SVG Logo (Fallback) -->
+                    <div id="defaultSvgLogo" class="w-10 h-10 bg-gradient-to-br from-red-700 to-red-900 rounded-lg flex items-center justify-center text-white shadow-md">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-6 h-6">
+                            <path d="M12 2a10 10 0 1 0 10 10" stroke-linecap="round" />
+                            <circle cx="12" cy="12" r="3" fill="currentColor" />
+                            <path d="M12 12 L16 16" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    
+                    <div class="flex flex-col justify-center h-full">
+                        <span class="text-xl font-extrabold text-gray-900 leading-none tracking-tight">CULTURE ARC</span>
+                        <span class="text-[10px] font-bold text-red-600 uppercase tracking-widest mt-0.5">Analytics & Data</span>
+                    </div>
+                </div>
+                
+                <!-- Hidden Input for Upload Feature -->
+                <input type="file" id="logoInput" accept="image/*" class="hidden" onchange="handleLogoUpload(event)">
+                <div class="absolute top-full left-0 mt-2 bg-gray-900 text-white text-xs px-2 py-1.5 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                    Click logo to upload file
+                </div>
+            </div>
+
+            <div class="h-8 w-px bg-gray-300 hidden md:block"></div>
+
+            <div class="flex flex-col justify-center">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Executive Dashboard</span>
+                <h1 class="text-lg font-bold text-red-700 leading-none mt-0.5">DATA VISUALIZATION SERVICES</h1>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button onclick="resetFilters()" class="text-xs font-semibold text-red-600 hover:text-red-800 hover:bg-red-50 px-3 py-1.5 rounded transition-colors hidden border border-red-200" id="clearAllBtn">
+                Clear Filters
+            </button>
+            <div class="h-9 w-9 bg-gradient-to-r from-red-700 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md border-2 border-white">
+                AD
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- Dashboard Canvas -->
+        <main class="flex-1 p-5 overflow-y-auto bg-gray-50">
+            <div class="max-w-[1920px] mx-auto flex flex-col gap-5 h-full">
+                
+                <!-- KPIs -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 h-28 shrink-0">
+                    <div class="card p-4 kpi-active flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <span class="text-gray-500 text-xs font-bold uppercase tracking-wide">Total Revenue</span>
+                            <span class="text-green-600 bg-green-100 px-1.5 py-0.5 rounded text-[10px] font-bold border border-green-200">▲ 12.5%</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black text-gray-900 tracking-tight" id="kpiRevenue">₹0</h3>
+                            <p class="text-xs text-red-600 mt-1 font-medium">Net Sales</p>
+                        </div>
+                    </div>
+                    <div class="card p-4 kpi-inactive flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <span class="text-gray-500 text-xs font-bold uppercase tracking-wide">Units Sold</span>
+                            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900" id="kpiUnits">0</h3>
+                            <p class="text-xs text-gray-500 mt-1">Total Volume</p>
+                        </div>
+                    </div>
+                    <div class="card p-4 kpi-inactive flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <span class="text-gray-500 text-xs font-bold uppercase tracking-wide">Avg Order Value</span>
+                            <span class="text-blue-500 text-xs font-bold">₹</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900" id="kpiAOV">₹0</h3>
+                            <p class="text-xs text-gray-500 mt-1">Per Transaction</p>
+                        </div>
+                    </div>
+                    <div class="card p-4 kpi-inactive flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <span class="text-gray-500 text-xs font-bold uppercase tracking-wide">Transactions</span>
+                            <span class="text-gray-400 text-xs font-bold">#</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900" id="kpiTxns">0</h3>
+                            <p class="text-xs text-gray-500 mt-1">Unique Sales</p>
+                        </div>
+                    </div>
+                    <div class="card p-4 kpi-inactive flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
+                            <span class="text-gray-500 text-xs font-bold uppercase tracking-wide">Avg Rating</span>
+                            <span class="text-yellow-500 text-sm">★</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900" id="kpiRating">0.0</h3>
+                            <p class="text-xs text-gray-500 mt-1">Customer Satisfaction</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1 min-h-[500px]">
+                    
+                    <!-- Line Chart (Big) -->
+                    <div class="lg:col-span-8 card p-5 flex flex-col">
+                        <div class="flex justify-between mb-4 border-b border-gray-100 pb-2">
+                            <h3 class="font-bold text-gray-800 text-sm uppercase flex items-center gap-2">
+                                <span class="w-1 h-4 bg-red-600 rounded-full"></span>
+                                Daily Sales Trend
+                            </h3>
+                            <div class="flex gap-2 text-xs">
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-600"></span> Revenue</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-gray-400"></span> Units</span>
+                            </div>
+                        </div>
+                        <div class="chart-container relative flex-1">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Top Models Table (New) -->
+                    <div class="lg:col-span-4 card p-0 flex flex-col overflow-hidden">
+                        <div class="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                            <h3 class="font-bold text-gray-800 text-sm uppercase flex items-center gap-2">
+                                <span class="w-1 h-4 bg-red-600 rounded-full"></span>
+                                Top Performing Models
+                            </h3>
+                        </div>
+                        <div class="flex-1 overflow-y-auto">
+                            <table class="w-full text-left text-sm text-gray-600">
+                                <thead class="text-xs text-gray-500 uppercase bg-gray-100 sticky top-0">
+                                    <tr>
+                                        <th class="px-4 py-3 font-semibold">Model</th>
+                                        <th class="px-4 py-3 font-semibold text-right">Units</th>
+                                        <th class="px-4 py-3 font-semibold text-right">Rev</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topModelsTableBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Brand Bar Chart -->
+                    <div class="lg:col-span-4 card p-5 flex flex-col">
+                        <div class="flex justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm uppercase">Revenue by Brand</h3>
+                            <span class="text-[10px] text-gray-400 italic bg-gray-50 px-2 py-0.5 rounded border">Click to filter</span>
+                        </div>
+                        <div class="chart-container relative flex-1">
+                            <canvas id="brandChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Age Demographics (New) -->
+                     <div class="lg:col-span-4 card p-5 flex flex-col">
+                        <div class="flex justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm uppercase">Customer Age</h3>
+                        </div>
+                        <div class="chart-container relative flex-1 flex justify-center">
+                            <canvas id="ageChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Payment Pie Chart -->
+                    <div class="lg:col-span-4 card p-5 flex flex-col">
+                        <div class="flex justify-between mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm uppercase">Payment Methods</h3>
+                            <span class="text-[10px] text-gray-400 italic bg-gray-50 px-2 py-0.5 rounded border">Click to filter</span>
+                        </div>
+                        <div class="chart-container relative flex-1 flex justify-center">
+                            <canvas id="paymentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Right Slicer Pane -->
+        <aside class="w-64 bg-white border-l border-gray-200 shadow-xl z-10 flex flex-col shrink-0">
+            <div class="p-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                <span class="font-bold text-sm text-gray-800 uppercase flex items-center gap-2">
+                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                    Filters
+                </span>
+            </div>
+            
+            <div class="p-4 space-y-6 overflow-y-auto flex-1">
+                
+                <!-- Brand Slicer -->
+                <div>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase mb-3 ml-1">Select Brand</h4>
+                    <div id="brandSlicer" class="space-y-1">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- City Slicer -->
+                <div>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase mb-3 ml-1">Select City</h4>
+                    <div id="citySlicer" class="space-y-1 max-h-60 overflow-y-auto pr-1">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-gray-50 border-t border-gray-200 text-center">
+                <p class="text-[10px] text-gray-400 font-medium">Powered by Culture Arc Analytics</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // --- 1. Enhanced Mock Data Generation ---
+        const generateData = () => {
+            const brands = ['Xiaomi', 'Vivo', 'OnePlus', 'Samsung', 'Apple', 'Realme', 'Oppo'];
+            const cities = ['Delhi', 'Mumbai', 'Chennai', 'Bangalore', 'Hyderabad', 'Kolkata', 'Pune', 'Jaipur', 'Lucknow'];
+            const payments = ['UPI', 'Credit Card', 'Cash', 'Debit Card'];
+            const models = {
+                'Xiaomi': ['Redmi Note 10', 'Mi 11', 'Redmi 9A'],
+                'Vivo': ['Vivo Y51', 'Vivo V20', 'Vivo X60'],
+                'OnePlus': ['Nord 2', 'OnePlus 9', 'OnePlus 9R'],
+                'Samsung': ['Galaxy S21', 'Galaxy M31', 'Galaxy A52'],
+                'Apple': ['iPhone 13', 'iPhone 12', 'iPhone SE'],
+                'Realme': ['Realme 8', 'Narzo 30', 'GT Master'],
+                'Oppo': ['Reno 6', 'F19 Pro', 'A54']
+            };
+            const data = [];
+            
+            for (let i = 1; i <= 600; i++) {
+                const brand = brands[Math.floor(Math.random() * brands.length)];
+                const model = models[brand][Math.floor(Math.random() * models[brand].length)];
+                const price = Math.floor(Math.random() * 45000) + 8000;
+                const units = Math.floor(Math.random() * 4) + 1;
+                const age = Math.floor(Math.random() * 40) + 18;
+                
+                data.push({
+                    id: i,
+                    day: (i % 30) + 1,
+                    brand: brand,
+                    model: model,
+                    city: cities[Math.floor(Math.random() * cities.length)],
+                    payment: payments[Math.floor(Math.random() * payments.length)],
+                    units: units,
+                    sales: price * units,
+                    age: age,
+                    rating: Math.floor(Math.random() * 3) + 3
+                });
+            }
+            return data.sort((a,b) => a.day - b.day);
+        };
+
+        const allData = generateData();
+        let currentFilters = { brand: null, city: null, payment: null };
+
+        // --- 2. Chart Configurations ---
+        let trendChart, brandChart, ageChart, paymentChart;
+
+        function initDashboard() {
+            renderSlicers();
+            updateDashboard();
+        }
+
+        function filterData() {
+            return allData.filter(d => 
+                (!currentFilters.brand || d.brand === currentFilters.brand) &&
+                (!currentFilters.city || d.city === currentFilters.city) &&
+                (!currentFilters.payment || d.payment === currentFilters.payment)
+            );
+        }
+
+        function updateDashboard() {
+            const data = filterData();
+            updateKPIs(data);
+            updateCharts(data);
+            updateTopModels(data);
+            updateSlicerUI();
+            
+            const hasFilters = Object.values(currentFilters).some(x => x !== null);
+            const clearBtn = document.getElementById('clearAllBtn');
+            if (hasFilters) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+        }
+
+        function updateKPIs(data) {
+            const totalRev = data.reduce((a, b) => a + b.sales, 0);
+            const totalUnits = data.reduce((a, b) => a + b.units, 0);
+            const avgRating = data.length ? (data.reduce((a, b) => a + b.rating, 0) / data.length).toFixed(1) : 0;
+            const aov = data.length ? (totalRev / data.length) : 0;
+            
+            document.getElementById('kpiRevenue').innerText = '₹' + new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(totalRev);
+            document.getElementById('kpiUnits').innerText = totalUnits.toLocaleString();
+            document.getElementById('kpiTxns').innerText = data.length.toLocaleString();
+            document.getElementById('kpiRating').innerText = avgRating;
+            document.getElementById('kpiAOV').innerText = '₹' + Math.round(aov).toLocaleString('en-IN');
+        }
+
+        function updateTopModels(data) {
+            const modelStats = {};
+            data.forEach(d => {
+                if(!modelStats[d.model]) modelStats[d.model] = { name: d.model, units: 0, rev: 0 };
+                modelStats[d.model].units += d.units;
+                modelStats[d.model].rev += d.sales;
+            });
+            
+            const sortedModels = Object.values(modelStats).sort((a, b) => b.rev - a.rev).slice(0, 5);
+            const tbody = document.getElementById('topModelsTableBody');
+            
+            if (sortedModels.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-3 text-center text-gray-400">No data available</td></tr>';
+                return;
+            }
+
+            const maxRev = sortedModels[0].rev;
+
+            tbody.innerHTML = sortedModels.map((m, idx) => `
+                <tr class="model-row border-b border-gray-100 last:border-0 hover:bg-red-50 transition-colors">
+                    <td class="px-4 py-3 font-medium text-gray-800 flex items-center gap-2">
+                        <span class="text-[10px] w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold">${idx + 1}</span>
+                        ${m.name}
+                    </td>
+                    <td class="px-4 py-3 text-right font-semibold text-gray-600">${m.units}</td>
+                    <td class="px-4 py-3 text-right">
+                        <div class="font-bold text-gray-800">₹${(m.rev/1000).toFixed(1)}k</div>
+                        <div class="w-full bg-gray-100 h-1 mt-1 rounded-full overflow-hidden">
+                            <div class="bg-red-500 h-full rounded-full" style="width: ${(m.rev/maxRev)*100}%"></div>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateCharts(data) {
+            // Aggregations
+            const daily = {}; 
+            const brands = {};
+            const payments = {};
+            const ageGroups = { '18-25': 0, '26-35': 0, '36-45': 0, '46+': 0 };
+
+            data.forEach(d => {
+                // Daily
+                if (!daily[d.day]) daily[d.day] = { sales: 0, units: 0 };
+                daily[d.day].sales += d.sales;
+                daily[d.day].units += d.units;
+                // Brands
+                if (!brands[d.brand]) brands[d.brand] = 0;
+                brands[d.brand] += d.sales;
+                // Payments
+                if (!payments[d.payment]) payments[d.payment] = 0;
+                payments[d.payment] += 1;
+                // Age
+                if (d.age <= 25) ageGroups['18-25'] += 1;
+                else if (d.age <= 35) ageGroups['26-35'] += 1;
+                else if (d.age <= 45) ageGroups['36-45'] += 1;
+                else ageGroups['46+'] += 1;
+            });
+
+            // Trend Chart (Dual Axis)
+            const days = Object.keys(daily).sort((a,b) => parseInt(a)-parseInt(b));
+            const daySales = days.map(d => daily[d].sales);
+            const dayUnits = days.map(d => daily[d].units);
+
+            if (trendChart) trendChart.destroy();
+            trendChart = new Chart(document.getElementById('trendChart'), {
+                type: 'bar',
+                data: {
+                    labels: days,
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: daySales,
+                            backgroundColor: '#DC2626',
+                            barPercentage: 0.6,
+                            order: 2,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Units',
+                            data: dayUnits,
+                            borderColor: '#475569',
+                            borderWidth: 2,
+                            type: 'line',
+                            pointRadius: 0,
+                            tension: 0.4,
+                            order: 1,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+                        y: { 
+                            position: 'left',
+                            border: { display: false }, 
+                            grid: { color: '#f1f5f9' },
+                            ticks: { font: { size: 10 }, callback: v => '₹' + v/1000 + 'k' } 
+                        },
+                        y1: {
+                            position: 'right',
+                            display: false,
+                            grid: { display: false }
+                        }
+                    },
+                    interaction: { mode: 'index', intersect: false }
+                }
+            });
+
+            // Brand Chart
+            const sortedBrands = Object.entries(brands).sort((a,b) => b[1] - a[1]);
+            if (brandChart) brandChart.destroy();
+            brandChart = new Chart(document.getElementById('brandChart'), {
+                type: 'bar',
+                data: {
+                    labels: sortedBrands.map(x => x[0]),
+                    datasets: [{
+                        data: sortedBrands.map(x => x[1]),
+                        backgroundColor: sortedBrands.map(x => x[0] === currentFilters.brand ? '#7f1d1d' : '#DC2626'),
+                        borderRadius: 4,
+                        barThickness: 20
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        x: { grid: { display: false }, ticks: { font: { size: 11 } } }, 
+                        y: { display: false } 
+                    },
+                    onClick: (evt, el) => {
+                        if (el.length > 0) {
+                            const brand = sortedBrands[el[0].index][0];
+                            setFilter('brand', brand);
+                        }
+                    }
+                }
+            });
+
+            // Age Chart
+            const ageEntries = Object.entries(ageGroups);
+            if (ageChart) ageChart.destroy();
+            ageChart = new Chart(document.getElementById('ageChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ageEntries.map(x => x[0]),
+                    datasets: [{
+                        data: ageEntries.map(x => x[1]),
+                        backgroundColor: ['#fecaca', '#f87171', '#dc2626', '#991b1b'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: { 
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 11 }, usePointStyle: true } } 
+                    }
+                }
+            });
+
+            // Payment Chart
+            const paymentEntries = Object.entries(payments);
+            if (paymentChart) paymentChart.destroy();
+            paymentChart = new Chart(document.getElementById('paymentChart'), {
+                type: 'pie',
+                data: {
+                    labels: paymentEntries.map(x => x[0]),
+                    datasets: [{
+                        data: paymentEntries.map(x => x[1]),
+                        backgroundColor: ['#DC2626', '#475569', '#94a3b8', '#cbd5e1'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 11 }, usePointStyle: true } } },
+                    onClick: (evt, el) => {
+                        if (el.length > 0) {
+                            const p = paymentEntries[el[0].index][0];
+                            setFilter('payment', p);
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- 3. Slicer UI Logic ---
+        function renderSlicers() {
+            // Brands
+            const uniqueBrands = [...new Set(allData.map(d => d.brand))].sort();
+            const brandHtml = uniqueBrands.map(b => 
+                `<div onclick="setFilter('brand', '${b}')" class="cursor-pointer px-3 py-2 rounded text-sm flex justify-between items-center mb-1 transition-all ${b === currentFilters.brand ? 'bg-red-50 text-red-700 font-bold border border-red-200 shadow-sm' : 'text-gray-600 hover:bg-gray-50 border border-transparent'}">
+                    <span>${b}</span>
+                    ${b === currentFilters.brand ? '<span class="w-2 h-2 rounded-full bg-red-600"></span>' : ''}
+                </div>`
+            ).join('');
+            document.getElementById('brandSlicer').innerHTML = brandHtml;
+
+            // Cities
+            const uniqueCities = [...new Set(allData.map(d => d.city))].sort();
+            const cityHtml = uniqueCities.map(c => 
+                `<div onclick="setFilter('city', '${c}')" class="cursor-pointer px-3 py-2 rounded text-sm flex justify-between items-center mb-1 transition-all ${c === currentFilters.city ? 'bg-red-50 text-red-700 font-bold border border-red-200 shadow-sm' : 'text-gray-600 hover:bg-gray-50 border border-transparent'}">
+                    <span>${c}</span>
+                    ${c === currentFilters.city ? '<span class="w-2 h-2 rounded-full bg-red-600"></span>' : ''}
+                </div>`
+            ).join('');
+            document.getElementById('citySlicer').innerHTML = cityHtml;
+        }
+
+        function updateSlicerUI() {
+            renderSlicers();
+        }
+
+        function setFilter(type, value) {
+            if (currentFilters[type] === value) {
+                currentFilters[type] = null;
+            } else {
+                currentFilters[type] = value;
+            }
+            updateDashboard();
+        }
+
+        function resetFilters() {
+            currentFilters = { brand: null, city: null, payment: null };
+            updateDashboard();
+        }
+
+        // --- 4. Logo Upload Logic ---
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('userProvidedLogo');
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                    document.getElementById('defaultSvgLogo').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Check for manual img src entry on load
+        window.onload = function() {
+            const img = document.getElementById('userProvidedLogo');
+            // If the src is not empty and not the current page URL (some browsers default empty src to current url)
+            if (img.getAttribute('src') && img.getAttribute('src').length > 1) {
+                img.classList.remove('hidden');
+                document.getElementById('defaultSvgLogo').style.display = 'none';
+            }
+            initDashboard();
+        };
+        
+        // Window resize
+        window.addEventListener('resize', () => {
+             if(trendChart) trendChart.resize();
+             if(brandChart) brandChart.resize();
+             if(ageChart) ageChart.resize();
+             if(paymentChart) paymentChart.resize();
+        });
+
+    </script>
+</body>
+</html>

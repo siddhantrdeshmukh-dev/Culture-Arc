@@ -1,0 +1,3599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CultureArc | Workforce Engineering System</title>
+    <meta name="description"
+        content="CultureArc — IT Staffing & Digital Transformation. We engineer scalable talent infrastructure using data, precision technology, and cultural alignment.">
+
+    <!-- Fonts are imported via CSS -->
+    <link rel="stylesheet" href="css/global1.css">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+    /* ===== GLOBAL MOBILE OVERFLOW FIX ===== */
+    html, body {
+        overflow-x: clip; /* <--- CHANGE THIS TO 'clip' */
+        width: 100%;
+        position: relative;
+    }
+
+    /* ===== INDEX-SPECIFIC STYLES ===== */
+    .hero {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: white;
+    }
+
+    #hero-canvas {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+
+    .hero-gradient {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.5) 50%, #F8F9FC 100%);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 10;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 80px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 4fr 6fr;
+        gap: 60px; /* <--- Increased gap pushes the image further right */
+        align-items: center;
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+
+    .hero-title {
+        font-size: 86px; /* Increased from 64px for a massive impact */
+        font-family: var(--font-display);
+        font-weight: 800; /* Made slightly bolder (from 700 to 800) */
+        line-height: 1.05; /* Tightened line height since the text is bigger */
+        letter-spacing: -0.03em;
+        margin-bottom: 24px;
+        color: var(--color-dark);
+    }
+
+    .hero-subtitle {
+        font-size: 22px; /* Increased from 18px */
+        color: #6B7280;
+        max-width: 640px; /* Widened from 540px to accommodate larger text */
+        line-height: 1.7;
+        margin-bottom: 32px;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    .hero-visual-block {
+        position: relative;
+        width: 100%;
+        height: 420px;
+        background: linear-gradient(135deg, #111, #000);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-floating-circle-1 {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: rgba(192, 0, 0, 0.4);
+        filter: blur(40px);
+        top: 10%;
+        left: 10%;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-floating-circle-2 {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(247, 179, 45, 0.3);
+        filter: blur(50px);
+        bottom: 10%;
+        right: 10%;
+        animation: float 8s ease-in-out infinite reverse;
+    }
+
+    /* 3D Chapter Engine Section */
+    .story-chapter-section {
+        --bg-0: #00224D;
+        --azure: #FF204E;
+        --azure-glow: rgba(255, 32, 78, 0.22);
+        --t1: #FFF0F3;
+        --t2: #C9A0AA;
+        --b1: rgba(255, 32, 78, 0.12);
+        --f-display: var(--font-display, 'Bricolage Grotesque', sans-serif);
+
+        background: var(--bg-0);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+        font-family: var(--font-sans, 'Figtree', sans-serif);
+        position: relative;
+    }
+
+    .story-chapter-header {
+        position: absolute;
+        top: 8%;
+        text-align: center;
+        width: 100%;
+        z-index: 10;
+        padding: 0 1rem;
+    }
+
+    .story-chapter-header h2 {
+        color: var(--t1);
+        font-family: var(--f-display);
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+    }
+
+    .story-chapter-header p {
+        color: var(--t2);
+        font-size: 1.1rem;
+    }
+
+    .story-carousel-wrap {
+        perspective: 1200px;
+        width: 100%;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: grab;
+        margin-top: 11rem;
+    }
+
+    .story-carousel-wrap:active {
+        cursor: grabbing;
+    }
+
+    .story-carousel {
+        width: 260px;
+        height: 380px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .story-card {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 34, 77, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(12px);
+        transform: rotateY(calc(var(--i) * 51.428deg)) translateZ(350px); 
+        transition: border-color 0.3s, box-shadow 0.3s, transform 0.5s;
+        backface-visibility: hidden;
+        user-select: none;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .story-card:hover {
+        border-color: var(--azure);
+        box-shadow: 0 0 30px var(--azure-glow), 0 25px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .sc-img img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 12px;
+        pointer-events: none;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+    
+    .hc-label {
+        font-size: 0.7rem;
+        color: var(--azure);
+        letter-spacing: 0.15em;
+        margin-bottom: 5px;
+        font-weight: 700;
+        margin-top: 1rem;
+    }
+
+    .sc-txt h3 {
+        color: var(--t1);
+        font-family: var(--f-display);
+        margin: 0 0 8px;
+        font-size: 1.35rem;
+        font-weight: 700;
+    }
+
+    .sc-txt p {
+        color: var(--t2);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* Clients Marquee */
+    .clients-marquee {
+        width: 100%;
+        overflow: hidden;
+        background: white;
+        padding: 4rem 0;
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column; /* Added to stack the heading and the marquee */
+        align-items: center;
+    }
+
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: scrollMarquee 30s linear infinite;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    .client-logo {
+        height: 48px;
+        width: auto;
+        margin: 0 4rem;
+        filter: opacity(0.9); 
+        transition: all 0.3s var(--ease-out);
+        object-fit: contain;
+    }
+
+    .client-logo:hover {
+        filter: opacity(1);
+        transform: scale(1.05); 
+    }
+
+    @keyframes scrollMarquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    /* Global Impact & Revenue Section */
+    .global-impact-section {
+        background: white;
+        padding: 100px 0;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .impact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+    }
+
+    .pie-container {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        justify-content: center;
+    }
+
+    .pie-chart {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: conic-gradient(var(--color-primary) 0% 61%,
+                var(--color-gold) 61% 75%,
+                #111 75% 86%,
+                #6B7280 86% 96%,
+                #E5E7EB 96% 100%);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        position: relative;
+        transform: rotate(-90deg);
+        animation: pieReveal 1.5s ease-out forwards;
+    }
+
+    @keyframes pieReveal {
+        from { opacity: 0; transform: rotate(-90deg) scale(0.8); }
+        to { opacity: 1; transform: rotate(-90deg) scale(1); }
+    }
+
+    .pie-center {
+        position: absolute;
+        inset: 35px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(90deg);
+    }
+
+    .pie-center-text {
+        text-align: center;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.8rem;
+        color: #111827;
+        line-height: 1.1;
+    }
+
+    .pie-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.95rem;
+        color: #4B5563;
+        font-weight: 500;
+    }
+
+    .legend-color {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+    }
+
+    .geo-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .geo-item {
+        background: #F3F4F6;
+        padding: 1.25rem 1.5rem;
+        border-radius: 12px;
+        border: 1px solid #E5E7EB;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s;
+    }
+
+    .geo-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: rgba(192, 0, 0, 0.4);
+    }
+    
+    .ping-wrapper {
+        position: relative;
+        width: 10px;
+        height: 10px;
+    }
+
+    .ping-core {
+        position: absolute;
+        inset: 0;
+        background: var(--color-primary);
+        border-radius: 50%;
+        z-index: 2;
+    }
+
+    .ping-ring {
+        position: absolute;
+        inset: -4px;
+        border: 2px solid var(--color-primary);
+        border-radius: 50%;
+        animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        z-index: 1;
+    }
+
+    @keyframes ping {
+        0% { transform: scale(0.5); opacity: 1; }
+        100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    .geo-text {
+        font-family: var(--font-sans);
+        font-weight: 600;
+        color: var(--color-dark);
+        font-size: 1rem;
+        letter-spacing: 0.02em;
+    }
+
+    /* Industries horizontal scroll */
+    .industry-track {
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        padding: 1rem 0 2rem;
+        scroll-snap-type: x mandatory;
+        cursor: grab;
+    }
+
+    .industry-track:active {
+        cursor: grabbing;
+    }
+
+    .industry-card {
+        flex: 0 0 300px;
+        height: 360px;
+        border-radius: var(--radius-xl);
+        position: relative;
+        overflow: hidden;
+        scroll-snap-align: start;
+        transition: transform 0.5s var(--ease-out);
+    }
+
+    .industry-card:hover {
+        transform: scale(1.03);
+    }
+
+    .industry-card-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
+        z-index: 1;
+    }
+
+    .industry-card-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 1.5rem;
+        z-index: 2;
+        color: white;
+    }
+
+    /* Process pipeline */
+    /* Process pipeline */
+    .pipeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto; /* Added to center the pipeline horizontally */
+    }
+
+    .pipeline-line {
+        position: absolute;
+        left: 24px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--color-border);
+        border-radius: 2px;
+    }
+
+    .pipeline-line-fill {
+        width: 100%;
+        background: linear-gradient(to bottom, var(--color-primary), var(--color-gold));
+        border-radius: 2px;
+        height: 0%;
+        transition: height 0.1s linear;
+    }
+
+    .pipeline-step {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+        /* CRITICAL: We need heavy padding on the text steps. 
+        This makes the left column extremely tall, giving the right image 
+        a very long "track" to scroll down before the section ends. */
+        padding: 6rem 0; 
+        position: relative;
+        min-height: 300px; 
+    }
+
+    .pipeline-dot {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 3px solid var(--color-border);
+        background: white;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s var(--ease-out);
+    }
+
+    .pipeline-dot.active {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 20px rgba(192, 0, 0, 0.4);
+    }
+
+    .pipeline-dot.active::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-primary);
+    }
+
+    .pipeline-step-content h4 {
+        font-family: var(--font-display);
+        font-size: 1.8rem; /* Increased from 1.25rem */
+        font-weight: 800; /* Made bolder */
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+        color: var(--color-dark);
+    }
+
+    .pipeline-step-content p {
+        font-size: 1.15rem; /* Increased from 0.9rem */
+        color: var(--color-gray);
+        line-height: 1.6;
+    }
+
+    /* Metrics bar */
+    .metrics-section {
+        background: var(--color-primary);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .metrics-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 60%);
+    }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .metric-item {
+        padding: 1.5rem;
+    }
+
+    .metric-value {
+        font-family: var(--font-display);
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        opacity: 0.85;
+    }
+
+    /* CTA */
+    .cta-section {
+        text-align: center;
+        background: white;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .cta-section h2 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        margin-bottom: 2rem;
+    }
+
+    /* Services grid on homepage */
+    .services-home-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .service-home-card {
+        padding: 2.5rem;
+        cursor: pointer;
+    }
+
+    .service-home-card .service-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s var(--ease-out);
+    }
+
+    .service-home-card:hover .service-icon {
+        transform: scale(1.1) rotate(-5deg);
+    }
+
+    .service-home-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .service-home-card p {
+        font-size: 0.9rem;
+        color: var(--color-gray);
+        margin-bottom: 1.25rem;
+        line-height: 1.6;
+    }
+
+    .service-home-card .explore-link {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: gap 0.3s var(--ease-spring);
+    }
+
+    .service-home-card:hover .explore-link {
+        gap: 0.8rem;
+    }
+
+    /* Tech badges */
+    .tech-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .tech-badge {
+        padding: 0.7rem 1.25rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-border);
+        background: var(--color-base);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s var(--ease-out);
+        cursor: default;
+    }
+
+    .tech-badge:hover {
+        border-color: var(--color-primary);
+        background: rgba(192, 0, 0, 0.04);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .tech-badge i {
+        color: var(--color-primary);
+    }
+
+    .tech-badge-gold {
+        border-color: var(--color-gold);
+        background: rgba(247, 179, 45, 0.08);
+        color: #D97706;
+    }
+
+    .tech-badge-gold:hover {
+        background: var(--color-gold);
+        color: white;
+        border-color: var(--color-gold);
+    }
+
+    .tech-badge-gold i {
+        color: #D97706;
+    }
+
+    .tech-badge-gold:hover i {
+        color: white;
+    }
+
+    /* ===== MEGA NAV STYLES ===== */
+    .mega-nav {
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        border-bottom: 1px solid var(--color-border);
+        padding: 0 5% 0 2%; /* Reduced left padding to move logo left */
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .mega-links {
+        display: flex;
+        height: 100%;
+        gap: 2.5rem;
+    }
+
+    .mega-item {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .mega-link {
+        font-family: var(--font-sans);
+        font-weight: 600;
+        color: var(--color-dark);
+        text-decoration: none;
+        font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0 0.5rem;
+        transition: color 0.2s;
+    }
+
+    .mega-link i {
+        font-size: 0.9rem;
+        color: var(--color-gray);
+        transition: transform 0.3s;
+    }
+
+    .mega-item:hover .mega-link {
+        color: var(--color-primary);
+    }
+
+    .mega-item:hover .mega-link i {
+        transform: rotate(180deg);
+        color: var(--color-primary);
+    }
+
+    .mega-dropdown {
+        position: absolute;
+        top: 90px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: white;
+        width: 850px;
+        border-radius: 16px;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--color-border);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        pointer-events: none;
+        display: flex;
+        overflow: hidden;
+        z-index: -1;
+        padding-bottom: 0px;
+        margin-top: -10px;
+    }
+
+    .mega-dropdown::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        background: transparent;
+    }
+
+    .mega-item:hover .mega-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(10px);
+        pointer-events: auto;
+        z-index: 1000;
+    }
+
+    .mega-drop-left {
+        width: 35%;
+        background: var(--color-surface);
+        padding: 3rem;
+        border-right: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .mega-drop-right {
+        width: 65%;
+        padding: 3rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .drop-title {
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: var(--color-dark);
+        line-height: 1.2;
+    }
+
+    .drop-link {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        text-decoration: none;
+        padding: 1rem;
+        border-radius: 12px;
+        transition: all 0.2s;
+        position: relative;
+    }
+
+    .drop-link:hover {
+        background: var(--color-base);
+        transform: translateX(5px);
+    }
+
+    .drop-icon {
+        background: rgba(192, 0, 0, 0.06);
+        color: var(--color-primary);
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+        transition: all 0.3s;
+        border: 1px solid rgba(192, 0, 0, 0.1);
+    }
+
+    .drop-link:hover .drop-icon {
+        background: var(--color-primary);
+        color: white;
+        box-shadow: 0 10px 20px rgba(192, 0, 0, 0.2);
+    }
+
+    .drop-text h4 {
+        font-family: var(--font-sans);
+        font-weight: 700;
+        color: var(--color-dark);
+        margin-bottom: 0.35rem;
+        font-size: 1.05rem;
+        transition: color 0.2s;
+    }
+
+    .drop-link:hover .drop-text h4 {
+        color: var(--color-primary);
+    }
+
+    .drop-text p {
+        font-size: 0.85rem;
+        color: var(--color-gray);
+        line-height: 1.5;
+        transition: color 0.2s;
+    }
+
+   /* ==========================================================================
+       COMPREHENSIVE RESPONSIVE OVERRIDES (UPDATED)
+       ========================================================================== */
+
+    /* 1. SMALL DESKTOPS & LAPTOPS (Max 1200px) */
+    @media (max-width: 1200px) {
+        .hero-content {
+            padding: 100px 5%;
+            gap: 30px;
+        }
+        .hero-title { font-size: 68px; }
+        .mega-dropdown {
+            width: 90vw !important;
+            left: 50% !important;
+        }
+        .mega-drop-left, .mega-drop-right {
+            padding: 2rem;
+        }
+        /* Adjust footer grid to prevent squishing */
+        .footer .container > div:nth-child(2) {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 3rem !important;
+        }
+        .footer .container > div:nth-child(2) > div:first-child {
+            grid-column: span 3; /* Brand bio spans top row */
+            margin-bottom: 1rem;
+        }
+    }
+
+    /* 2. TABLETS & SMALL LAPTOPS (Max 1024px) */
+    @media (max-width: 1024px) {
+        /* HEADER & NAVIGATION */
+        .top-bar-left span { display: none !important; }
+        .mega-links { display: none !important; }
+        .nav-buttons-right .btn { display: none !important; }
+        .nav-toggle { display: flex !important; margin-left: auto; color: var(--color-dark); }
+
+        /* HERO SECTION */
+        .hero-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+            padding: 100px 5% 60px;
+        }
+        .hero-subtitle {
+            margin: 0 auto 32px auto;
+        }
+        .hero-actions {
+            justify-content: center;
+        }
+        .hero-visual-block {
+            height: 400px;
+            margin-top: 4rem; /* <--- Change this */
+        }
+
+        /* OVERRIDE INLINE GRID (Solutions Cards) */
+        .container > div[style*="minmax(400px"] {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+        }
+
+        /* ESG & GLOBAL IMPACT SECTIONS */
+        .esg-grid, .impact-grid {
+            grid-template-columns: 1fr !important;
+            gap: 4rem !important;
+        }
+
+        /* FOOTER */
+        .footer .container > div:nth-child(2) {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+        .footer .container > div:nth-child(2) > div:first-child {
+            grid-column: span 2;
+        }
+    }
+
+    /* 3. MOBILE DEVICES (Max 768px) */
+    @media (max-width: 768px) {
+        /* TOP BAR & NAV */
+        .top-bar { display: none !important; }
+        .mega-nav { height: 70px; padding: 0 5%; }
+        .mega-nav img { height: 36px !important; }
+        .nav-mobile { top: 70px !important; max-height: calc(100vh - 70px) !important; }
+        main { margin-top: 70px !important; }
+
+        /* TYPOGRAPHY SCALING */
+        .hero-title { font-size: 52px !important; }
+        h2, [style*="font-size: clamp(2.5rem"], [style*="font-size: clamp(2rem"] {
+            font-size: 2.2rem !important;
+            line-height: 1.2 !important;
+        }
+
+        /* HERO */
+        .hero { min-height: auto; padding: 4rem 0; }
+        .hero-visual-block { height: 300px; }
+
+        /* OVERRIDE INLINE GRID (Solutions Cards to 1 column) */
+        .container > div[style*="minmax(400px"] {
+            grid-template-columns: 1fr !important;
+        }
+        .solution-card {
+            padding: 2rem !important;
+        }
+
+        /* INDUSTRY TABS */
+        .ind-content-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+        .ind-tab-content { padding: 2rem !important; }
+
+        /* PIPELINE PROCESS */
+        .pipeline-line { left: 15px; }
+        .pipeline-dot { width: 16px; height: 16px; }
+        .pipeline-step { gap: 1.25rem; }
+        .pipeline-step-content h4 { font-size: 1.4rem; }
+        .pipeline-step-content p { font-size: 1rem; }
+
+        /* GLOBAL IMPACT */
+        .pie-container { flex-direction: column; gap: 2rem; }
+        .geo-grid { grid-template-columns: 1fr; gap: 1rem; }
+
+        /* METRICS */
+        .metrics-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 2rem;
+        }
+        .metric-value { font-size: 2.5rem !important; }
+
+        /* FOOTER RESTRUCTURING */
+        .footer { padding: 4rem 5% 2rem !important; }
+        
+        /* Newsletter */
+        .footer .container > div:first-child {
+            flex-direction: column; align-items: flex-start !important;
+        }
+        .footer .container > div:first-child > div { max-width: 100% !important; width: 100%; }
+        
+        /* Links Grid */
+        .footer .container > div:nth-child(2) { 
+            grid-template-columns: 1fr !important; 
+            gap: 2.5rem !important; 
+        }
+        .footer .container > div:nth-child(2) > div:first-child { 
+            grid-column: span 1; 
+        }
+        
+        /* Legal Links */
+        .footer > .container > div:last-child {
+            flex-direction: column; align-items: flex-start; gap: 1.5rem;
+        }
+        .footer > .container > div:last-child > div:last-child {
+            flex-direction: column; gap: 1rem; align-items: flex-start;
+        }
+    }
+
+    /* 4. SMALL MOBILE (Max 480px) */
+    @media (max-width: 480px) {
+        .hero-title { font-size: 40px !important; }
+        .hero-actions { flex-direction: column; gap: 15px; }
+        .hero-actions .btn { width: 100%; justify-content: center; }
+        
+        /* Shrink 3D Carousel further so it doesn't overflow edge */
+        .story-carousel { width: 220px; height: 320px; }
+        .story-carousel-wrap { height: 400px; }
+
+        .metrics-grid { grid-template-columns: 1fr !important; gap: 1.5rem; }
+        
+        /* FOOTER NEWSLETTER STACKING */
+        .footer input[type="email"] { width: 100% !important; margin-bottom: 10px; }
+        .footer .container > div:first-child > div:nth-child(2) { flex-direction: column; gap: 0 !important; }
+        .footer .btn-primary { width: 100%; padding: 1.25rem; }
+    }
+    /* ===== PIPELINE SCROLL EFFECT ===== */
+
+    .pipeline-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        /* CRITICAL: 'start' prevents the right column from stretching to the full 
+        height of the 10 steps. If it stretches, it can't be sticky. */
+        align-items: start; 
+        position: relative;
+    }
+
+    .pipeline-sticky-visual {
+        /* Safari fallback */
+        position: -webkit-sticky; 
+        /* This pins the element to the screen */
+        position: sticky;
+        /* The distance from the top of the screen where the image will 'catch' and stick */
+        top: 120px; 
+        
+        /* Dynamically size the height based on the user's viewport so it fits perfectly */
+        height: calc(100vh - 160px); 
+        min-height: 400px;
+        max-height: 700px;
+        
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        background: var(--color-surface);
+    }
+
+    .pipeline-sticky-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    /* Mobile override for the pipeline */
+    @media (max-width: 1024px) {
+        .pipeline-wrapper {
+            grid-template-columns: 1fr;
+        }
+        .pipeline-sticky-visual {
+            display: none; /* Hide sticky image on smaller screens to save space, or change to relative position */
+        }
+    }
+    /* ===== INCREASE CLIENT LOGOS ===== */
+    .marquee-container img {
+        height: 80px !important; /* Forces all logos to be larger */
+        object-fit: contain;
+    }
+</style>
+</head>
+
+<body>
+    <!-- ===== ENTERPRISE HEADERS ===== -->
+    <div class="top-bar"
+        style="background: var(--color-dark); color: white; padding: 0.5rem 5%; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1001;">
+        <div class="top-bar-left" style="display: flex; gap: 2rem;">
+            <a href="mailto:info@culturearc.com"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-envelope"></i> info@culturearc.com</a>
+            <a href="tel:+91206680456"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-phone"></i> Global Support</a>
+            <span style="color: #6B7280; display: flex; align-items: center; gap: 0.5rem;"><i class="ph ph-map-pin"></i>
+                HQ: Pune, India &bull; USA &bull; UK</span>
+        </div>
+        <div class="top-bar-right" style="display: flex; gap: 1.5rem;">
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'"
+                onmouseout="this.style.color='white'">Investors</a>
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">Newsroom</a>
+            <a href="career.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">creeer</a>
+            <div class="lang-select"
+                style="display:flex; align-items: center; gap: 0.2rem; cursor: pointer; color: var(--color-gold); font-weight: 600;">
+                <i class="ph ph-globe"></i> EN <i class="ph ph-caret-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .mega-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 5%;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mega-links {
+            display: flex;
+            height: 100%;
+            gap: 2.5rem;
+        }
+
+        .mega-item {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .mega-link {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--color-dark);
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .mega-link i {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            transition: transform 0.3s;
+        }
+
+        .mega-item:hover .mega-link {
+            color: var(--color-primary);
+        }
+
+        .mega-item:hover .mega-link i {
+            transform: rotate(180deg);
+            color: var(--color-primary);
+        }
+
+        /* The Dropdown Container */
+        .mega-dropdown {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: white;
+            width: 850px;
+            border-radius: 16px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--color-border);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            display: flex;
+            overflow: hidden;
+            z-index: -1;
+            /* Extra invisible hover padding */
+            padding-bottom: 0px;
+            margin-top: -10px;
+            /* Bridge the gap */
+        }
+
+        .mega-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+
+        .mega-item:hover .mega-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(10px);
+            pointer-events: auto;
+            z-index: 1000;
+        }
+
+        .mega-drop-left {
+            width: 35%;
+            background: var(--color-surface);
+            padding: 3rem;
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mega-drop-right {
+            width: 65%;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .drop-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            line-height: 1.2;
+        }
+
+        .drop-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .drop-link:hover {
+            background: var(--color-base);
+            transform: translateX(5px);
+        }
+
+        .drop-icon {
+            background: rgba(192, 0, 0, 0.06);
+            color: var(--color-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            border: 1px solid rgba(192, 0, 0, 0.1);
+        }
+
+        .drop-link:hover .drop-icon {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: 0 10px 20px rgba(192, 0, 0, 0.2);
+        }
+
+        .drop-text h4 {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 0.35rem;
+            font-size: 1.05rem;
+            transition: color 0.2s;
+        }
+
+        .drop-link:hover .drop-text h4 {
+            color: var(--color-primary);
+        }
+
+        .drop-text p {
+            font-size: 0.85rem;
+            color: var(--color-gray);
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+
+        /* Responsive hiding for mega nav on strictly small elements */
+        @media (max-width: 1024px) {
+
+            .mega-links,
+            .top-bar-right,
+            .top-bar-left span {
+                display: none !important;
+            }
+
+            .nav-toggle {
+                display: flex !important;
+                margin-left: auto;
+            }
+        }
+        
+    </style>
+
+    <nav class="mega-nav">
+        <a href="index.html" class="nav-logo" style="flex: 1; text-decoration: none; display: flex; align-items: center;">
+            <img src="culture  arc logo.png" alt="CultureArc Logo" style="height: 65px; width: auto; object-fit: contain;">
+        </a>
+
+        <div class="mega-links">
+            <div class="mega-item">
+                <a href="about.html" class="mega-link" style="gap: 0;">Company</a>
+            </div>
+            <div class="mega-item">
+                <span class="mega-link">Solutions <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown">
+                    <div class="mega-drop-left">
+                        <div>
+                            <h3 class="drop-title" style="color: #C00000;">End-to-End Enterprise Solutions</h3>
+                            <p style="color: #C00000; line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem;">
+                                Discover how CultureArc engineers talent infrastructure to scale global technology
+                                operations securely and efficiently.
+                            </p>
+                        </div>
+                        <a href="services.html" class="btn btn-primary"
+                            style="width: 100%; justify-content: center;">View All Solutions <i
+                                class="ph ph-arrow-right"></i></a>
+                    </div>
+                    <div class="mega-drop-right">
+                        <a href="it-staffing.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-users-three"></i></div>
+                            <div class="drop-text">
+                                <h4>IT Staffing</h4>
+                                <p>Rapid deployment of pre-vetted tech professionals.</p>
+                            </div>
+                        </a>
+                        <a href="global-capability-center.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-buildings"></i></div>
+                            <div class="drop-text">
+                                <h4>Global Tech Center</h4>
+                                <p>Build-Operate-Transfer models for global scale.</p>
+                            </div>
+                        </a>
+                        <a href="executive-search.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-briefcase"></i></div>
+                            <div class="drop-text">
+                                <h4>Executive Search</h4>
+                                <p>Elite leadership and C-suite talent acquisition.</p>
+                            </div>
+                        </a>
+                        <a href="background-verification.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-shield-check"></i></div>
+                            <div class="drop-text">
+                                <h4>Background Verification</h4>
+                                <p>Comprehensive compliance and security checks.</p>
+                            </div>
+                        </a>
+                        <a href="rpo-solutions.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-chart-line-up"></i></div>
+                            <div class="drop-text">
+                                <h4>RPO Solutions</h4>
+                                <p>End-to-end recruitment process outsourcing.</p>
+                            </div>
+                        </a>
+                        <a href="payroll-management.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-files"></i></div>
+                            <div class="drop-text">
+                                <h4>Payroll Management</h4>
+                                <p>Seamless contractor and employee administration.</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Industries <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 700px;">
+                    <div class="mega-drop-left" style="width: 40%; background: white;">
+                        <h3 class="drop-title">Industry Verticals</h3>
+                        <p style="color: var(--color-gray); font-size: 0.9rem;">Tailored staffing architectures
+                            specialized for strict sector compliance and high velocity execution.</p>
+                    </div>
+                   <div class="mega-drop-right" style="width: 60%; grid-template-columns: 1fr 1fr; padding: 2rem;">
+                        <a href="bfsi.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-bank"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">BFSI</h4>
+                            </div>
+                        </a>
+                        <a href="healthcare.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-heartbeat"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Healthcare</h4>
+                            </div>
+                        </a>
+                        <a href="ecommerce.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-shopping-cart"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">E-Commerce</h4>
+                            </div>
+                        </a>
+                        <a href="telecom.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-broadcast"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Telecom</h4>
+                            </div>
+                        </a>
+                        <a href="manufacturing.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-factory"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Manufacturing</h4>
+                            </div>
+                        </a>
+                        <a href="technology.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-cpu"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Technology</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Insights <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="portfolio.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-open"></i></div>
+                        <div class="drop-text">
+                            <h4>Case Studies</h4>
+                            <p>Read about our successful commercial transformations.</p>
+                        </div>
+                    </a>
+                    <a href="study.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-newspaper"></i></div>
+                        <div class="drop-text">
+                            <h4>Newsroom</h4>
+                            <p>Latest corporate updates and press releases.</p>
+                        </div>
+                    </a>
+                    <a href="whitepapers.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-file-text"></i></div>
+                        <div class="drop-text">
+                            <h4>Whitepapers & Research</h4>
+                            <p>Deep-dive research into global talent markets.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Resources <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="blog.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-article"></i></div>
+                        <div class="drop-text">
+                            <h4>Blog</h4>
+                            <p>Latest articles, industry trends, and expert opinions.</p>
+                        </div>
+                    </a>
+                    <a href="webinars.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-video-camera"></i></div>
+                        <div class="drop-text">
+                            <h4>Webinars</h4>
+                            <p>Live and on-demand video sessions and masterclasses.</p>
+                        </div>
+                    </a>
+                    <a href="ebooks.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-bookmark"></i></div>
+                        <div class="drop-text">
+                            <h4>E-Books & Guides</h4>
+                            <p>Comprehensive materials to elevate your talent strategy.</p>
+                        </div>
+                    </a>
+                    <a href="help-center.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-question"></i></div>
+                        <div class="drop-text">
+                            <h4>Help Center & FAQ</h4>
+                            <p>Support and answers to your most common questions.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="flex: 1; display: flex; gap: 1.25rem; justify-content: flex-end; align-items: center;" class="nav-buttons-right">
+            <a href="jobs.html" class="btn btn-ghost"
+                style="padding: 0.75rem 1.5rem; border-color: var(--color-border); font-weight: 600;">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary"
+                style="padding: 0.75rem 1.5rem; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner
+                With Us</a>
+            <button class="nav-toggle" id="nav-toggle"
+                style="display: none; background: transparent; border: none; font-size: 1.5rem; cursor: pointer;">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Enterprise Mobile Navigation (Hidden by default) -->
+    <div class="nav-mobile" id="nav-mobile-menu" style="display: none; background: white; padding: 1rem 5% 2rem; position: absolute; top: 90px; left: 0; width: 100%; border-bottom: 1px solid var(--color-border); box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: calc(100vh - 90px); overflow-y: auto; z-index: 999;">
+        
+        <style>
+            /* Clean up default summary arrows for mobile menu */
+            .nav-mobile details summary::-webkit-details-marker { display: none; }
+            .nav-mobile details summary { list-style: none; }
+            .nav-mobile a { transition: color 0.2s; }
+            .nav-mobile a:hover { color: var(--color-primary) !important; }
+        </style>
+
+        <a href="index.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Home</a>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Solutions <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="services.html" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">View All Solutions</a>
+                <a href="it-staffing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">IT Staffing</a>
+                <a href="global-capability-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Global Tech Center</a>
+                <a href="executive-search.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Executive Search</a>
+                <a href="background-verification.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Background Verification</a>
+                <a href="rpo-solutions.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">RPO Solutions</a>
+                <a href="payroll-management.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Payroll Management</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Industries <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="bfsi.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">BFSI</a>
+                <a href="healthcare.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Healthcare</a>
+                <a href="ecommerce.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Commerce</a>
+                <a href="telecom.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Telecom</a>
+                <a href="manufacturing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Manufacturing</a>
+                <a href="technology.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Technology</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Insights <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="portfolio.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Case Studies</a>
+                <a href="study.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Newsroom</a>
+                <a href="whitepapers.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Whitepapers & Research</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Resources <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="blog.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Blog</a>
+                <a href="webinars.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Webinars</a>
+                <a href="ebooks.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Books & Guides</a>
+                <a href="help-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Help Center & FAQ</a>
+            </div>
+        </details>
+
+        <a href="about.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Company</a>
+        
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+            <a href="jobs.html" class="btn btn-ghost" style="justify-content: center; border: 1px solid var(--color-border); padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; color: var(--color-dark);">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary" style="justify-content: center; padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner With Us</a>
+        </div>
+    </div>
+
+    <main style="margin-top: 72px;">
+
+        <!-- ===== 1. HERO SECTION ===== -->
+        <section class="hero" id="hero">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-gradient"></div>
+
+            <div class="hero-content">
+                <div class="gs-reveal">
+                    <div class="pill pill-red" style="margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
+                        <span class="pulse-dot"></span>
+                        Talent Solutions for a Digital Future
+                    </div>
+
+                    <h1 class="hero-title">
+                        Possibilities <br>
+                        <span class="text-gradient"
+                            style="color: #C00000; -webkit-text-fill-color: initial;">Possible.</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        CultureArc is a premier IT Services and Business consulting firm driving digital transformation.
+                        We combine enterprise-level resources with the agility of a startup to provide elite IT staffing
+                        and technology solutions.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#story-section" class="btn btn-primary btn-lg"
+                            style="background: #C00000; border-color: #C00000;">
+                            <span>Explore The System</span>
+                            <i class="ph ph-caret-down btn-icon"></i>
+                        </a>
+                        <a href="services.html" class="btn btn-ghost btn-lg"
+                            style="border: 1px solid var(--color-border);">
+                            <span>View Models</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Visual Block -->
+                <div class="hero-visual-block gs-reveal delay-2" style="position: relative; width: 100%; height: 420px; background: #050505; border-radius: 20px; overflow: hidden; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" class="hero-slide" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: opacity 1s ease-in-out;">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" class="hero-slide" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80" class="hero-slide" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" class="hero-slide" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 2. 3D CHAPTER CAROUSEL ===== -->
+        <section class="story-chapter-section" id="story-section">
+            <div class="story-chapter-header gs-reveal">
+                <h2>The Staffing Evolution</h2>
+                <p>Engineering scalable talent infrastructure for the new digital economy.</p>
+            </div>
+
+            <div class="story-carousel-wrap gs-reveal delay-1">
+                <div class="story-carousel" id="carousel">
+                    <div class="story-card" style="--i:0">
+                        <div class="sc-img"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500&q=80"
+                                alt="Digital Economy"></div>
+                        <div class="sc-txt">
+                            <div class="hc-label">CHAPTER 01</div>
+                            <h3>The Digital Chasm</h3>
+                            <p>Enterprises struggle to find the right talent to manage business in the new era of the digital economy.</p>
+                        </div>
+                    </div>
+                    <div class="story-card" style="--i:1">
+                        <div class="sc-img"><img
+                                src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=500&q=80" alt="Talent Sourcing"></div>
+                        <div class="sc-txt">
+                            <div class="hc-label">CHAPTER 02</div>
+                            <h3>Elite Acquisition</h3>
+                            <p>Tapping into a pre-vetted database of over 1 Million+ profiles to find the top 5% industry talent.</p>
+                        </div>
+                    </div>
+                    <div class="story-card" style="--i:2">
+                        <div class="sc-img"><img
+                                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&q=80" alt="Candidate Verification"></div>
+                        <div class="sc-txt">
+                            <div class="hc-label">CHAPTER 03</div>
+                            <h3>Deep Verification</h3>
+                            <p>Executing a rigorous 10-step background and technical verification for absolute quality control.</p>
+                        </div>
+                    </div>
+                    <div class="story-card" style="--i:3">
+                        <div class="sc-img"><img
+                                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&q=80" alt="Rapid Deployment"></div>
+                        <div class="sc-txt">
+                            <div class="hc-label">CHAPTER 04</div>
+                            <h3>Rapid Deployment</h3>
+                            <p>Aggressive SLAs delivering speed-to-market with a targeted 0-24 hours Turnaround Time (TAT).</p>
+                        </div>
+                    </div>
+                    <div class="story-card" style="--i:4">
+                        <div class="sc-img"><img
+                                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=500&q=80" alt="Agile Models"></div>
+                        <div class="sc-txt">
+                            <div class="hc-label">CHAPTER 05</div>
+                            <h3>Agile Engagement</h3>
+                            <p>Pivoting seamlessly between Contractual Staffing, Fixed Price Pods, and B.O.T offshore centers.</p>
+                        </div>
+                    </div>
+                    <div class="story-card" style="--i:5">
+                        <div class="sc-img"><img
+                                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&q=80" alt="Work Culture"></div>
+                        <div class="sc-txt">
+                            <div class="hc-label">CHAPTER 06</div>
+                            <h3>Cultural Synergy</h3>
+                            <p>Nurturing a strong culture value system resulting in an impressive 85% consultant retention rate.</p>
+                        </div>
+                    </div>
+                    <div class="story-card" style="--i:6">
+                        <div class="sc-img"><img
+                                src="global scale.webp" alt="Global Operations"></div>
+                        <div class="sc-txt">
+                            <div class="hc-label">CHAPTER 07</div>
+                            <h3>Global Scale</h3>
+                            <p>Transforming operations for global clients across the US, UK, Europe, Australia, and India.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 3. END-TO-END ENTERPRISE SOLUTIONS ===== -->
+        <section class="section-lg" style="background: var(--color-base); position: relative; overflow: hidden;">
+            <div
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(192,0,0,0.5), transparent);">
+            </div>
+            <div class="container" style="max-width: 1400px; padding: 0 5%;">
+
+                <div class="text-center gs-reveal"
+                    style="margin-bottom: 5rem; max-width: 800px; margin-left: auto; margin-right: auto; position: relative;">
+                    <div class="pill pill-red"
+                        style="margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; background: rgba(192,0,0,0.1); color: var(--color-primary); display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.5rem; border-radius: 50px;">
+                        <i class="ph ph-strategy"></i> Our Expertise
+                    </div>
+                    <h2
+                        style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem; font-family: var(--font-display); font-weight: 800; color: var(--color-dark); line-height: 1.1;">
+                        End-to-End <br> <span style="color: var(--color-primary);">Enterprise Solutions.</span>
+                    </h2>
+                    <p style="color: var(--color-gray); font-size: 1.15rem; line-height: 1.7;">
+                        CultureArc architects and deploys modular talent delivery systems customized for massive scale,
+                        precision speed, and absolute quality. We bridge the gap between human intelligence and
+                        technological advancement.
+                    </p>
+                </div>
+
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2.5rem; position: relative;">
+                    <!-- Massive Card 1 -->
+                    <div class="solution-card gs-reveal"
+                        style="background: white; border-radius: 20px; border: 1px solid var(--color-border); padding: 3rem; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; overflow: hidden; display: flex; flex-direction: column;"
+                        onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.08)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.03)';">
+                        <div
+                            style="width: 70px; height: 70px; background: rgba(192,0,0,0.05); color: var(--color-primary); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 2rem;">
+                            <i class="ph ph-users-three"></i>
+                        </div>
+                        <h3
+                            style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1rem;">
+                            IT Contractual Staffing</h3>
+                        <p
+                            style="color: var(--color-gray); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+                            Rapid deployment of highly specialized technology professionals. Our robust matrix filters
+                            ensure that you receive exactly the skills needed, exactly when your global deadlines demand
+                            them.
+                        </p>
+                        <div
+                            style="border-top: 1px solid var(--color-border); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle"
+                                    style="color: var(--color-primary); font-size: 1.25rem;"></i> Pre-vetted Talent
+                                Pools
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle"
+                                    style="color: var(--color-primary); font-size: 1.25rem;"></i> Agile Team
+                                Augmentation
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle"
+                                    style="color: var(--color-primary); font-size: 1.25rem;"></i> Seamless Offboarding
+                            </div>
+                        </div>
+                        <a href="services.html"
+                            style="margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-primary); font-weight: 700; text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Discover Methodology <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Massive Card 2 -->
+                    <div class="solution-card gs-reveal delay-1"
+                        style="background: white; border-radius: 20px; border: 1px solid var(--color-border); padding: 3rem; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; overflow: hidden; display: flex; flex-direction: column;"
+                        onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.08)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.03)';">
+                        <div
+                            style="width: 70px; height: 70px; background: rgba(247,179,45,0.1); color: var(--color-gold); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 2rem;">
+                            <i class="ph ph-buildings"></i>
+                        </div>
+                        <h3
+                            style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1rem;">
+                            Global Tech Centers (BOT)</h3>
+                        <p
+                            style="color: var(--color-gray); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+                            Future-proof your enterprise with the Build-Operate-Transfer model. We establish
+                            high-performance offshore innovation centers that you can legally transfer ownership of at
+                            scale.
+                        </p>
+                        <div
+                            style="border-top: 1px solid var(--color-border); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-gold); font-size: 1.25rem;"></i>
+                                Turnkey Infrastructure Setup
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-gold); font-size: 1.25rem;"></i>
+                                Local Compliance & Legal
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-gold); font-size: 1.25rem;"></i>
+                                Frictionless Asset Transfer
+                            </div>
+                        </div>
+                        <a href="services.html"
+                            style="margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-gold); font-weight: 700; text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Explore BOT Models <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Massive Card 3 -->
+                    <div class="solution-card gs-reveal delay-2"
+                        style="background: var(--color-dark); color: white; border-radius: 20px; padding: 3rem; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden; display: flex; flex-direction: column;"
+                        onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.4)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)';">
+                        <!-- BG accent -->
+                        <div
+                            style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(192,0,0,0.1) 0%, transparent 70%); pointer-events: none;">
+                        </div>
+
+                        <div
+                            style="width: 70px; height: 70px; background: rgba(255,255,255,0.1); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 2rem;">
+                            <i class="ph ph-crown"></i>
+                        </div>
+                        <h3
+                            style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;">
+                            Executive Search</h3>
+                        <p
+                            style="color: #9CA3AF; font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+                            Confidential headhunting mapped to your strategic board vision. We acquire C-Level
+                            executives, VPs, and Directors who fundamentally transform enterprise trajectories.
+                        </p>
+                        <div
+                            style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: white; font-size: 1.25rem;"></i> Deep Market
+                                Mapping
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: white; font-size: 1.25rem;"></i> Leadership
+                                Profiling
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: white; font-size: 1.25rem;"></i> Succession
+                                Planning Advisory
+                            </div>
+                        </div>
+                        <a href="services.html"
+                            style="margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: white; font-weight: 700; text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            View Executive Scope <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Massive Card 4 -->
+                    <div class="solution-card gs-reveal"
+                        style="background: white; border-radius: 20px; border: 1px solid var(--color-border); padding: 3rem; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; overflow: hidden; display: flex; flex-direction: column;"
+                        onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.08)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.03)';">
+                        <div
+                            style="width: 70px; height: 70px; background: rgba(52,232,158,0.1); color: #0f3443; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 2rem;">
+                            <i class="ph ph-chart-line-up"></i>
+                        </div>
+                        <h3
+                            style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1rem;">
+                            RPO Architectures</h3>
+                        <p
+                            style="color: var(--color-gray); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+                            End-to-end Recruitment Process Outsourcing designed for massive scalability. We embed our
+                            recruiters within your HR divisions to dramatically lower cost-per-hire metrics.
+                        </p>
+                        <div
+                            style="border-top: 1px solid var(--color-border); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #34e89e; font-size: 1.25rem;"></i>
+                                Predictive Hiring Analytics
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #34e89e; font-size: 1.25rem;"></i> Employer
+                                Branding Integration
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #34e89e; font-size: 1.25rem;"></i>
+                                Centralized Compliance Hub
+                            </div>
+                        </div>
+                        <a href="services.html"
+                            style="margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #0f3443; font-weight: 700; text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Discover RPO Data <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Massive Card 5 -->
+                    <div class="solution-card gs-reveal delay-1"
+                        style="background: white; border-radius: 20px; border: 1px solid var(--color-border); padding: 3rem; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; overflow: hidden; display: flex; flex-direction: column;"
+                        onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.08)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.03)';">
+                        <div
+                            style="width: 70px; height: 70px; background: rgba(67,48,15,0.1); color: #e8a834; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 2rem;">
+                            <i class="ph ph-shield-check"></i>
+                        </div>
+                        <h3
+                            style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1rem;">
+                            Background Verification</h3>
+                        <p
+                            style="color: var(--color-gray); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+                            Protect your enterprise architecture with military-grade background and compliance
+                            screening. Integrating automated court-record scraping and manual deep-investigations.
+                        </p>
+                        <div
+                            style="border-top: 1px solid var(--color-border); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #e8a834; font-size: 1.25rem;"></i> Criminal
+                                & Civil Clearances
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #e8a834; font-size: 1.25rem;"></i>
+                                Educational Fiduciary Checks
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #e8a834; font-size: 1.25rem;"></i> API
+                                Integrations (B2B)
+                            </div>
+                        </div>
+                        <a href="services.html"
+                            style="margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #e8a834; font-weight: 700; text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Verify Parameters <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Massive Card 6 -->
+                    <div class="solution-card gs-reveal delay-2"
+                        style="background: white; border-radius: 20px; border: 1px solid var(--color-border); padding: 3rem; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; overflow: hidden; display: flex; flex-direction: column;"
+                        onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.08)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.03)';">
+                        <div
+                            style="width: 70px; height: 70px; background: rgba(30,144,255,0.1); color: #1E90FF; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 2rem;">
+                            <i class="ph ph-files"></i>
+                        </div>
+                        <h3
+                            style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1rem;">
+                            Payroll Management</h3>
+                        <p
+                            style="color: var(--color-gray); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1;">
+                            Complex multi-geography payroll systems simplified. Complete compliance, tax structuring,
+                            statutory adherence, and zero-latency fund transfers across borders.
+                        </p>
+                        <div
+                            style="border-top: 1px solid var(--color-border); padding-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #1E90FF; font-size: 1.25rem;"></i>
+                                End-to-End Tax Computations
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #1E90FF; font-size: 1.25rem;"></i> Statutory
+                                Law Adherence
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 500; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: #1E90FF; font-size: 1.25rem;"></i> Employee
+                                Trust Portals
+                            </div>
+                        </div>
+                        <a href="services.html"
+                            style="margin-top: 2.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #1E90FF; font-weight: 700; text-decoration: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            Examine System <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 4. TECHNOLOGY SECTION ===== -->
+        <section class="section-lg"
+            style="background: white; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+            <div class="container text-center">
+                <div class="gs-reveal" style="margin-bottom: 4.5rem;">
+                    <div class="pill pill-gold" style="margin-bottom: 1.5rem; padding: 0.5rem 1.25rem; font-size: 0.8rem;">Tech Stack</div>
+                    <h2 style="font-size: clamp(2.5rem, 5vw, 3.8rem); margin-bottom: 1.5rem;">Core Technology Competencies</h2>
+                    <p style="color: var(--color-gray); font-size: 1.15rem; max-width: 700px; margin: 0 auto;">
+                        Engineering robust enterprise solutions using the most advanced and secure technology frameworks available.
+                    </p>
+                </div>
+                
+                <div class="tech-grid gs-reveal" style="max-width: 1100px; gap: 1.25rem;">
+                    <div class="tech-badge"><i class="ph ph-brackets-curly"></i> React & Node</div>
+                    <div class="tech-badge"><i class="ph ph-brain"></i> AI & ML</div>
+                    <div class="tech-badge"><i class="ph ph-cloud-arrow-up"></i> AWS / Azure</div>
+                    <div class="tech-badge tech-badge-gold"><i class="ph ph-hard-drives"></i> SAP Solutions</div>
+                    <div class="tech-badge"><i class="ph ph-cpu"></i> IoT & Embedded</div>
+                    <div class="tech-badge"><i class="ph ph-chart-line-up"></i> Data Analytics</div>
+                    <div class="tech-badge"><i class="ph ph-device-mobile"></i> Mobile Dev</div>
+                    <div class="tech-badge"><i class="ph ph-shield-checkered"></i> Cybersecurity</div>
+                    <div class="tech-badge"><i class="ph ph-git-branch"></i> DevOps / CI-CD</div>
+                    <div class="tech-badge"><i class="ph ph-cube"></i> Blockchain</div>
+                    <div class="tech-badge tech-badge-gold"><i class="ph ph-database"></i> Big Data</div>
+                    <div class="tech-badge"><i class="ph ph-robot"></i> RPA</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 5. ENTERPRISE INDUSTRY VERTICALS (INTERACTIVE TABS) ===== -->
+        <section class="section-lg"
+            style="background: linear-gradient(to right, #001233, #001f54); position: relative; overflow: hidden;"
+            id="industries">
+            <div
+                style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(192,0,0,0.15) 0%, transparent 60%); filter: blur(40px);">
+            </div>
+            <div class="container" style="max-width: 1400px; padding: 0 5%; position: relative; z-index: 2;">
+
+                <div class="gs-reveal"
+                    style="margin-bottom: 4rem; text-align: left; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 2rem;">
+                    <div style="max-width: 600px;">
+                        <div class="pill pill-gold"
+                            style="margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; background: rgba(247,179,45,0.15); color: var(--color-gold); display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.5rem; border-radius: 50px;">
+                            <i class="ph ph-globe-hemisphere-east"></i> Global Reach
+                        </div>
+                        <h2
+                            style="font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 1rem; font-family: var(--font-display); font-weight: 800; color: white; line-height: 1.1;">
+                            Industry <span style="color: var(--color-gold);">Dominance.</span>
+                        </h2>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; line-height: 1.6;">
+                            Our domain-specific consultants possess deep structural knowledge across major verticals,
+                            ensuring your staffing arrays align precisely with sector regulations and growth curves.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="services.html" class="btn btn-outline"
+                            style="border-color: rgba(255,255,255,0.2); color: white; background: transparent;"
+                            onmouseover="this.style.background='white'; this.style.color='var(--color-dark)';"
+                            onmouseout="this.style.background='transparent'; this.style.color='white';">
+                            Explore Technical Domains <i class="ph ph-arrow-up-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Custom Tab System HTML & Internal CSS -->
+                <style>
+                    .ind-tabs-wrapper {
+                        display: flex;
+                        gap: 4rem;
+                        align-items: flex-start;
+                    }
+
+                    .ind-tabs-list {
+                        width: 350px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
+                        flex-shrink: 0;
+                    }
+
+                    .ind-tab-btn {
+                        background: rgba(255, 255, 255, 0.03);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        color: white;
+                        padding: 1.5rem 2rem;
+                        border-radius: 12px;
+                        font-family: var(--font-sans);
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        text-align: left;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+
+                    .ind-tab-btn:hover {
+                        background: rgba(255, 255, 255, 0.08);
+                        transform: translateX(5px);
+                    }
+
+                    .ind-tab-btn.active {
+                        background: linear-gradient(90deg, rgba(192, 0, 0, 0.8), rgba(139, 0, 0, 0.8));
+                        border-color: transparent;
+                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                        transform: translateX(10px);
+                    }
+
+                    .ind-tab-btn i.arrow {
+                        opacity: 0;
+                        transform: translateX(-10px);
+                        transition: all 0.3s;
+                    }
+
+                    .ind-tab-btn.active i.arrow {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+
+                    .ind-tab-content {
+                        flex-grow: 1;
+                        background: rgba(255, 255, 255, 0.02);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        border-radius: 20px;
+                        padding: 4rem;
+                        display: none;
+                        min-height: 500px;
+                        animation: fadeInRight 0.5s ease forwards;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .ind-tab-content.active {
+                        display: block;
+                    }
+
+                    @keyframes fadeInRight {
+                        from {
+                            opacity: 0;
+                            transform: translateX(30px);
+                        }
+
+                        to {
+                            opacity: 1;
+                            transform: translateX(0);
+                        }
+                    }
+
+                    .ind-content-grid {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 3rem;
+                        position: relative;
+                        z-index: 2;
+                    }
+
+                    .ind-stat-box {
+                        background: rgba(0, 0, 0, 0.2);
+                        border: 1px solid rgba(255, 255, 255, 0.05);
+                        padding: 1.5rem;
+                        border-radius: 12px;
+                        text-align: center;
+                    }
+
+                    .ind-stat-val {
+                        font-family: var(--font-display);
+                        font-size: 2.5rem;
+                        font-weight: 800;
+                        color: white;
+                        line-height: 1;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .ind-stat-label {
+                        font-size: 0.85rem;
+                        color: rgba(255, 255, 255, 0.6);
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                    }
+
+                    .ind-feature-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 1rem;
+                        margin-top: 2rem;
+                    }
+
+                    .ind-feature-item {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 1rem;
+                    }
+
+                    .ind-feature-icon {
+                        width: 32px;
+                        height: 32px;
+                        background: rgba(192, 0, 0, 0.2);
+                        color: #ff4d4d;
+                        border-radius: 8px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                        margin-top: 0.2rem;
+                    }
+
+                    @media (max-width: 1024px) {
+                        .ind-tabs-wrapper {
+                            flex-direction: column;
+                            gap: 2rem;
+                        }
+
+                        .ind-tabs-list {
+                            width: 100%;
+                            flex-direction: row;
+                            overflow-x: auto;
+                            padding-bottom: 1rem;
+                            scroll-snap-type: x mandatory;
+                        }
+
+                        .ind-tab-btn {
+                            flex-shrink: 0;
+                            scroll-snap-align: start;
+                            padding: 1rem 1.5rem;
+                            white-space: nowrap;
+                            transform: none !important;
+                        }
+
+                        .ind-tab-btn.active {
+                            transform: none !important;
+                        }
+
+                        .ind-tab-content {
+                            padding: 2rem;
+                            min-height: auto;
+                        }
+
+                        .ind-content-grid {
+                            grid-template-columns: 1fr;
+                            gap: 2rem;
+                        }
+                    }
+                </style>
+
+                <div class="ind-tabs-wrapper gs-reveal">
+                    <!-- Left Tab Buttons -->
+                    <div class="ind-tabs-list" id="ind-tabs">
+                        <button class="ind-tab-btn active" data-target="tab-bfsi">
+                            <span style="display: flex; align-items: center; gap: 1rem;"><i class="ph ph-bank"
+                                    style="font-size: 1.4rem; color: var(--color-gold);"></i> BFSI</span>
+                            <i class="ph ph-arrow-right arrow"></i>
+                        </button>
+                        <button class="ind-tab-btn" data-target="tab-tech">
+                            <span style="display: flex; align-items: center; gap: 1rem;"><i class="ph ph-cpu"
+                                    style="font-size: 1.4rem; color: #34e89e;"></i> IT & Telecom</span>
+                            <i class="ph ph-arrow-right arrow"></i>
+                        </button>
+                        <button class="ind-tab-btn" data-target="tab-health">
+                            <span style="display: flex; align-items: center; gap: 1rem;"><i class="ph ph-heartbeat"
+                                    style="font-size: 1.4rem; color: #ff4d4d;"></i> Healthcare</span>
+                            <i class="ph ph-arrow-right arrow"></i>
+                        </button>
+                        <button class="ind-tab-btn" data-target="tab-ecom">
+                            <span style="display: flex; align-items: center; gap: 1rem;"><i class="ph ph-shopping-cart"
+                                    style="font-size: 1.4rem; color: #1E90FF;"></i> Retail & E-Commerce</span>
+                            <i class="ph ph-arrow-right arrow"></i>
+                        </button>
+                        <button class="ind-tab-btn" data-target="tab-mfg">
+                            <span style="display: flex; align-items: center; gap: 1rem;"><i class="ph ph-factory"
+                                    style="font-size: 1.4rem; color: #e8a834;"></i> Manufacturing</span>
+                            <i class="ph ph-arrow-right arrow"></i>
+                        </button>
+                    </div>
+
+                    <!-- Right Tab Contents -->
+                    <div style="flex-grow: 1;">
+
+                        <!-- TAB: BFSI -->
+                        <div class="ind-tab-content active" id="tab-bfsi">
+                            <!-- Background accent -->
+                            <i class="ph ph-bank"
+                                style="position: absolute; bottom: -5%; right: -5%; font-size: 30rem; color: rgba(255,255,255,0.02); z-index: 1;"></i>
+                            <div class="ind-content-grid">
+                                <div>
+                                    <div
+                                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-gold); font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                                        <i class="ph ph-shield-check"></i> High Compliance
+                                    </div>
+                                    <h3
+                                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.2;">
+                                        Banking, Financial Services & Insurance</h3>
+                                    <p
+                                        style="color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+                                        Accelerating digital transformation in FinTech. We provide highly vetted
+                                        engineers versed in PCI-DSS environments, algorithmic trading platforms, and
+                                        blockchain deployments.
+                                    </p>
+                                    <div class="ind-feature-list">
+                                        <div class="ind-feature-item">
+                                            <div class="ind-feature-icon"><i class="ph ph-code"></i></div>
+                                            <div>
+                                                <h4
+                                                    style="color: white; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem;">
+                                                    Core Banking Development</h4>
+                                                <p
+                                                    style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.4;">
+                                                    Legacy modernization and open-banking API architects.</p>
+                                            </div>
+                                        </div>
+                                        <div class="ind-feature-item">
+                                            <div class="ind-feature-icon"><i class="ph ph-shield"></i></div>
+                                            <div>
+                                                <h4
+                                                    style="color: white; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem;">
+                                                    Cybersecurity Analysts</h4>
+                                                <p
+                                                    style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.4;">
+                                                    Zero-trust framework implementation experts.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; flex-direction: column; gap: 1.5rem; justify-content: center;">
+                                    <div class="ind-stat-box">
+                                        <div class="ind-stat-val">2.5K+</div>
+                                        <div class="ind-stat-label">Experts Deployed in BFSI</div>
+                                    </div>
+                                    <div class="ind-stat-box">
+                                        <div class="ind-stat-val">Top 10</div>
+                                        <div class="ind-stat-label">Global Banks Served</div>
+                                    </div>
+                                    <div class="ind-stat-box">
+                                        <div class="ind-stat-val">0.0%</div>
+                                        <div class="ind-stat-label">Compliance Breach Rate</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB: IT & TELECOM -->
+                        <div class="ind-tab-content" id="tab-tech">
+                            <i class="ph ph-cpu"
+                                style="position: absolute; bottom: -5%; right: -5%; font-size: 30rem; color: rgba(255,255,255,0.02); z-index: 1;"></i>
+                            <div class="ind-content-grid">
+                                <div>
+                                    <div
+                                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #34e89e; font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                                        <i class="ph ph-rocket-launch"></i> High Velocity
+                                    </div>
+                                    <h3
+                                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.2;">
+                                        IT, Telecom & Product Engineering</h3>
+                                    <p
+                                        style="color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+                                        Scaling product roadmaps for hyper-growth unicorns and Fortune 500 tech giants.
+                                        Supplying elite Full-Stack, AI/ML, and DevOps talent.
+                                    </p>
+                                    <div class="ind-feature-list">
+                                        <div class="ind-feature-item">
+                                            <div class="ind-feature-icon"
+                                                style="background: rgba(52,232,158,0.2); color: #34e89e;"><i
+                                                    class="ph ph-brain"></i></div>
+                                            <div>
+                                                <h4
+                                                    style="color: white; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem;">
+                                                    AI / LLM Engineers</h4>
+                                                <p
+                                                    style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.4;">
+                                                    Generative AI and custom model fine-tuning specialists.</p>
+                                            </div>
+                                        </div>
+                                        <div class="ind-feature-item">
+                                            <div class="ind-feature-icon"
+                                                style="background: rgba(52,232,158,0.2); color: #34e89e;"><i
+                                                    class="ph ph-broadcast"></i></div>
+                                            <div>
+                                                <h4
+                                                    style="color: white; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem;">
+                                                    5G Network Architects</h4>
+                                                <p
+                                                    style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.4;">
+                                                    Edge computing and telecom infrastructure orchestration.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    style="display: flex; flex-direction: column; gap: 1.5rem; justify-content: center;">
+                                    <div class="ind-stat-box">
+                                        <div class="ind-stat-val">4.2K+</div>
+                                        <div class="ind-stat-label">Product Engineers</div>
+                                    </div>
+                                    <div class="ind-stat-box">
+                                        <div class="ind-stat-val">32</div>
+                                        <div class="ind-stat-label">Unicorn Partners</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB: HEALTHCARE -->
+                        <div class="ind-tab-content" id="tab-health">
+                            <i class="ph ph-heartbeat"
+                                style="position: absolute; bottom: -5%; right: -5%; font-size: 30rem; color: rgba(255,255,255,0.02); z-index: 1;"></i>
+                            <div class="ind-content-grid">
+                                <div>
+                                    <div
+                                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #ff4d4d; font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                                        <i class="ph ph-first-aid"></i> Mission Critical
+                                    </div>
+                                    <h3
+                                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.2;">
+                                        Healthcare & Life Sciences</h3>
+                                    <p
+                                        style="color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+                                        Transforming HealthTech ecosystems with HIPAA-compliant developers,
+                                        bio-informatics specialists, and medical IoT engineers.
+                                    </p>
+                                    <div class="ind-feature-list">
+                                        <div class="ind-feature-item">
+                                            <div class="ind-feature-icon"
+                                                style="background: rgba(255,77,77,0.2); color: #ff4d4d;"><i
+                                                    class="ph ph-database"></i></div>
+                                            <div>
+                                                <h4
+                                                    style="color: white; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem;">
+                                                    EHR / EMR Integration</h4>
+                                                <p
+                                                    style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.4;">
+                                                    Epic, Cerner, and HL7/FHIR interoperability experts.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB: E-COMMERCE -->
+                        <div class="ind-tab-content" id="tab-ecom">
+                            <i class="ph ph-shopping-cart"
+                                style="position: absolute; bottom: -5%; right: -5%; font-size: 30rem; color: rgba(255,255,255,0.02); z-index: 1;"></i>
+                            <div class="ind-content-grid">
+                                <div>
+                                    <div
+                                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #1E90FF; font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                                        <i class="ph ph-lightning"></i> High Scalability
+                                    </div>
+                                    <h3
+                                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.2;">
+                                        Retail & E-Commerce</h3>
+                                    <p
+                                        style="color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+                                        Building massive traffic architectures. Providing DevOps teams and cloud
+                                        consultants that ensure 99.999% uptime during peak holiday loads.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB: MANUFACTURING -->
+                        <div class="ind-tab-content" id="tab-mfg">
+                            <i class="ph ph-factory"
+                                style="position: absolute; bottom: -5%; right: -5%; font-size: 30rem; color: rgba(255,255,255,0.02); z-index: 1;"></i>
+                            <div class="ind-content-grid">
+                                <div>
+                                    <div
+                                        style="display: inline-flex; align-items: center; gap: 0.5rem; color: #e8a834; font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">
+                                        <i class="ph ph-gear"></i> Industry 4.0
+                                    </div>
+                                    <h3
+                                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 1.5rem; line-height: 1.2;">
+                                        Manufacturing & Supply Chain</h3>
+                                    <p
+                                        style="color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+                                        Bridging IT and OT. Deploying SAP consultants, supply chain analysts, and
+                                        industrial IoT (IIoT) architects for smart factory transformations.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industry Tabs JS logic injected inline for execution -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const btns = document.querySelectorAll('.ind-tab-btn');
+                    const contents = document.querySelectorAll('.ind-tab-content');
+
+                    btns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            btns.forEach(b => b.classList.remove('active'));
+                            contents.forEach(c => c.classList.remove('active'));
+
+                            btn.classList.add('active');
+                            const target = document.getElementById(btn.getAttribute('data-target'));
+                            if (target) target.classList.add('active');
+                        });
+                    });
+                });
+            </script>
+        </section>
+
+        <!-- ===== 5.5 ESG & CORPORATE GOVERNANCE (NEW ENTERPRISE TIER) ===== -->
+        <section class="section-lg"
+            style="background: white; border-bottom: 1px solid var(--color-border); position: relative; overflow: hidden;">
+            <div class="container" style="max-width: 1400px; padding: 0 5%;">
+                <div class="esg-grid"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;">
+
+                    <div class="gs-reveal">
+                        <div class="pill pill-gold"
+                            style="margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; background: rgba(52,232,158,0.1); color: #2196F3; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.5rem; border-radius: 50px;">
+                            <i class="ph ph-leaf"></i> Corporate Responsibility
+                        </div>
+                        <h2
+                            style="font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1.5rem; font-family: var(--font-display); font-weight: 800; color: var(--color-dark); line-height: 1.1;">
+                            Building a <span style="color: #2196F3;">Sustainable</span> Future.
+                        </h2>
+                        <p
+                            style="color: var(--color-gray); font-size: 1.15rem; line-height: 1.7; margin-bottom: 2.5rem;">
+                            At CultureArc, we believe that world-class staffing solutions must be paired with
+                            world-class corporate citizenship. Our ESG frameworks are integrated into our core
+                            operational architecture, ensuring ethical governance, diversity, and environmental
+                            stewardship across our global supply chains.
+                        </p>
+
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                            <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                                <div
+                                    style="width: 50px; height: 50px; background: rgba(33,150,243,0.1); color: #2196F3; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0;">
+                                    <i class="ph ph-users-four"></i>
+                                </div>
+                                <div>
+                                    <h4
+                                        style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-dark); margin-bottom: 0.5rem;">
+                                        Diversity, Equity & Inclusion (DEI)</h4>
+                                    <p style="color: var(--color-gray); font-size: 0.95rem; line-height: 1.5;">
+                                        Implementing unbiased AI sourcing algorithms to guarantee diverse talent pools.
+                                        Currently achieving 45% female representation in leadership placements.</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                                <div
+                                    style="width: 50px; height: 50px; background: rgba(76,175,80,0.1); color: #4CAF50; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0;">
+                                    <i class="ph ph-plant"></i>
+                                </div>
+                                <div>
+                                    <h4
+                                        style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-dark); margin-bottom: 0.5rem;">
+                                        Net-Zero Cloud Operations</h4>
+                                    <p style="color: var(--color-gray); font-size: 0.95rem; line-height: 1.5;">Migrating
+                                        100% of our internal data pipelines and recruitment ATS to carbon-neutral cloud
+                                        providers by 2030.</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                                <div
+                                    style="width: 50px; height: 50px; background: rgba(156,39,176,0.1); color: #9C27B0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0;">
+                                    <i class="ph ph-scales"></i>
+                                </div>
+                                <div>
+                                    <h4
+                                        style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-dark); margin-bottom: 0.5rem;">
+                                        Impeccable Governance</h4>
+                                    <p style="color: var(--color-gray); font-size: 0.95rem; line-height: 1.5;">Strict
+                                        adherence to GDPR, CCPA, and global labor laws. Zero-tolerance policy against
+                                        unethical labor practices within our supplier network.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="gs-reveal delay-1" style="position: relative;">
+                        <div
+                            style="width: 100%; height: 600px; background: var(--color-surface); border-radius: 30px; border: 1px solid var(--color-border); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                            <!-- Placeholder for ESG visualization -->
+                            <div
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(33,150,243,0.05) 0%, rgba(76,175,80,0.05) 100%);">
+                            </div>
+
+                            <!-- Abstract Graphic -->
+                            <div
+                                style="width: 300px; height: 300px; border-radius: 50%; border: 2px dashed rgba(33,150,243,0.3); position: relative; animation: spin 20s linear infinite;">
+                                <div
+                                    style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #2196F3; border-radius: 50%; box-shadow: 0 0 20px rgba(33,150,243,0.5);">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #4CAF50; border-radius: 50%; box-shadow: 0 0 20px rgba(76,175,80,0.5);">
+                                </div>
+                            </div>
+
+                            <div
+                                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                <i class="ph ph-chart-polar"
+                                    style="font-size: 6rem; color: var(--color-dark); opacity: 0.8; margin-bottom: 1rem; display: block;"></i>
+                                <span
+                                    style="font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--color-dark);">CultureArc</span><br>
+                                <span
+                                    style="color: var(--color-gray); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">ESG
+                                    Matrix</span>
+                            </div>
+
+                            <style>
+                                @keyframes spin {
+                                    100% {
+                                        transform: rotate(360deg);
+                                    }
+                                }
+                            </style>
+                        </div>
+
+                        <!-- Floating badges -->
+                        <div
+                            style="position: absolute; top: 10%; right: -20px; background: white; padding: 1rem 1.5rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--color-border); display: flex; align-items: center; gap: 1rem; animation: float 6s ease-in-out infinite;">
+                            <div
+                                style="width: 40px; height: 40px; background: rgba(76,175,80,0.1); color: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                                <i class="ph ph-shield-check"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="font-family: var(--font-display); font-weight: 800; color: var(--color-dark); font-size: 1.2rem;">
+                                    ISO 27001</div>
+                                <div style="font-size: 0.8rem; color: var(--color-gray);">Certified Systems</div>
+                            </div>
+                        </div>
+                        <div
+                            style="position: absolute; bottom: 15%; left: -30px; background: white; padding: 1rem 1.5rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--color-border); display: flex; align-items: center; gap: 1rem; animation: float 8s ease-in-out infinite reverse;">
+                            <div
+                                style="width: 40px; height: 40px; background: rgba(33,150,243,0.1); color: #2196F3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                                <i class="ph ph-globe"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="font-family: var(--font-display); font-weight: 800; color: var(--color-dark); font-size: 1.2rem;">
+                                    UNGC</div>
+                                <div style="font-size: 0.8rem; color: var(--color-gray);">Member Signatory</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                @media (max-width: 1024px) {
+                    .esg-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 3rem !important;
+                    }
+                }
+            </style>
+        </section>
+
+        <!-- ===== 6. PROCESS PIPELINE ===== -->
+        <section class="section-lg" style="background: white;">
+            <div class="container" style="max-width: 1400px; padding: 0 5%;">
+                <div class="gs-reveal" style="margin-bottom: 4rem;">
+                    <div class="pill pill-red" style="margin-bottom: 1rem;">Quality Assurance</div>
+                    <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem;">The Verification Pipeline.</h2>
+                    <p style="color: var(--color-gray); font-size: 1.05rem;">10-step rigorous background verification system for unparalleled quality control.</p>
+                </div>
+
+                <div class="pipeline-wrapper">
+                    <div class="pipeline" id="pipeline" style="max-width: 100%;">
+                        <div class="pipeline-line">
+                            <div class="pipeline-line-fill" id="pipeline-fill"></div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal" data-img="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800">
+                            <div class="pipeline-dot active"></div>
+                            <div class="pipeline-step-content">
+                                <h4>1. Candidate Engagement</h4>
+                                <p>Initial alignment and talent interest validation.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-1" data-img="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>2. Address Map Location</h4>
+                                <p>Geographical verification and residential validation.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-2" data-img="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>3. Employment Records</h4>
+                                <p>Strict verification of past tenures and performance.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-3" data-img="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>4. Education Graduation</h4>
+                                <p>Academic qualifications and degree authenticity checks.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-4" data-img="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>5. Criminal Records</h4>
+                                <p>Thorough legal background screening and assurance.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-5" data-img="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>6. World Check</h4>
+                                <p>Comprehensive global watchlist and screening databases.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal" data-img="https://images.unsplash.com/photo-1614064641913-a5323ea1f22b?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>7. Photo Identity</h4>
+                                <p>Multi-point identification and biometric validation.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-1" data-img="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>8. Professional Reference</h4>
+                                <p>Testimonial validation from past employers and colleagues.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-2" data-img="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800">
+                            <div class="pipeline-dot"></div>
+                            <div class="pipeline-step-content">
+                                <h4>9. Credit Check</h4>
+                                <p>Financial stability assessment where relevant.</p>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-step gs-reveal delay-3" data-img="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800">
+                            <div class="pipeline-dot" style="border-color: var(--color-gold); box-shadow: 0 0 15px rgba(247,179,45,0.4);"></div>
+                            <div class="pipeline-step-content">
+                                <h4 style="color: var(--color-gold);">10. Drug Test</h4>
+                                <p>Final medical clearance and deployment readiness.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-sticky-visual">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%); z-index: 1;"></div>
+                        
+                        <img id="pipeline-dynamic-img" src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800" alt="Verification Process">
+                        
+                        <div style="position: absolute; bottom: 30px; left: 30px; z-index: 2; color: white;">
+                            <div class="pill" style="background: var(--color-primary); color: white; border: none; margin-bottom: 10px;">Security Core</div>
+                            <h3 style="font-family: var(--font-display); font-size: 1.5rem;">Verification Matrix</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 6.5 CLIENTS ECOSYSTEM ===== -->
+        <div class="clients-marquee">
+    
+            <div class="container text-center gs-reveal" style="margin-bottom: 3rem; width: 100%;">
+                <div class="pill pill-gold" style="margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(247,179,45,0.15); color: var(--color-gold); padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
+                    <i class="ph ph-handshake"></i> Trusted Partners
+                </div>
+                <h2 style="font-size: clamp(2rem, 3vw, 2.5rem); font-family: var(--font-display); font-weight: 800; color: var(--color-dark); margin: 0;">
+                    Our Global <span style="color: var(--color-primary);">Clients.</span>
+                </h2>
+            </div>
+
+            <div class="marquee-track">
+                <!-- Group 1 -->
+                <img class="client-logo" src="intel.png" alt="Intel">
+                <img class="client-logo" src="ibm.png" alt="IBM">
+                <img class="client-logo" src="verizon.jpg" alt="Verizon Wireless">
+                <img class="client-logo" src="IHS_Markit.png" alt="IHS Markit">
+                <img class="client-logo" src="unitrends.png" alt="Unitrends">
+                <img class="client-logo" src="Intuitive.png" alt="Intuitive Surgical">
+                <img class="client-logo" src="marchex.jpg" alt="Marchex">
+                <img class="client-logo" src="IPAYMNT.png" alt="iPayment">
+                <img class="client-logo" src="aws.svg" alt="AWS">
+                <img class="client-logo" src="Microsoft.png" alt="Microsoft">
+                <img class="client-logo" src="Oracle.png" alt="Oracle">
+                <!-- Group 2 (for seamless loop) -->
+                <img class="client-logo" src="intel.png" alt="Intel">
+                <img class="client-logo" src="ibm.png" alt="IBM">
+                <img class="client-logo" src="verizon.jpg" alt="Verizon Wireless">
+                <img class="client-logo" src="IHS_Markit.png" alt="IHS Markit">
+                <img class="client-logo" src="unitrends.png" alt="Unitrends">
+                <img class="client-logo" src="Intuitive.png" alt="Intuitive Surgical">
+                <img class="client-logo" src="marchex.jpg" alt="Marchex">
+                <img class="client-logo" src="IPAYMNT.png" alt="iPayment">
+                <img class="client-logo" src="aws.svg" alt="AWS">
+                <img class="client-logo" src="Microsoft.png" alt="Microsoft">
+                <img class="client-logo" src="Oracle.png" alt="Oracle">
+            </div>
+        </div>
+
+        <!-- ===== 6.75 GLOBAL IMPACT & REVENUE ===== -->
+        <section class="section global-impact-section">
+            <div class="container">
+                <div class="section-header text-center gs-reveal" style="margin-bottom: 4rem;">
+                    <div class="pill">Global Impact</div>
+                    <h2 style="font-size: clamp(3rem, 5vw, 4.5rem); margin-bottom: 1rem; font-family: var(--font-display); font-weight: 800; line-height: 1.1; color: var(--color-dark);">
+                        Data-Driven <span class="text-gradient">Expansion</span>
+                    </h2>
+                    <p style="max-width: 600px; margin: 0 auto; color: var(--color-gray);">CultureArc's global presence
+                        and sector-wise revenue distribution mapping drawn from our core delivery centers.</p>
+                </div>
+
+                <div class="impact-grid mt-4 gs-reveal">
+
+                    <!-- Revenue Pie Chart -->
+                    <div class="pie-wrapper">
+                        <div class="pie-container">
+                            <div class="pie-chart">
+                                <div class="pie-center">
+                                    <div class="pie-center-text">100%<br><span
+                                            style="font-size: 0.8rem; color: #6B7280; font-weight: 600; text-transform: uppercase;">Revenue</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pie-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: var(--color-primary);"></div> <span>61%
+                                        Services & R&D</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: var(--color-gold);"></div> <span>14%
+                                        Product Dev</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #111;"></div> <span>11% Mobile</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #6B7280;"></div> <span>10% BFSI</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: #E5E7EB;"></div> <span>4% IoT
+                                        Solutions</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Geographic Locations -->
+                    <div class="geo-wrapper">
+                        <div class="geo-grid">
+                            <div class="geo-item">
+                                <div class="ping-wrapper">
+                                    <div class="ping-core"></div>
+                                    <div class="ping-ring"></div>
+                                </div>
+                                <span class="geo-text">United States</span>
+                            </div>
+                            <div class="geo-item">
+                                <div class="ping-wrapper">
+                                    <div class="ping-core"></div>
+                                    <div class="ping-ring"></div>
+                                </div>
+                                <span class="geo-text">India</span>
+                            </div>
+                            <div class="geo-item">
+                                <div class="ping-wrapper">
+                                    <div class="ping-core"></div>
+                                    <div class="ping-ring"></div>
+                                </div>
+                                <span class="geo-text">United Kingdom</span>
+                            </div>
+                            <div class="geo-item">
+                                <div class="ping-wrapper">
+                                    <div class="ping-core"></div>
+                                    <div class="ping-ring"></div>
+                                </div>
+                                <span class="geo-text">Canada</span>
+                            </div>
+                            <div class="geo-item">
+                                <div class="ping-wrapper">
+                                    <div class="ping-core"></div>
+                                    <div class="ping-ring"></div>
+                                </div>
+                                <span class="geo-text">Australia</span>
+                            </div>
+                            <div class="geo-item">
+                                <div class="ping-wrapper">
+                                    <div class="ping-core"></div>
+                                    <div class="ping-ring"></div>
+                                </div>
+                                <span class="geo-text">Europe HQ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 7. METRICS ===== -->
+        <section class="section metrics-section" id="metrics">
+            <div class="container">
+                <div class="metrics-grid gs-reveal">
+                    <div class="metric-item">
+                        <div class="metric-value" style="color: white; font-size: 48px;"><span
+                                data-count="10">0</span>L+</div>
+                        <div class="metric-label" style="color: rgba(255, 255, 255, 0.85);">Candidate Profiles</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" style="color: white; font-size: 48px;"><span
+                                data-count="100">0</span>K+</div>
+                        <div class="metric-label" style="color: rgba(255, 255, 255, 0.85);">Connections</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" style="color: white; font-size: 48px;"><span
+                                data-count="50">0</span>+</div>
+                        <div class="metric-label" style="color: rgba(255, 255, 255, 0.85);">Recruiters</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" style="color: white; font-size: 48px;"><span
+                                data-count="800">0</span>+</div>
+                        <div class="metric-label" style="color: rgba(255, 255, 255, 0.85);">Tech Pros Deployed</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-lg" style="background: var(--color-base); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+            <div class="container text-center">
+                <div class="gs-reveal" style="margin-bottom: 3rem;">
+                    <div class="pill pill-red" style="margin-bottom: 1rem;">Live Network</div>
+                    <h2 style="font-size: clamp(2rem, 4vw, 3rem);">Global Engineering Array</h2>
+                </div>
+                
+                <div class="gs-reveal delay-1" id="talent-network-container" 
+                     style="position: relative; width: 100%; max-width: 1000px; height: 500px; background: #050505; border-radius: 20px; overflow: hidden; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3); margin: 0 auto;">
+                    
+                    <div style="position: absolute; bottom: 20px; left: 24px; z-index: 10; display: flex; align-items: center; gap: 10px;">
+                        <span style="background: var(--color-primary); width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 10px var(--color-primary); animation: pulse 2s infinite;"></span>
+                        <span style="color: rgba(255,255,255,0.6); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;">AI Talent Matrix Engine Active</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ===== 8. CTA ===== -->
+        <section class="section-lg cta-section">
+            <div class="container text-center gs-reveal">
+                <h2 style="color: var(--color-dark);">Ready to <span class="text-gradient">scale?</span></h2>
+                <a href="hire.html" class="btn btn-primary btn-lg" style="box-shadow: 0 20px 40px rgba(192,0,0,0.2);">
+                    <span>Construct Your Engine</span>
+                    <i class="ph ph-arrow-right btn-icon"></i>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== ENTERPRISE MEGA FOOTER ===== -->
+    <footer class="footer"
+        style="background: var(--color-dark); padding: 6rem 5% 2rem; position: relative; overflow: hidden; color: white;">
+        <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #C00000, #F7B32D, #C00000);">
+        </div>
+        <i class="ph ph-globe"
+            style="position: absolute; top: -10%; right: -5%; font-size: 50rem; color: rgba(255,255,255,0.02); z-index: 0; pointer-events: none;"></i>
+
+        <div class="container" style="max-width: 1400px; position: relative; z-index: 2;">
+
+            <!-- Top Footer / Newsletter -->
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4rem; margin-bottom: 4rem; gap: 2rem;">
+                <div style="max-width: 500px;">
+                    <h3
+                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: white;">
+                        Subscribe to <span style="color: var(--color-gold);">ArcInsights</span></h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.6;">Get monthly executive
+                        briefings on global talent trends, remote team compliance updates, and AI in recruitment.</p>
+                </div>
+                <div style="flex-grow: 1; max-width: 500px; display: flex; gap: 1rem;">
+                    <input type="email" placeholder="Enter your work email"
+                        style="width: 100%; padding: 1.25rem 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: white; font-size: 1rem; outline: none; transition: all 0.3s;"
+                        onfocus="this.style.borderColor='var(--color-gold)'; this.style.background='rgba(255,255,255,0.05)';"
+                        onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.03)';">
+                    <button class="btn btn-primary"
+                        style="padding: 0 2.5rem; flex-shrink: 0; border-radius: 8px; font-weight: 700;">Subscribe <i
+                            class="ph ph-paper-plane-tilt"></i></button>
+                </div>
+            </div>
+
+            <!-- Main Footer Links Grid -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+
+                <!-- Brand Col -->
+                <div>
+                    <a href="index.html" style="display: inline-flex; align-items: center; text-decoration: none; margin-bottom: 2rem;">
+                        <img src="culture  arc logo.png" alt="CultureArc Logo" style="height: 45px; width: auto; object-fit: contain;">
+                    </a>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;">
+                        Engineering scalable talent infrastructure for the digital economy. We provide end-to-end IT
+                        staffing, executive search, and enterprise operational transformation across global markets.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#0077b5'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-linkedin-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#1DA1F2'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-twitter-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#E1306C'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-instagram-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#FF0000'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-youtube-logo"></i></a>
+                    </div>
+                </div>
+
+                <!-- Link Cols -->
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Solutions</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="it-staffing.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">IT Contract Staffing</a></li>
+                        <li><a href="global-capability-center.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Global Tech Centers</a></li>
+                        <li><a href="executive-search.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Executive Search</a></li>
+                        <li><a href="rpo-solutions.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">RPO Architecture</a></li>
+                        <li><a href="background-verification.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Background Verifications</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Company</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Corporate Overview</a></li>
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Leadership Team</a></li>
+                        <li><a href="portfolio.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Global Operations</a></li>
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">ESG Initiatives</a></li>
+                        <li><a href="hire.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Partner With Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Talent</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="jobs.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Find Jobs</a></li>
+                        <li><a href="jobs.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Submit Resume</a></li>
+                        <li><a href="study.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Career Content</a></li>
+                        <li><a href="#"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Alumni Network</a></li>
+                        <li><a href="payroll-management.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Payroll Portal</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Global HQ</h4>
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <i class="ph ph-map-pin"
+                            style="color: var(--color-gold); font-size: 1.25rem; margin-top: 0.2rem;"></i>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                            15A, 4th Floor, City Vista,
+                            Fountain Road, Kharadi<br>Pune, Maharashtra - 411014
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <i class="ph ph-envelope"
+                            style="color: var(--color-gold); font-size: 1.25rem; margin-top: 0.2rem;"></i>
+                        <a href="mailto:info@culturearc.com"
+                            style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                            onmouseover="this.style.color='var(--color-gold)';"
+                            onmouseout="this.style.color='rgba(255,255,255,0.6)';">info@culturearc.com</a>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div
+                            style="font-size: 0.8rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; font-weight: 700;">
+                            Government Registered</div>
+                        <div
+                            style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: white;">
+                            MSME: UDYAM-MH-26-0170565</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Legal & Compliance -->
+            <div
+                style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
+                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.5);">
+                    &copy; 2026 CultureArc Pvt. Ltd. All Rights Reserved.
+                </div>
+
+                <div style="display: flex; gap: 2rem; align-items: center;">
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Privacy Architecture</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Terms of Engagement</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Cookie Enforcement</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Compliance Center</a>
+                </div>
+            </div>
+
+            <style>
+                @media (max-width: 1024px) {
+                    .footer>.container>div:nth-child(2) {
+                        grid-template-columns: 1fr 1fr;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .footer>.container>div:nth-child(2) {
+                        grid-template-columns: 1fr;
+                        gap: 3rem;
+                    }
+
+                    .footer>.container>div:nth-child(3) {
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                    }
+                }
+            </style>
+        </div>
+    </footer>
+
+    <script src="js/global1.js"></script>
+    <script src="js/hero.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('carousel');
+            const cards = document.querySelectorAll('.story-card');
+            const wrap = document.querySelector('.story-carousel-wrap');
+
+            if (!carousel || !cards.length || !wrap) return;
+
+            let currAngle = 0;
+            let isDragging = false;
+            let startX = 0;
+            let autoRotate = true;
+
+            // 1. Logic to Snap Card to Front on Click
+            cards.forEach((card, i) => {
+                card.addEventListener('click', () => {
+                    const anglePerCard = 360 / cards.length;
+                    currAngle = i * -anglePerCard;
+                    carousel.style.transform = `rotateY(${currAngle}deg)`;
+                });
+            });
+
+            // 2. Manual Drag Interaction (Speed Increased)
+            wrap.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                autoRotate = false;
+                startX = e.pageX;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.pageX - startX;
+                currAngle += dx * 0.5; // Sensitivity increased
+                startX = e.pageX;
+                carousel.style.transform = `rotateY(${currAngle}deg)`;
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            wrap.addEventListener('mouseleave', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            // 3. Touch support (Speed Increased)
+            wrap.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                autoRotate = false;
+                startX = e.touches[0].pageX;
+            }, { passive: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const dx = e.touches[0].pageX - startX;
+                currAngle += dx * 0.6; // Sensitivity increased
+                startX = e.touches[0].pageX;
+                carousel.style.transform = `rotateY(${currAngle}deg)`;
+            }, { passive: true });
+
+            window.addEventListener('touchend', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            // 4. Gentle Auto-Drift (Speed Increased)
+            function drift() {
+                if (!isDragging && autoRotate) {
+                    currAngle -= 0.15; // Increased speed here
+                    carousel.style.transform = `rotateY(${currAngle}deg)`;
+                }
+                requestAnimationFrame(drift);
+            }
+            drift();
+        });
+    </script>
+
+    <script>
+        (function () {
+            // --- PIPELINE DYNAMIC IMAGE LOGIC ---
+            const pipeline = document.getElementById('pipeline');
+            const fill = document.getElementById('pipeline-fill');
+            const steps = document.querySelectorAll('.pipeline-step');
+            const dynamicImg = document.getElementById('pipeline-dynamic-img');
+
+            if (pipeline && fill) {
+                let currentActiveIndex = -1;
+
+                function updatePipeline() {
+                    const rect = pipeline.getBoundingClientRect();
+                    const viewH = window.innerHeight;
+                    
+                    // Calculate line fill percentage
+                    const progress = Math.max(0, Math.min(1, (viewH - rect.top) / (rect.height + viewH * 0.5)));
+                    fill.style.height = (progress * 100) + '%';
+
+                    let mostRecentActiveIndex = -1;
+
+                    steps.forEach((step, index) => {
+                        const stepRect = step.getBoundingClientRect();
+                        const dot = step.querySelector('.pipeline-dot');
+                        
+                        // If the step is roughly in the middle of the screen
+                        if (stepRect.top < viewH * 0.65) {
+                            if(dot) dot.classList.add('active');
+                            mostRecentActiveIndex = index;
+                        } else {
+                            if(dot) dot.classList.remove('active');
+                        }
+                    });
+
+                    // If a new step becomes active, change the image!
+                    if (mostRecentActiveIndex !== -1 && mostRecentActiveIndex !== currentActiveIndex && dynamicImg) {
+                        currentActiveIndex = mostRecentActiveIndex;
+                        const newImgSrc = steps[currentActiveIndex].getAttribute('data-img');
+                        
+                        if (newImgSrc) {
+                            // Quick fade out/in effect
+                            dynamicImg.style.opacity = '0';
+                            setTimeout(() => {
+                                dynamicImg.src = newImgSrc;
+                                dynamicImg.style.opacity = '1';
+                            }, 200);
+                        }
+                    }
+                }
+
+                window.addEventListener('scroll', updatePipeline, { passive: true });
+                // Run once on load
+                updatePipeline();
+            }
+
+            // --- INDUSTRY HORIZONTAL SCROLL DRAG (KEPT FROM ORIGINAL) ---
+            const track = document.getElementById('industry-scroll');
+            if (track) {
+                let isDown = false, startX, scrollLeft;
+                track.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+                track.addEventListener('mouseleave', () => isDown = false);
+                track.addEventListener('mouseup', () => isDown = false);
+                track.addEventListener('mousemove', e => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - track.offsetLeft;
+                    track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+                });
+            }
+        })();
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const initTalentNetwork = () => {
+                const container = document.getElementById('talent-network-container');
+                if (!container || typeof THREE === 'undefined') return;
+
+                // 1. Scene Setup
+                const scene = new THREE.Scene();
+                scene.fog = new THREE.FogExp2(0x050505, 0.003); // Fades out nodes in the distance
+
+                const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 120;
+
+                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Performance optimization
+                container.appendChild(renderer.domElement);
+
+                // 2. Core Variables
+                const particleCount = 250;
+                const radius = 65;
+                const group = new THREE.Group();
+                scene.add(group);
+
+                // 3. Create Talent Nodes (Particles)
+                const geometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+
+                const colorPrimary = new THREE.Color('#C00000'); // CultureArc Red
+                const colorGold = new THREE.Color('#F7B32D');    // CultureArc Gold
+                const colorWhite = new THREE.Color('#ffffff');
+
+                for (let i = 0; i < particleCount; i++) {
+                    // Distribute particles in a sphere
+                    const r = radius * Math.cbrt(Math.random());
+                    const theta = Math.random() * 2 * Math.PI;
+                    const phi = Math.acos(2 * Math.random() - 1);
+
+                    positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+                    positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+                    positions[i * 3 + 2] = r * Math.cos(phi);
+
+                    // Assign colors based on probability
+                    const rand = Math.random();
+                    let nodeColor = rand < 0.5 ? colorPrimary : (rand < 0.85 ? colorGold : colorWhite);
+                    
+                    colors[i * 3] = nodeColor.r;
+                    colors[i * 3 + 1] = nodeColor.g;
+                    colors[i * 3 + 2] = nodeColor.b;
+                }
+
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                const material = new THREE.PointsMaterial({
+                    size: 2.5,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.9,
+                    blending: THREE.AdditiveBlending
+                });
+
+                const particles = new THREE.Points(geometry, material);
+                group.add(particles);
+
+                // 4. Create Infrastructure Connections (Lines)
+                const linePositions = [];
+                const lineColors = [];
+                const maxDistanceSq = 600; // Only connect nodes that are close to each other
+
+                for (let i = 0; i < particleCount; i++) {
+                    for (let j = i + 1; j < particleCount; j++) {
+                        const dx = positions[i*3] - positions[j*3];
+                        const dy = positions[i*3+1] - positions[j*3+1];
+                        const dz = positions[i*3+2] - positions[j*3+2];
+                        const distSq = dx*dx + dy*dy + dz*dz;
+                        
+                        if (distSq < maxDistanceSq) {
+                            linePositions.push(
+                                positions[i*3], positions[i*3+1], positions[i*3+2],
+                                positions[j*3], positions[j*3+1], positions[j*3+2]
+                            );
+                            
+                            // Blend colors for lines based on connecting nodes
+                            lineColors.push(
+                                colors[i*3], colors[i*3+1], colors[i*3+2],
+                                colors[j*3], colors[j*3+1], colors[j*3+2]
+                            );
+                        }
+                    }
+                }
+
+                const lineGeometry = new THREE.BufferGeometry();
+                lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+                lineGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
+                
+                const lineMaterial = new THREE.LineBasicMaterial({
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.15,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+                group.add(lines);
+
+                // 5. Mouse Interaction
+                let targetRotationX = 0;
+                let targetRotationY = 0;
+                
+                container.addEventListener('mousemove', (e) => {
+                    const rect = container.getBoundingClientRect();
+                    // Normalize mouse coordinates to -1 to +1
+                    const mouseX = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+                    const mouseY = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+                    
+                    targetRotationY = mouseX * 0.5;
+                    targetRotationX = mouseY * 0.5;
+                });
+
+                container.addEventListener('mouseleave', () => {
+                    targetRotationX = 0;
+                    targetRotationY = 0;
+                });
+
+                // 6. Render Loop
+                let frame = 0;
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    
+                    frame += 0.002;
+                    
+                    // Auto-rotation combined with smooth mouse parallax
+                    group.rotation.y = frame + (targetRotationY - group.rotation.y) * 0.05;
+                    group.rotation.x = (targetRotationX - group.rotation.x) * 0.05;
+
+                    renderer.render(scene, camera);
+                };
+                
+                animate();
+
+                // 7. Responsive Resizing
+                window.addEventListener('resize', () => {
+                    if(!container) return;
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                });
+            };
+
+            // Delay initialization slightly to ensure GSAP/HTML is fully ready
+            setTimeout(initTalentNetwork, 100);
+        });
+        
+        // Mobile Navigation Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const navToggle = document.getElementById('nav-toggle');
+            const mobileMenu = document.getElementById('nav-mobile-menu');
+
+            if (navToggle && mobileMenu) {
+                navToggle.addEventListener('click', () => {
+                    // Check if menu is currently open
+                    const isExpanded = mobileMenu.style.display === 'block';
+                    
+                    // Toggle menu visibility
+                    mobileMenu.style.display = isExpanded ? 'none' : 'block';
+                    
+                    // Toggle the icon between hamburger (list) and X
+                    const icon = navToggle.querySelector('i');
+                    if (icon) {
+                        if (isExpanded) {
+                            icon.classList.remove('ph-x');
+                            icon.classList.add('ph-list');
+                        } else {
+                            icon.classList.remove('ph-list');
+                            icon.classList.add('ph-x');
+                        }
+                    }
+                });
+            }
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.hero-slide');
+            if (slides.length === 0) return;
+
+            let currentSlide = 0;
+            const slideDuration = 4000; // Change image every 4 seconds
+
+            setInterval(() => {
+                // Fade out the current slide
+                slides[currentSlide].style.opacity = '0';
+                
+                // Calculate the next slide index (loops back to 0 after the last image)
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                // Fade in the new slide
+                slides[currentSlide].style.opacity = '1';
+            }, slideDuration);
+        });
+        
+    </script>
+</body>
+</html>

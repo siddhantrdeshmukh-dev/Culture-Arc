@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CultureArc | Workforce Engineering System</title>
+    <meta name="description"
+        content="CultureArc — IT Staffing & Digital Transformation. We engineer scalable talent infrastructure using data, precision technology, and cultural alignment.">
+
+    <!-- Fonts are imported via CSS -->
+    <link rel="stylesheet" href="css/global1.css">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* ===== INDEX-SPECIFIC STYLES ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: white;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.5) 50%, #F8F9FC 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 80px;
+            /* 80px side padding desktop */
+            width: 100%;
+            display: grid;
+            grid-template-columns: 4fr 6fr;
+            /* 40% 60% layout */
+            gap: 24px;
+            align-items: center;
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            color: var(--color-dark);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #6B7280;
+            /* grey */
+            max-width: 540px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual-block {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            background: linear-gradient(135deg, #111, #000);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-floating-circle-1 {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(192, 0, 0, 0.4);
+            filter: blur(40px);
+            top: 10%;
+            left: 10%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-floating-circle-2 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(247, 179, 45, 0.3);
+            filter: blur(50px);
+            bottom: 10%;
+            right: 10%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        /* 3D Chapter Engine Section */
+        .story-chapter-section {
+            --bg-0: #00224D;
+            --azure: #FF204E;
+            --azure-glow: rgba(255, 32, 78, 0.22);
+            --t1: #FFF0F3;
+            --t2: #C9A0AA;
+            --b1: rgba(255, 32, 78, 0.12);
+            --f-display: var(--font-display, 'Bricolage Grotesque', sans-serif);
+
+            background: var(--bg-0);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: var(--font-sans, 'Figtree', sans-serif);
+            position: relative;
+        }
+
+        .story-chapter-header {
+            position: absolute;
+            top: 5%;
+            text-align: center;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .story-chapter-header h2 {
+            color: var(--t1);
+            font-family: var(--f-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .story-chapter-header p {
+            color: var(--t2);
+            font-size: 1.15rem;
+        }
+
+        .story-carousel-wrap {
+            perspective: 1400px;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            margin-top: 6rem;
+        }
+
+        .story-carousel-wrap:active {
+            cursor: grabbing;
+        }
+
+        .story-carousel {
+            width: 320px;
+            height: 440px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .story-card {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 34, 77, 0.85);
+            border: 1px solid var(--b1);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(12px);
+            transform: rotateY(calc(var(--i) * 51.428deg)) translateZ(480px);
+            /* 360 / 7 = 51.428 */
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.5s;
+            backface-visibility: hidden;
+            user-select: none;
+        }
+
+        .story-card:hover {
+            border-color: var(--azure);
+            box-shadow: 0 0 30px var(--azure-glow);
+        }
+
+        .sc-img img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            pointer-events: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sc-txt h3 {
+            color: var(--t1);
+            font-family: var(--f-display);
+            margin: 20px 0 10px;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .sc-txt p {
+            color: var(--t2);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .hc-label {
+            font-size: 0.75rem;
+            color: var(--azure);
+            letter-spacing: 0.15em;
+            margin-bottom: 5px;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        /* Clients Marquee */
+        .clients-marquee {
+            width: 100%;
+            overflow: hidden;
+            background: white;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: scrollMarquee 30s linear infinite;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .client-logo {
+            height: 48px;
+            width: auto;
+            margin: 0 4rem;
+            filter: grayscale(100%) opacity(0.6);
+            transition: all 0.3s var(--ease-out);
+            object-fit: contain;
+        }
+
+        .client-logo:hover {
+            filter: grayscale(0%) opacity(1);
+        }
+
+        @keyframes scrollMarquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Global Impact & Revenue Section */
+        .global-impact-section {
+            background: white;
+            padding: 100px 0;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .pie-container {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            justify-content: center;
+        }
+
+        .pie-chart {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            /* 61% (0-61), 14% (61-75), 11% (75-86), 10% (86-96), 4% (96-100) */
+            background: conic-gradient(var(--color-primary) 0% 61%,
+                    var(--color-gold) 61% 75%,
+                    #111 75% 86%,
+                    #6B7280 86% 96%,
+                    #E5E7EB 96% 100%);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform: rotate(-90deg);
+            animation: pieReveal 1.5s ease-out forwards;
+        }
+
+        @keyframes pieReveal {
+            from {
+                opacity: 0;
+                transform: rotate(-90deg) scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: rotate(-90deg) scale(1);
+            }
+        }
+
+        .pie-center {
+            position: absolute;
+            inset: 35px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(90deg);
+        }
+
+        .pie-center-text {
+            text-align: center;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--color-dark);
+            line-height: 1.1;
+        }
+
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.95rem;
+            color: var(--color-gray);
+            font-weight: 500;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        .geo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .geo-item {
+            background: var(--color-surface);
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .geo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(192, 0, 0, 0.2);
+        }
+
+        .ping-wrapper {
+            position: relative;
+            width: 10px;
+            height: 10px;
+        }
+
+        .ping-core {
+            position: absolute;
+            inset: 0;
+            background: var(--color-primary);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .ping-ring {
+            position: absolute;
+            inset: -4px;
+            border: 2px solid var(--color-primary);
+            border-radius: 50%;
+            animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+            z-index: 1;
+        }
+
+        @keyframes ping {
+            0% {
+                transform: scale(0.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        .geo-text {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--color-dark);
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* Industries horizontal scroll */
+        .industry-track {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding: 1rem 0 2rem;
+            scroll-snap-type: x mandatory;
+            cursor: grab;
+        }
+
+        .industry-track:active {
+            cursor: grabbing;
+        }
+
+        .industry-card {
+            flex: 0 0 300px;
+            height: 360px;
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+            transition: transform 0.5s var(--ease-out);
+        }
+
+        .industry-card:hover {
+            transform: scale(1.03);
+        }
+
+        .industry-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        .industry-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 1.5rem;
+            z-index: 2;
+            color: white;
+        }
+
+        /* Process pipeline */
+        .pipeline {
+            position: relative;
+            max-width: 800px;
+        }
+
+        .pipeline-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--color-border);
+            border-radius: 2px;
+        }
+
+        .pipeline-line-fill {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-gold));
+            border-radius: 2px;
+            height: 0%;
+            transition: height 0.1s linear;
+        }
+
+        .pipeline-step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            padding: 1.5rem 0;
+            position: relative;
+        }
+
+        .pipeline-dot {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 3px solid var(--color-border);
+            background: white;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s var(--ease-out);
+        }
+
+        .pipeline-dot.active {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(192, 0, 0, 0.4);
+        }
+
+        .pipeline-dot.active::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-primary);
+        }
+
+        .pipeline-step-content h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        .pipeline-step-content p {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+        }
+
+        /* Metrics bar */
+        .metrics-section {
+            background: var(--color-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metrics-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 60%);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .metric-item {
+            padding: 1.5rem;
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            opacity: 0.85;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 2rem;
+        }
+
+        /* Services grid on homepage */
+        .services-home-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .service-home-card {
+            padding: 2.5rem;
+            cursor: pointer;
+        }
+
+        .service-home-card .service-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .service-home-card:hover .service-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .service-home-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .service-home-card p {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .service-home-card .explore-link {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s var(--ease-spring);
+        }
+
+        .service-home-card:hover .explore-link {
+            gap: 0.8rem;
+        }
+
+        /* Tech badges */
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tech-badge {
+            padding: 0.7rem 1.25rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            background: var(--color-base);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s var(--ease-out);
+            cursor: default;
+        }
+
+        .tech-badge:hover {
+            border-color: var(--color-primary);
+            background: rgba(192, 0, 0, 0.04);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tech-badge i {
+            color: var(--color-primary);
+        }
+
+        .tech-badge-gold {
+            border-color: var(--color-gold);
+            background: rgba(247, 179, 45, 0.08);
+            color: #D97706;
+        }
+
+        .tech-badge-gold:hover {
+            background: var(--color-gold);
+            color: white;
+            border-color: var(--color-gold);
+        }
+
+        .tech-badge-gold i {
+            color: #D97706;
+        }
+
+        .tech-badge-gold:hover i {
+            color: white;
+        }
+
+        /* Responsive overrides for index */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                display: none;
+            }
+
+            .story-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .story-visual {
+                height: 300px;
+                margin-top: 2rem;
+            }
+
+            .services-home-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pipeline {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding: 6rem 0 4rem;
+            }
+
+            .services-home-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .industry-card {
+                flex: 0 0 260px;
+                height: 300px;
+            }
+
+            .story-section {
+                display: block;
+            }
+
+            #story-track {
+                height: auto !important;
+            }
+
+            .story-sticky {
+                position: relative;
+                height: auto;
+                padding: 4rem 0;
+            }
+
+            .story-visual {
+                display: none;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== ENTERPRISE HEADERS ===== -->
+    <div class="top-bar"
+        style="background: var(--color-dark); color: white; padding: 0.5rem 5%; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1001;">
+        <div class="top-bar-left" style="display: flex; gap: 2rem;">
+            <a href="mailto:info@culturearc.com"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-envelope"></i> info@culturearc.com</a>
+            <a href="tel:+91206680456"
+                style="color: #9CA3AF; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;"><i
+                    class="ph ph-phone"></i> Global Support</a>
+            <span style="color: #6B7280; display: flex; align-items: center; gap: 0.5rem;"><i class="ph ph-map-pin"></i>
+                HQ: Pune, India &bull; USA &bull; UK</span>
+        </div>
+        <div class="top-bar-right" style="display: flex; gap: 1.5rem;">
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'"
+                onmouseout="this.style.color='white'">Investors</a>
+            <a href="#" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">Newsroom</a>
+            <a href="career.html" style="color: white; text-decoration: none; font-weight: 500; transition: color 0.3s;"
+                onmouseover="this.style.color='var(--color-primary)'" onmouseout="this.style.color='white'">Careers</a>
+            <div class="lang-select"
+                style="display:flex; align-items: center; gap: 0.2rem; cursor: pointer; color: var(--color-gold); font-weight: 600;">
+                <i class="ph ph-globe"></i> EN <i class="ph ph-caret-down"></i>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .mega-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 5%;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mega-links {
+            display: flex;
+            height: 100%;
+            gap: 2.5rem;
+        }
+
+        .mega-item {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .mega-link {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--color-dark);
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .mega-link i {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            transition: transform 0.3s;
+        }
+
+        .mega-item:hover .mega-link {
+            color: var(--color-primary);
+        }
+
+        .mega-item:hover .mega-link i {
+            transform: rotate(180deg);
+            color: var(--color-primary);
+        }
+
+        /* The Dropdown Container */
+        .mega-dropdown {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: white;
+            width: 850px;
+            border-radius: 16px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--color-border);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            display: flex;
+            overflow: hidden;
+            z-index: -1;
+            /* Extra invisible hover padding */
+            padding-bottom: 0px;
+            margin-top: -10px;
+            /* Bridge the gap */
+        }
+
+        .mega-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+
+        .mega-item:hover .mega-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(10px);
+            pointer-events: auto;
+            z-index: 1000;
+        }
+
+        .mega-drop-left {
+            width: 35%;
+            background: var(--color-surface);
+            padding: 3rem;
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mega-drop-right {
+            width: 65%;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .drop-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            line-height: 1.2;
+        }
+
+        .drop-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .drop-link:hover {
+            background: var(--color-base);
+            transform: translateX(5px);
+        }
+
+        .drop-icon {
+            background: rgba(192, 0, 0, 0.06);
+            color: var(--color-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            border: 1px solid rgba(192, 0, 0, 0.1);
+        }
+
+        .drop-link:hover .drop-icon {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: 0 10px 20px rgba(192, 0, 0, 0.2);
+        }
+
+        .drop-text h4 {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 0.35rem;
+            font-size: 1.05rem;
+            transition: color 0.2s;
+        }
+
+        .drop-link:hover .drop-text h4 {
+            color: var(--color-primary);
+        }
+
+        .drop-text p {
+            font-size: 0.85rem;
+            color: var(--color-gray);
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+
+        /* Responsive hiding for mega nav on strictly small elements */
+        @media (max-width: 1024px) {
+
+            .mega-links,
+            .top-bar-right,
+            .top-bar-left span {
+                display: none !important;
+            }
+
+            .nav-toggle {
+                display: flex !important;
+                margin-left: auto;
+            }
+        }
+        
+    </style>
+
+    <nav class="mega-nav">
+        <a href="index.html" class="nav-logo" style="flex: 1; text-decoration: none; display: flex; align-items: center;">
+            <img src="culture  arc logo.png" alt="CultureArc Logo" style="height: 65px; width: auto; object-fit: contain;">
+        </a>
+
+        <div class="mega-links">
+            <div class="mega-item">
+                <a href="about.html" class="mega-link" style="gap: 0;">Company</a>
+            </div>
+            <div class="mega-item">
+                <span class="mega-link">Solutions <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown">
+                    <div class="mega-drop-left">
+                        <div>
+                            <h3 class="drop-title" style="color: #C00000;">End-to-End Enterprise Solutions</h3>
+                            <p style="color: #C00000; line-height: 1.6; margin-bottom: 2rem; font-size: 0.95rem;">
+                                Discover how CultureArc engineers talent infrastructure to scale global technology
+                                operations securely and efficiently.
+                            </p>
+                        </div>
+                        <a href="services.html" class="btn btn-primary"
+                            style="width: 100%; justify-content: center;">View All Solutions <i
+                                class="ph ph-arrow-right"></i></a>
+                    </div>
+                    <div class="mega-drop-right">
+                        <a href="it-staffing.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-users-three"></i></div>
+                            <div class="drop-text">
+                                <h4>IT Staffing</h4>
+                                <p>Rapid deployment of pre-vetted tech professionals.</p>
+                            </div>
+                        </a>
+                        <a href="global-capability-center.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-buildings"></i></div>
+                            <div class="drop-text">
+                                <h4>Global Tech Center</h4>
+                                <p>Build-Operate-Transfer models for global scale.</p>
+                            </div>
+                        </a>
+                        <a href="executive-search.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-briefcase"></i></div>
+                            <div class="drop-text">
+                                <h4>Executive Search</h4>
+                                <p>Elite leadership and C-suite talent acquisition.</p>
+                            </div>
+                        </a>
+                        <a href="background-verification.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-shield-check"></i></div>
+                            <div class="drop-text">
+                                <h4>Background Verification</h4>
+                                <p>Comprehensive compliance and security checks.</p>
+                            </div>
+                        </a>
+                        <a href="rpo-solutions.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-chart-line-up"></i></div>
+                            <div class="drop-text">
+                                <h4>RPO Solutions</h4>
+                                <p>End-to-end recruitment process outsourcing.</p>
+                            </div>
+                        </a>
+                        <a href="payroll-management.html" class="drop-link">
+                            <div class="drop-icon"><i class="ph ph-files"></i></div>
+                            <div class="drop-text">
+                                <h4>Payroll Management</h4>
+                                <p>Seamless contractor and employee administration.</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Industries <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 700px;">
+                    <div class="mega-drop-left" style="width: 40%; background: white;">
+                        <h3 class="drop-title">Industry Verticals</h3>
+                        <p style="color: var(--color-gray); font-size: 0.9rem;">Tailored staffing architectures
+                            specialized for strict sector compliance and high velocity execution.</p>
+                    </div>
+                   <div class="mega-drop-right" style="width: 60%; grid-template-columns: 1fr 1fr; padding: 2rem;">
+                        <a href="bfsi.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-bank"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">BFSI</h4>
+                            </div>
+                        </a>
+                        <a href="healthcare.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-heartbeat"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Healthcare</h4>
+                            </div>
+                        </a>
+                        <a href="ecommerce.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-shopping-cart"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">E-Commerce</h4>
+                            </div>
+                        </a>
+                        <a href="telecom.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-broadcast"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Telecom</h4>
+                            </div>
+                        </a>
+                        <a href="manufacturing.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-factory"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Manufacturing</h4>
+                            </div>
+                        </a>
+                        <a href="technology.html" class="drop-link" style="padding: 0.5rem;">
+                            <div class="drop-icon" style="width: 36px; height: 36px; font-size: 1.2rem;"><i
+                                    class="ph ph-cpu"></i></div>
+                            <div class="drop-text">
+                                <h4 style="margin: 0; line-height: 36px;">Technology</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Insights <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="portfolio.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-open"></i></div>
+                        <div class="drop-text">
+                            <h4>Case Studies</h4>
+                            <p>Read about our successful commercial transformations.</p>
+                        </div>
+                    </a>
+                    <a href="study.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-newspaper"></i></div>
+                        <div class="drop-text">
+                            <h4>Newsroom</h4>
+                            <p>Latest corporate updates and press releases.</p>
+                        </div>
+                    </a>
+                    <a href="whitepapers.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-file-text"></i></div>
+                        <div class="drop-text">
+                            <h4>Whitepapers & Research</h4>
+                            <p>Deep-dive research into global talent markets.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mega-item">
+                <span class="mega-link">Resources <i class="ph ph-caret-down"></i></span>
+                <div class="mega-dropdown" style="width: 450px; display: block; padding: 2rem;">
+                    <a href="blog.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-article"></i></div>
+                        <div class="drop-text">
+                            <h4>Blog</h4>
+                            <p>Latest articles, industry trends, and expert opinions.</p>
+                        </div>
+                    </a>
+                    <a href="webinars.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-video-camera"></i></div>
+                        <div class="drop-text">
+                            <h4>Webinars</h4>
+                            <p>Live and on-demand video sessions and masterclasses.</p>
+                        </div>
+                    </a>
+                    <a href="ebooks.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-book-bookmark"></i></div>
+                        <div class="drop-text">
+                            <h4>E-Books & Guides</h4>
+                            <p>Comprehensive materials to elevate your talent strategy.</p>
+                        </div>
+                    </a>
+                    <a href="help-center.html" class="drop-link">
+                        <div class="drop-icon"><i class="ph ph-question"></i></div>
+                        <div class="drop-text">
+                            <h4>Help Center & FAQ</h4>
+                            <p>Support and answers to your most common questions.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="flex: 1; display: flex; gap: 1.25rem; justify-content: flex-end; align-items: center;" class="nav-buttons-right">
+            <a href="jobs.html" class="btn btn-ghost"
+                style="padding: 0.75rem 1.5rem; border-color: var(--color-border); font-weight: 600;">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary"
+                style="padding: 0.75rem 1.5rem; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner
+                With Us</a>
+            <button class="nav-toggle" id="nav-toggle"
+                style="display: none; background: transparent; border: none; font-size: 1.5rem; cursor: pointer;">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Enterprise Mobile Navigation (Hidden by default) -->
+    <div class="nav-mobile" id="nav-mobile-menu" style="display: none; background: white; padding: 1rem 5% 2rem; position: absolute; top: 90px; left: 0; width: 100%; border-bottom: 1px solid var(--color-border); box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-height: calc(100vh - 90px); overflow-y: auto; z-index: 999;">
+        
+        <style>
+            /* Clean up default summary arrows for mobile menu */
+            .nav-mobile details summary::-webkit-details-marker { display: none; }
+            .nav-mobile details summary { list-style: none; }
+            .nav-mobile a { transition: color 0.2s; }
+            .nav-mobile a:hover { color: var(--color-primary) !important; }
+        </style>
+
+        <a href="index.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Home</a>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Solutions <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="services.html" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">View All Solutions</a>
+                <a href="it-staffing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">IT Staffing</a>
+                <a href="global-capability-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Global Tech Center</a>
+                <a href="executive-search.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Executive Search</a>
+                <a href="background-verification.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Background Verification</a>
+                <a href="rpo-solutions.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">RPO Solutions</a>
+                <a href="payroll-management.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Payroll Management</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Industries <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="bfsi.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">BFSI</a>
+                <a href="healthcare.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Healthcare</a>
+                <a href="ecommerce.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Commerce</a>
+                <a href="telecom.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Telecom</a>
+                <a href="manufacturing.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Manufacturing</a>
+                <a href="technology.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Technology</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Insights <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="portfolio.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Case Studies</a>
+                <a href="study.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Newsroom</a>
+                <a href="whitepapers.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Whitepapers & Research</a>
+            </div>
+        </details>
+
+        <details style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <summary style="padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">Resources <i class="ph ph-caret-down"></i></summary>
+            <div style="padding: 0 0 1.25rem 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                <a href="blog.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Blog</a>
+                <a href="webinars.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Webinars</a>
+                <a href="ebooks.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">E-Books & Guides</a>
+                <a href="help-center.html" style="color: var(--color-gray); text-decoration: none; font-size: 1rem;">Help Center & FAQ</a>
+            </div>
+        </details>
+
+        <a href="about.html" style="display: block; padding: 1.25rem 0; font-size: 1.15rem; font-weight: 600; color: var(--color-dark); text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.05);">Company</a>
+        
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+            <a href="jobs.html" class="btn btn-ghost" style="justify-content: center; border: 1px solid var(--color-border); padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; color: var(--color-dark);">Find a Job</a>
+            <a href="hire.html" class="btn btn-primary" style="justify-content: center; padding: 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; box-shadow: 0 10px 20px rgba(192,0,0,0.2);">Partner With Us</a>
+        </div>
+    </div>
+
+    <main style="margin-top: 72px;">
+
+    <!-- ===== 1. SERVICES HERO ===== -->
+    <section class="hero"
+        style="min-height: 70vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: linear-gradient(135deg, white 0%, var(--color-base) 100%);">
+
+        <div class="container text-center" style="position: relative; z-index: 2; padding-top: 4rem;">
+            <div class="gs-reveal">
+                <div class="pill pill-red"
+                    style="margin-bottom: 2rem; border: 1px solid rgba(192,0,0,0.3); background: rgba(192,0,0,0.05); color: var(--color-primary); font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">
+                    Enterprise Service Portfolio
+                </div>
+            </div>
+
+            <h1 class="gs-reveal delay-1"
+                style="font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 800; color: var(--color-dark); line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                Architecting the <br>
+                <span style="color: var(--color-primary);">Workforce of the Future.</span>
+            </h1>
+
+            <p class="gs-reveal delay-2"
+                style="font-size: clamp(1.1rem, 2vw, 1.25rem); color: var(--color-gray); max-width: 800px; margin: 0 auto 3rem; line-height: 1.7;">
+                From rapid augmentation of specialized IT squads to standing up global technical delivery centers from
+                scratch. We deploy enterprise-grade talent solutions with zero operational friction.
+            </p>
+
+            <div class="gs-reveal delay-3">
+                <a href="#services-matrix" class="btn btn-primary btn-lg"
+                    style="box-shadow: 0 15px 30px rgba(192,0,0,0.2);">View Service Matrix <i
+                        class="ph ph-arrow-down"></i></a>
+            </div>
+        </div>
+
+        <!-- Graphic Overlay -->
+       <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 250px; background: url('data:image/svg+xml,%3Csvg viewBox=%220 0 1440 320%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath fill=%22%23ffffff%22 fill-opacity=%221%22 d=%22M0,128L48,128C96,128,192,128,288,149.3C384,171,480,213,576,213.3C672,213,768,171,864,160C960,149,1056,171,1152,192C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z%22%3E%3C/path%3E%3C/svg%3E') no-repeat bottom; background-size: cover; z-index: 1;">
+    </div>
+    </section>
+
+    <!-- ===== 2. SERVICE MATRIX ===== -->
+    <section class="section-lg" id="services-matrix" style="background: white; position: relative; z-index: 2;">
+        <div class="container" style="max-width: 1400px; padding: 0 5%;">
+
+            <!-- Service 1: IT Contract Staffing -->
+            <div class="service-detail-block gs-reveal"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 8rem;">
+                <div style="order: 1;">
+                    <h2
+                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1.5rem;">
+                        IT Contract Staffing <span style="color: var(--color-primary);">.</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--color-gray); line-height: 1.7; margin-bottom: 2rem;">
+                        Rapidly scale your technical capabilities without the overhead. We provide specialized contract
+                        engineers, data scientists, and DevOps architects deployed directly into your sprints.
+                    </p>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.25rem;">
+                        <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div
+                                style="width: 32px; height: 32px; border-radius: 8px; background: rgba(192,0,0,0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem;">
+                                <i class="ph ph-clock"></i></div>
+                            <div>
+                                <h4
+                                    style="font-family: var(--font-sans); font-weight: 700; color: var(--color-dark); margin-bottom: 0.25rem;">
+                                    48-Hour SLA</h4>
+                                <p style="font-size: 0.95rem; color: var(--color-gray); margin: 0; line-height: 1.5;">
+                                    First set of pre-vetted profiles delivered within 48 hours for critical reqs.</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div
+                                style="width: 32px; height: 32px; border-radius: 8px; background: rgba(192,0,0,0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem;">
+                                <i class="ph ph-user-switch"></i></div>
+                            <div>
+                                <h4
+                                    style="font-family: var(--font-sans); font-weight: 700; color: var(--color-dark); margin-bottom: 0.25rem;">
+                                    Contract-to-Hire</h4>
+                                <p style="font-size: 0.95rem; color: var(--color-gray); margin: 0; line-height: 1.5;">
+                                    Evaluate technical fit over 6 months before absorbing them into your payroll.</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div
+                                style="width: 32px; height: 32px; border-radius: 8px; background: rgba(192,0,0,0.1); color: var(--color-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem;">
+                                <i class="ph ph-shield-check"></i></div>
+                            <div>
+                                <h4
+                                    style="font-family: var(--font-sans); font-weight: 700; color: var(--color-dark); margin-bottom: 0.25rem;">
+                                    Total Compliance</h4>
+                                <p style="font-size: 0.95rem; color: var(--color-gray); margin: 0; line-height: 1.5;">We
+                                    absorb all co-employment risks, tax filings, and legal compliance.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="order: 2; position: relative;">
+                    <!-- Tech Data Vis -->
+                    <div
+                        style="background: var(--color-dark); border-radius: 24px; padding: 3rem; position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.15);">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22%3E%3Ccircle cx=%222%22 cy=%222%22 r=%221%22 fill=%22rgba(255,255,255,0.05)%22/%3E%3C/svg%3E');"></div>
+                            <div style="position: relative; z-index: 2;">
+                            <div
+                                style="display: flex; justify-content: space-between; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+                                <div
+                                    style="color: white; font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em;">
+                                    ACTIVE SQUDS</div>
+                                <div style="color: var(--color-primary);"><i class="ph ph-pulse"
+                                        style="font-size: 1.5rem;"></i></div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                                    <div
+                                        style="font-size: 0.75rem; color: var(--color-gray); margin-bottom: 0.5rem; text-transform: uppercase; font-family: var(--font-mono);">
+                                        Cloud Arch</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: white;">
+                                        320+</div>
+                                </div>
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                                    <div
+                                        style="font-size: 0.75rem; color: var(--color-gray); margin-bottom: 0.5rem; text-transform: uppercase; font-family: var(--font-mono);">
+                                        Full Stack</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: white;">
+                                        450+</div>
+                                </div>
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                                    <div
+                                        style="font-size: 0.75rem; color: var(--color-gold); margin-bottom: 0.5rem; text-transform: uppercase; font-family: var(--font-mono);">
+                                        Data/AI</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: white;">
+                                        180+</div>
+                                </div>
+                                <div
+                                    style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                                    <div
+                                        style="font-size: 0.75rem; color: var(--color-gray); margin-bottom: 0.5rem; text-transform: uppercase; font-family: var(--font-mono);">
+                                        CyberSec</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: white;">
+                                        95+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 2: BOT Model -->
+            <div class="service-detail-block gs-reveal"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 8rem;">
+                <div style="order: 2;">
+                    <h2
+                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1.5rem;">
+                        Global Tech Centers <span style="color: var(--color-gold);">(BOT)</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--color-gray); line-height: 1.7; margin-bottom: 2rem;">
+                        Offshore and nearshore captive centers, de-risked. Our Build-Operate-Transfer models allow you
+                        to establish massive global capabilities without initial entity setup complexities.
+                    </p>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.25rem;">
+                        <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div
+                                style="width: 32px; height: 32px; border-radius: 8px; background: rgba(247,179,45,0.1); color: #D97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem;">
+                                <i class="ph ph-hammer"></i></div>
+                            <div>
+                                <h4
+                                    style="font-family: var(--font-sans); font-weight: 700; color: var(--color-dark); margin-bottom: 0.25rem;">
+                                    Phase 1: Build</h4>
+                                <p style="font-size: 0.95rem; color: var(--color-gray); margin: 0; line-height: 1.5;">
+                                    Facilities, infrastructure, entity registration, and initial core team hiring.</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div
+                                style="width: 32px; height: 32px; border-radius: 8px; background: rgba(247,179,45,0.1); color: #D97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem;">
+                                <i class="ph ph-gear"></i></div>
+                            <div>
+                                <h4
+                                    style="font-family: var(--font-sans); font-weight: 700; color: var(--color-dark); margin-bottom: 0.25rem;">
+                                    Phase 2: Operate</h4>
+                                <p style="font-size: 0.95rem; color: var(--color-gray); margin: 0; line-height: 1.5;">
+                                    Managed HR, localized payroll, performance enablement, and scale.</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div
+                                style="width: 32px; height: 32px; border-radius: 8px; background: rgba(247,179,45,0.1); color: #D97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem;">
+                                <i class="ph ph-arrows-merge"></i></div>
+                            <div>
+                                <h4
+                                    style="font-family: var(--font-sans); font-weight: 700; color: var(--color-dark); margin-bottom: 0.25rem;">
+                                    Phase 3: Transfer</h4>
+                                <p style="font-size: 0.95rem; color: var(--color-gray); margin: 0; line-height: 1.5;">
+                                    Seamless legal transfer of assets and talent to your captive entity.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="order: 1; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800"
+                        alt="Global Tech Center"
+                        style="width: 100%; height: auto; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.1);">
+                    <!-- Floating KPI card -->
+                    <div
+                        style="position: absolute; bottom: 30px; left: -30px; background: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); border-left: 4px solid var(--color-gold); display: flex; align-items: center; gap: 1rem;">
+                        <div
+                            style="width: 50px; height: 50px; border-radius: 50%; background: rgba(247,179,45,0.1); color: #D97706; display: flex; justify-content: center; align-items: center; font-size: 1.5rem;">
+                            <i class="ph ph-trend-down"></i></div>
+                        <div>
+                            <div
+                                style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--color-dark); line-height: 1;">
+                                40-60%</div>
+                            <div style="font-size: 0.85rem; color: var(--color-gray); font-weight: 600;">Cost Arbitrage
+                                Achieved</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 3: Executive Search -->
+            <div class="service-detail-block gs-reveal"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 8rem;">
+                <div style="order: 1;">
+                    <h2
+                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1.5rem;">
+                        Executive Search <span style="color: var(--color-primary);">.</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--color-gray); line-height: 1.7; margin-bottom: 2rem;">
+                        Acquiring technology visionaries. Our deep-rooted industry connections and discreet search
+                        methodology guarantee access to the top 1% of passive technical leadership globally.
+                    </p>
+                    <div
+                        style="background: var(--color-base); border: 1px solid var(--color-border); border-radius: 16px; overflow: hidden;">
+                        <div
+                            style="padding: 1.5rem; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 1rem; background: white;">
+                            <i class="ph ph-crown" style="font-size: 1.5rem; color: var(--color-gold);"></i>
+                            <h4
+                                style="font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; margin: 0; color: var(--color-dark);">
+                                Target Topologies</h4>
+                        </div>
+                        <div style="padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 600; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-primary);"></i> Chief
+                                Information Officer</div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 600; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-primary);"></i> Chief Technology
+                                Officer</div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 600; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-primary);"></i> VP of
+                                Engineering</div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 600; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-primary);"></i> Chief Info
+                                Security Officer</div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 600; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-primary);"></i> Head of Al/ML
+                            </div>
+                            <div
+                                style="display: flex; align-items: center; gap: 0.75rem; color: var(--color-dark); font-weight: 600; font-size: 0.95rem;">
+                                <i class="ph ph-check-circle" style="color: var(--color-primary);"></i> Enterprise
+                                Architects</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="order: 2; border-radius: 24px; overflow: hidden; height: 500px; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800" alt="Executive Search"
+                        style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(1.1);">
+                    <div
+                        style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.6), transparent);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service 4: Background & Compliance -->
+            <div class="service-detail-block gs-reveal"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 4rem;">
+                <div style="order: 2;">
+                    <h2
+                        style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--color-dark); margin-bottom: 1.5rem;">
+                        Verification & Compliance <span style="color: #2196F3;">.</span></h2>
+                    <p style="font-size: 1.1rem; color: var(--color-gray); line-height: 1.7; margin-bottom: 2rem;">
+                        Mitigate insider threats. Our exhaustive BGV (Background Verification) engine guarantees
+                        absolute integrity across your workforce, operating within strict global data privacy
+                        constraints.
+                    </p>
+
+                    <!-- Accordion like list -->
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+                        <div
+                            style="border: 1px solid var(--color-border); border-radius: 12px; padding: 1.5rem; background: var(--color-base);">
+                            <h4
+                                style="font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; color: var(--color-dark); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="ph ph-fingerprint" style="color: #2196F3; font-size: 1.5rem;"></i> Identity &
+                                Criminal</h4>
+                            <p style="margin: 0; color: var(--color-gray); font-size: 0.95rem; line-height: 1.5;">
+                                Multijurisdictional criminal databases, global watchlists (OFAC), and definitive ID
+                                authentication logic.</p>
+                        </div>
+
+                        <div
+                            style="border: 1px solid var(--color-border); border-radius: 12px; padding: 1.5rem; background: var(--color-base);">
+                            <h4
+                                style="font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; color: var(--color-dark); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="ph ph-graduation-cap" style="color: #2196F3; font-size: 1.5rem;"></i>
+                                Education & Credential</h4>
+                            <p style="margin: 0; color: var(--color-gray); font-size: 0.95rem; line-height: 1.5;">Direct
+                                verification with universities and primary source licensure bodies globally to eliminate
+                                fraudulent credentials.</p>
+                        </div>
+
+                        <div
+                            style="border: 1px solid var(--color-border); border-radius: 12px; padding: 1.5rem; background: var(--color-base);">
+                            <h4
+                                style="font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; color: var(--color-dark); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="ph ph-briefcase" style="color: #2196F3; font-size: 1.5rem;"></i> Employment
+                                History</h4>
+                            <p style="margin: 0; color: var(--color-gray); font-size: 0.95rem; line-height: 1.5;">
+                                Extensive deep-dives into prior employments, cross-checking tax records (UAN/PF) and
+                                authenticating exit modalities.</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="order: 1; position: relative;">
+                    <!-- Animated Scanner Graphic -->
+                    <div
+                        style="background: var(--color-base); border-radius: 24px; padding: 3rem; border: 1px solid var(--color-border); position: relative; overflow: hidden; height: 500px; display: flex; align-items: center; justify-content: center;">
+                        <div
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 50%; border-bottom: 2px solid #2196F3; background: linear-gradient(to bottom, transparent, rgba(33,150,243,0.1)); animation: scan 3s infinite alternate ease-in-out; box-shadow: 0 10px 20px rgba(33,150,243,0.2);">
+                        </div>
+                        <i class="ph ph-file-dashed"
+                            style="font-size: 12rem; color: var(--color-gray); opacity: 0.3;"></i>
+
+                        <style>
+                            @keyframes scan {
+                                0% {
+                                    height: 0%;
+                                    opacity: 0;
+                                }
+
+                                10% {
+                                    opacity: 1;
+                                }
+
+                                90% {
+                                    opacity: 1;
+                                }
+
+                                100% {
+                                    height: 100%;
+                                    opacity: 0;
+                                }
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile overrides for alternating grid -->
+        <style>
+            @media (max-width: 1024px) {
+                .service-detail-block {
+                    grid-template-columns: 1fr !important;
+                    gap: 3rem !important;
+                }
+
+                .service-detail-block>div {
+                    order: 1 !important;
+                }
+            }
+        </style>
+    </section>
+
+    <!-- ===== 3. CAPABILITY METRICS ===== -->
+    <section class="section metrics-section" id="metrics" style="margin-top: 0;">
+        <div class="container">
+            <div class="metrics-grid gs-reveal">
+                <div class="metric-item">
+                    <div class="metric-value" style="color: white; font-size: 48px;"><span data-count="30">0</span>+
+                    </div>
+                    <div class="metric-label" style="color: rgba(255,255,255,0.7);">Global Enterprise Clients</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value" style="color: white; font-size: 48px;"><span data-count="98">0</span>%
+                    </div>
+                    <div class="metric-label" style="color: rgba(255,255,255,0.7);">Executive Placement Retention</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value" style="color: white; font-size: 48px;"><span data-count="50">0</span>K+
+                    </div>
+                    <div class="metric-label" style="color: rgba(255,255,255,0.7);">Background Checks YoY</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value" style="color: white; font-size: 48px;">&lt;<span data-count="48">0</span>h
+                    </div>
+                    <div class="metric-label" style="color: rgba(255,255,255,0.7);">Avg Turnaround Time</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 4. CTA ===== -->
+    <section class="section-lg cta-section">
+        <div class="container text-center gs-reveal">
+            <h2 style="color: var(--color-dark); margin-bottom: 2rem;">Architect Your <span
+                    class="text-gradient">Team.</span></h2>
+            <a href="hire.html" class="btn btn-primary btn-lg" style="box-shadow: 0 20px 40px rgba(192,0,0,0.2);">
+                <span>Submit Resource Request</span>
+                <i class="ph ph-arrow-right btn-icon"></i>
+            </a>
+        </div>
+    </section>
+
+</main>
+
+    <!-- ===== ENTERPRISE MEGA FOOTER ===== -->
+    <footer class="footer"
+        style="background: var(--color-dark); padding: 6rem 5% 2rem; position: relative; overflow: hidden; color: white;">
+        <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #C00000, #F7B32D, #C00000);">
+        </div>
+        <i class="ph ph-globe"
+            style="position: absolute; top: -10%; right: -5%; font-size: 50rem; color: rgba(255,255,255,0.02); z-index: 0; pointer-events: none;"></i>
+
+        <div class="container" style="max-width: 1400px; position: relative; z-index: 2;">
+
+            <!-- Top Footer / Newsletter -->
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4rem; margin-bottom: 4rem; gap: 2rem;">
+                <div style="max-width: 500px;">
+                    <h3
+                        style="font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: white;">
+                        Subscribe to <span style="color: var(--color-gold);">ArcInsights</span></h3>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 1.05rem; line-height: 1.6;">Get monthly executive
+                        briefings on global talent trends, remote team compliance updates, and AI in recruitment.</p>
+                </div>
+                <div style="flex-grow: 1; max-width: 500px; display: flex; gap: 1rem;">
+                    <input type="email" placeholder="Enter your work email"
+                        style="width: 100%; padding: 1.25rem 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: white; font-size: 1rem; outline: none; transition: all 0.3s;"
+                        onfocus="this.style.borderColor='var(--color-gold)'; this.style.background='rgba(255,255,255,0.05)';"
+                        onblur="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.03)';">
+                    <button class="btn btn-primary"
+                        style="padding: 0 2.5rem; flex-shrink: 0; border-radius: 8px; font-weight: 700;">Subscribe <i
+                            class="ph ph-paper-plane-tilt"></i></button>
+                </div>
+            </div>
+
+            <!-- Main Footer Links Grid -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+
+                <!-- Brand Col -->
+                <div>
+                    <a href="index.html" style="display: inline-flex; align-items: center; text-decoration: none; margin-bottom: 2rem;">
+                        <img src="culture  arc logo.png" alt="CultureArc Logo" style="height: 45px; width: auto; object-fit: contain;">
+                    </a>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;">
+                        Engineering scalable talent infrastructure for the digital economy. We provide end-to-end IT
+                        staffing, executive search, and enterprise operational transformation across global markets.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#0077b5'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-linkedin-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#1DA1F2'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-twitter-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#E1306C'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-instagram-logo"></i></a>
+                        <a href="#"
+                            style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s;"
+                            onmouseover="this.style.background='#FF0000'; this.style.transform='translateY(-5px)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0)';"><i
+                                class="ph ph-youtube-logo"></i></a>
+                    </div>
+                </div>
+
+                <!-- Link Cols -->
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Solutions</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">IT Contract Staffing</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Global Tech Centers</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Executive Search</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">RPO Architecture</a></li>
+                        <li><a href="services.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Background Verifications</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Company</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Corporate Overview</a></li>
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Leadership Team</a></li>
+                        <li><a href="portfolio.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Global Operations</a></li>
+                        <li><a href="about.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">ESG Initiatives</a></li>
+                        <li><a href="hire.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Partner With Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Talent</h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                        <li><a href="jobs.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Find Jobs</a></li>
+                        <li><a href="jobs.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Submit Resume</a></li>
+                        <li><a href="study.html"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Career Content</a></li>
+                        <li><a href="#"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Alumni Network</a></li>
+                        <li><a href="#"
+                                style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                                onmouseover="this.style.color='var(--color-gold)';"
+                                onmouseout="this.style.color='rgba(255,255,255,0.6)';">Payroll Portal</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4
+                        style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                        Global HQ</h4>
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <i class="ph ph-map-pin"
+                            style="color: var(--color-gold); font-size: 1.25rem; margin-top: 0.2rem;"></i>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                            15A, 4th Floor, City Vista,
+                            Fountain Road, Kharadi<br>Pune, Maharashtra - 411014
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <i class="ph ph-envelope"
+                            style="color: var(--color-gold); font-size: 1.25rem; margin-top: 0.2rem;"></i>
+                        <a href="mailto:info@culturearc.com"
+                            style="color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s;"
+                            onmouseover="this.style.color='var(--color-gold)';"
+                            onmouseout="this.style.color='rgba(255,255,255,0.6)';">info@culturearc.com</a>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div
+                            style="font-size: 0.8rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; font-weight: 700;">
+                            Government Registered</div>
+                        <div
+                            style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: white;">
+                            MSME: UDYAM-MH-26-0170565</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Legal & Compliance -->
+            <div
+                style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
+                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.5);">
+                    &copy; 2026 CultureArc Pvt. Ltd. All Rights Reserved.
+                </div>
+
+                <div style="display: flex; gap: 2rem; align-items: center;">
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Privacy Architecture</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Terms of Engagement</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Cookie Enforcement</a>
+                    <a href="#"
+                        style="color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s;"
+                        onmouseover="this.style.color='white';"
+                        onmouseout="this.style.color='rgba(255,255,255,0.5)';">Compliance Center</a>
+                </div>
+            </div>
+
+            <style>
+                @media (max-width: 1024px) {
+                    .footer>.container>div:nth-child(2) {
+                        grid-template-columns: 1fr 1fr;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .footer>.container>div:nth-child(2) {
+                        grid-template-columns: 1fr;
+                        gap: 3rem;
+                    }
+
+                    .footer>.container>div:nth-child(3) {
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                    }
+                }
+            </style>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/global1.js"></script>
+    <script src="js/hero.js"></script>
+
+    <!-- 3D Chapter Carousel Engine -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('carousel');
+            const cards = document.querySelectorAll('.story-card');
+            const wrap = document.querySelector('.story-carousel-wrap');
+
+            if (!carousel || !cards.length || !wrap) return;
+
+            let currAngle = 0;
+            let isDragging = false;
+            let startX = 0;
+            let autoRotate = true;
+
+            // 1. Logic to Snap Card to Front on Click
+            cards.forEach((card, i) => {
+                card.addEventListener('click', () => {
+                    const anglePerCard = 360 / cards.length;
+                    currAngle = i * -anglePerCard;
+                    carousel.style.transform = `rotateY(${currAngle}deg)`;
+                });
+            });
+
+            // 2. Manual Drag Interaction
+            wrap.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                autoRotate = false;
+                startX = e.pageX;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.pageX - startX;
+                currAngle += dx * 0.3; // Sensitivity
+                startX = e.pageX;
+                carousel.style.transform = `rotateY(${currAngle}deg)`;
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            wrap.addEventListener('mouseleave', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            // 3. Touch support
+            wrap.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                autoRotate = false;
+                startX = e.touches[0].pageX;
+            }, { passive: true });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                const dx = e.touches[0].pageX - startX;
+                currAngle += dx * 0.4;
+                startX = e.touches[0].pageX;
+                carousel.style.transform = `rotateY(${currAngle}deg)`;
+            }, { passive: true });
+
+            window.addEventListener('touchend', () => {
+                isDragging = false;
+                autoRotate = true;
+            });
+
+            // 4. Gentle Auto-Drift
+            function drift() {
+                if (!isDragging && autoRotate) {
+                    currAngle -= 0.08;
+                    carousel.style.transform = `rotateY(${currAngle}deg)`;
+                }
+                requestAnimationFrame(drift);
+            }
+            drift();
+        });
+    </script>
+
+    <!-- Pipeline scroll animation -->
+    <script>
+        (function () {
+            const pipeline = document.getElementById('pipeline');
+            const fill = document.getElementById('pipeline-fill');
+            const dots = document.querySelectorAll('.pipeline-dot');
+
+            if (!pipeline || !fill) return;
+
+            function updatePipeline() {
+                const rect = pipeline.getBoundingClientRect();
+                const viewH = window.innerHeight;
+                const progress = Math.max(0, Math.min(1, (viewH - rect.top) / (rect.height + viewH * 0.5)));
+                fill.style.height = (progress * 100) + '%';
+
+                dots.forEach((dot, i) => {
+                    const dotRect = dot.getBoundingClientRect();
+                    if (dotRect.top < viewH * 0.7) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updatePipeline, { passive: true });
+
+            // Industry horizontal scroll drag
+            const track = document.getElementById('industry-scroll');
+            if (track) {
+                let isDown = false, startX, scrollLeft;
+                track.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+                track.addEventListener('mouseleave', () => isDown = false);
+                track.addEventListener('mouseup', () => isDown = false);
+                track.addEventListener('mousemove', e => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - track.offsetLeft;
+                    track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

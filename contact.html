@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CultureArc | Our Experts & Contact</title>
+    <meta name="description" content="Meet the expert team of Consulting Architects, Data Scientists, and QA Managers at CultureArc. Includes our detailed contact information.">
+    
+    <!-- Structured Data and Open Graph Tags remain consistent with the overall site -->
+    <meta property="og:title" content="CultureArc - Our Expert Team">
+    <meta property="og:description" content="Profiles of our Consulting Architects, Data Scientists, QA Leads, and UI Developers.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.culturearc.com/team.html">
+    <meta property="og:image" content="https://placehold.co/1200x630/D32F2F/ffffff?text=CultureArc_Team">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & RESET (Copied from previous files)
+           ========================================= */
+        :root {
+            /* Theme: Red, Black, White */
+            --primary-color: #D32F2F; /* The "Arc" Red */
+            --primary-dark: #b71c1c;  /* Darker Red for hover */
+            --accent-black: #000000;  /* The "Culture" Black */
+            
+            --text-dark: #1a1a1a;
+            --text-gray: #4b5563;
+            --text-light: #6b7280;
+            
+            --bg-body: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-dark: #111111;
+
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            
+            --radius: 4px; /* Sharper corners for a more corporate/bold feel */
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-dark);
+            background-color: var(--bg-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img, svg {
+            vertical-align: middle;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 90px 0;
+        }
+
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary-color); }
+        .text-black { color: var(--accent-black); }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--accent-black);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* Red underline for section headings */
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
+        }
+        
+        .section-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-gray);
+            max-width: 650px;
+            margin: 1.5rem auto 4rem auto;
+            text-align: center;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* =========================================
+           HEADER & NAVBAR 
+           ========================================= */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+            transition: height 0.3s;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-dark);
+            position: relative;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: var(--accent-black);
+        }
+        
+        /* =========================================
+           PAGE SPECIFIC LAYOUTS
+           ========================================= */
+        
+        .hero-page {
+            background-color: var(--bg-light);
+            padding: 100px 0 60px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        .hero-page h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .hero-page p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+        }
+        
+        /* Team Profiles */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid var(--accent-black);
+        }
+        
+        .profile-card:nth-child(1),
+        .profile-card:nth-child(2),
+        .profile-card:nth-child(3) {
+             border-top-color: var(--primary-color); /* Architects/Key roles highlighted */
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            background-color: var(--bg-light);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .profile-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-role {
+            font-size: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .profile-expertise {
+            text-align: left;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .contact-info-box {
+            background: #111; /* Dark Black background */
+            color: white;
+            padding: 50px;
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+        
+        .contact-info-box::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 20px solid var(--primary-color);
+            opacity: 0.2;
+        }
+        
+        .contact-info-box h2 {
+             color: white;
+             border: none;
+             font-size: 2.2rem;
+        }
+        
+        .contact-info-box ul li {
+             display: flex;
+             gap: 15px;
+             margin-bottom: 15px;
+        }
+        .contact-info-box ul li svg {
+             color: var(--primary-color);
+        }
+
+        /* Footer (Copied from index.html) */
+        footer {
+            background-color: #000;
+            color: white;
+            padding: 80px 0 30px;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .footer h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links a {
+            color: #999;
+            transition: color 0.3s;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            background: #222;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary-color);
+        }
+        
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+        @media (max-width: 992px) {
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-menu {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 90px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: left 0.3s;
+                border-top: 1px solid #eee;
+            }
+            .nav-menu.active { left: 0; }
+            h1 { font-size: 2.5rem; }
+            .team-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Animation Utility */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <header id="header">
+        <div class="container nav-container">
+            <!-- LOGO: Recreated with SVG to match requested Image (Culture Black, Arc Red, Stylized A) -->
+            <a href="index.html" class="brand-logo">
+                <svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 'Culture' in Black -->
+                    <text x="0" y="30" font-family="Arial, sans-serif" font-size="32" font-weight="400" fill="#000000">Culture</text>
+                    
+                    <!-- Stylized 'A' -->
+                    <g transform="translate(108, 0)">
+                        <!-- The A Legs -->
+                        <path d="M12 30 L22 4 L32 30" stroke="#D32F2F" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- The Orbit/Ring -->
+                        <ellipse cx="22" cy="20" rx="16" ry="4" stroke="#D32F2F" stroke-width="2" fill="none" transform="rotate(-5 22 20)"/>
+                    </g>
+                    
+                    <!-- 'rc' in Red -->
+                    <text x="142" y="30" font-family="Arial, sans-serif" font-size="32" font-weight="400" fill="#D32F2F">rc</text>
+                </svg>
+            </a>
+            
+            <nav>
+                <!-- Navigation links point to planned pages -->
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="Aboutus.html" class="nav-link">About</a></li>
+                    <li><a href="services.html" class="nav-link">Services</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="model.html" class="nav-link">Models</a></li>
+                    <li><a href="team.html" class="nav-link active">Team/Contact</a></li>
+                    <li><a href="index.html" class="btn btn-primary">Hire Talent</a></li>
+                </ul>
+            </nav>
+            
+            <div class="hamburger" id="hamburger">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== PAGE HERO ==================== -->
+    <section class="hero-page">
+        <div class="container">
+            <h1 class="fade-in">Meet Our Experts</h1>
+            <p class="fade-in">The specialized architects, scientists, and engineers driving your digital transformation.</p>
+        </div>
+    </section>
+
+    <!-- ==================== TEAM PROFILES ==================== -->
+    <section id="team" class="section-padding">
+        <div class="container">
+            <div class="team-grid">
+                
+                <!-- Profile 1: Swapnil P - Consulting Enterprise Architect -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><path d="M17 11l-4 4-2-2"></path></svg>
+                    </div>
+                    <h3>Swapnil P</h3>
+                    <span class="profile-role">Consulting Enterprise Architect</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">19 Years of Experience | Creative, Innovative & Results-Driven</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> End-to-End Solutions, Technology Strategy, Presales, Mobile/Portal Architecture (Android, iOS, Angular, React, Flutter), Backend (J2EE, Spring, AWS, GCP), AR/VR, AI/ML, and hyper-personalization.</p>
+                        <p style="margin-top: 10px;">* Worked with large clients including FedEx, Home Depot, Amex, HSBC, Siemens.</p>
+                    </div>
+                </div>
+
+                <!-- Profile 2: Anand W - Consulting Mobility Architect -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    </div>
+                    <h3>Anand W</h3>
+                    <span class="profile-role">Consulting Mobility Architect</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">15 Years of Experience | Full Life Cycle Mobile Solutions</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> Native, Hybrid, and PWA Mobile Applications. Hands-on Design & Development (Android Native, Ionic, React Native, Flutter, Angular). Backend Integration (Spring, MySQL, Apache Kafka).</p>
+                        <p style="margin-top: 10px;">* Specialized in solutions for CenturyLink, AutoZone, Sony Mobile, and Wells Fargo.</p>
+                    </div>
+                </div>
+
+                <!-- Profile 3: Atul K - Consulting Cloud Architect -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 18v-5c0-1.2-0.6-2.4-1.6-3.2L12 3.5 5.6 9.8C4.6 10.6 4 11.8 4 13v5"></path><polyline points="10 20 12 22 14 20"></polyline></svg>
+                    </div>
+                    <h3>Atul K</h3>
+                    <span class="profile-role">Consulting Cloud Architect</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">25+ Years of IT Experience | Microsoft 365 SME</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> Microsoft technologies, M365 Modern Workplace, Power Platform (Apps, Automate, BI), Azure (SaaS, PaaS, APIM, Functions), SharePoint (SPFx, Modernization, Governance). </p>
+                        <p style="margin-top: 10px;">* Extensive Onsite experience in US, Belgium, Netherlands, and UK.</p>
+                    </div>
+                </div>
+                
+                <!-- Profile 4: Ayush P - Data Scientist -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><path d="M9 9h.01"></path><path d="M15 9h.01"></path></svg>
+                    </div>
+                    <h3>Ayush P</h3>
+                    <span class="profile-role">Data Scientist</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">3 Years of Experience | Predictive Modeling Expert</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> Machine Learning, Statistical Modeling, Data Analysis (Python, R, SQL). Deep Learning (TensorFlow, Keras, CNNs, LSTMs). Big Data (Hadoop, Spark, Kafka). Visualization (Tableau, Power BI).</p>
+                    </div>
+                </div>
+                
+                <!-- Profile 5: Pranav N - Data Analyst -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>
+                    </div>
+                    <h3>Pranav N</h3>
+                    <span class="profile-role">Data Analyst</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">3 Years of Experience | Actionable Insights</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> Data Cleaning, Exploratory Data Analysis (EDA), Hypothesis Testing, Regression Analysis. Tools: Python (Pandas, NumPy), Tableau, Power BI, MySQL. Experienced in K-means clustering for customer segmentation.</p>
+                    </div>
+                </div>
+
+                <!-- Profile 6: Abhinendra T - QA Manager -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <h3>Abhinendra T</h3>
+                    <span class="profile-role">QA Manager / PSM Certified</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">12 Years of Experience | Quality & Process Compliance</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> Software Testing (Functional, Regression, Security, Black Box). PSM Certified. Experience with Apttus CPQ, Chatbot testing, Salesforce Admin training. Technology stack: .NET, ASP, Java, React, Agile Methodology.</p>
+                    </div>
+                </div>
+                
+                <!-- Profile 7: Praveen R - QA Lead -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline><path d="M17 12H7"></path><path d="M17 16H7"></path></svg>
+                    </div>
+                    <h3>Praveen R</h3>
+                    <span class="profile-role">QA Lead / Automation Specialist</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">8+ Years of Experience | Test Strategy & SDLC</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> SDLC/STLC, Test Planning, Defect Management (JIRA/Rally). Automation using Selenium WebDriver-Java and Test NG. Experience in API Testing (Postman), Mobile Responsive testing, and Agile/Scrum.</p>
+                    </div>
+                </div>
+                
+                <!-- Profile 8: Nupesh T - UI Developer -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                    </div>
+                    <h3>Nupesh T</h3>
+                    <span class="profile-role">UI Developer / Frontend Expert</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">7+ Years of Competitive Experience | Creative & Analytical</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> HTML5, CSS3, JavaScript, Bootstrap, Sass/Less. Frameworks: IONIC, Angular JS, Angular2/6, React JS, Jquery. Tools: Visual Studio, Git, Adobe Photoshop. Strong organizational and leadership qualities.</p>
+                    </div>
+                </div>
+                
+                <!-- Profile 9: Krati G - Talent Acquisition -->
+                <div class="profile-card fade-in">
+                    <div class="profile-image">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h3>Krati G</h3>
+                    <span class="profile-role">Talent Acquisition Specialist</span>
+                    <p style="color: var(--text-dark); font-weight: 600;">6+ Years of Experience | IT Recruitment Expert</p>
+                    <div class="profile-expertise">
+                        <p><strong>Expertise:</strong> Sourcing across platforms (LinkedIn, GitHub). Technical expertise in Java, Python, Cloud (AWS, Azure), DevOps, ML. Skilled in technical interviewing and ATS management for precise candidate selection.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT US ==================== -->
+    <section id="contact" class="section-padding bg-light">
+        <div class="container">
+            <div class="contact-info-box fade-in" style="background: var(--accent-black);">
+                <h2 style="color: white; border: none; font-size: 2.2rem;">Reach Out Today</h2>
+                <p style="margin-bottom: 40px; opacity: 0.8; font-size: 1.1rem;">Connect with Dr. Manish D (Technologist Economist) and our support team.</p>
+                
+                <ul style="display: flex; flex-direction: column; gap: 25px;">
+                    <li style="display: flex; gap: 15px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>CultureArc, 15A, 4th Floor, City Vista, Fountain Road, Kharadi, Pune, Maharashtra - 411014</span>
+                    </li>
+                    <li style="display: flex; gap: 15px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span>
+                            info@culturearc.com, talent@culturearc.com, hr@culturearc.com, amcsagile@gmail.com
+                        </span>
+                    </li>
+                    <li style="display: flex; gap: 15px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>+91 95290 45600 (Pune, Indore, USA, UK, Europe)</span>
+                    </li>
+                    <li style="display: flex; gap: 15px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 3M12 17c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 3"></path></svg>
+                        <span>GitHub: https://github.com/Manish Tech Workspace</span>
+                    </li>
+                    <li style="display: flex; gap: 15px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        <span>LinkedIn: https://www.linkedin.com/in/manishdhote/</span>
+                    </li>
+                </ul>
+                
+                <div style="color: #999; font-size: 0.85rem; margin-top: 30px;">
+                    MSME REGISTRATION : UDYAM-MH-26-0170565
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>CultureArc</h3>
+                    <p style="color: #999; margin-bottom: 25px; font-size: 0.95rem;">Innovative Technology solutions to manage business in the new era of digital economy. Creating high productive teams and work culture across the globe.</p>
+                </div>
+                
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="Aboutus.html">About Us</a></li>
+                        <li><a href="job.html">career</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="services.html#cloud">Cloud Solutions</a></li>
+                        <li><a href="services.html#web">Web Development</a></li>
+                        <li><a href="services.html#mobility">Mobility</a></li>
+                        <li><a href="services.html#aiml">AI & IoT</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Connect</h3>
+                    <div style="display: flex; margin-bottom: 20px;">
+                        <a href="https://www.linkedin.com/in/manishdhote/" class="social-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid #222; padding-top: 20px; text-align: center; color: #666; font-size: 0.85rem;">
+                &copy; 2025 CultureArc. All Rights Reserved. | MSME: UDYAM-MH-26-0170565
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // --- DOM Elements ---
+        const navMenu = document.getElementById('nav-menu');
+        const hamburger = document.getElementById('hamburger');
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            setupIntersectionObserver();
+        });
+
+        // --- Navigation ---
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // --- Intersection Observer for Animations ---
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+        }
+    </script>
+</body>
+</html>
